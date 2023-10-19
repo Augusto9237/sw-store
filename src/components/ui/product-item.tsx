@@ -6,7 +6,8 @@ import { ArrowBigDown } from "lucide-react";
 interface ProductItemProps {
     product: ProductWithTotalPrice
 }
-const ProductItem = ({ product }: ProductItemProps) => {
+
+export default function ProductItem({ product }: ProductItemProps) {
     return (
         <div className="flex max-w-[156px] flex-col gap-4">
             <div className="relative bg-accent rounded-lg h-[170px] w-[156px] flex items-center justify-center">
@@ -53,5 +54,3 @@ const ProductItem = ({ product }: ProductItemProps) => {
         </div>
     );
 }
-
-export default ProductItem;
