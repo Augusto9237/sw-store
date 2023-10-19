@@ -43,7 +43,7 @@ export default function ProductItem({ product }: ProductItemProps) {
                             </p>
                         </>
                     ) : (
-                        <p className="line-through opacity-75 text-xs">
+                        <p className="font-semibold">
                             R$ {Number(product.basePrice).toFixed(2)}
                         </p>
                     )}
