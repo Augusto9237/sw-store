@@ -50,9 +50,7 @@ export default function ProductItem({ product }: ProductItemProps) {
                             </p>
                         )}
                     </div>
-
                 </div>
-
             </div>
         </Link>
     );
