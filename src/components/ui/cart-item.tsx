@@ -8,7 +8,7 @@ interface CartItemProps {
     product: CartProduct;
 }
 export default function CartItem({ product }: CartItemProps) {
-    const { decreaseProductQuantity } = useContext(CartContext)
+    const { decreaseProductQuantity, increaseProductQuantity } = useContext(CartContext)
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -39,7 +39,7 @@ export default function CartItem({ product }: CartItemProps) {
 
                         <span className="text-xs">{product.quantity}</span>
 
-                        <Button size="icon" variant='outline' className="w-8 h-8">
+                        <Button size="icon" variant='outline' className="w-8 h-8" onClick={() => increaseProductQuantity(product.id)}>
                             <ArrowRightIcon size={16} />
                         </Button>
                     </div>
