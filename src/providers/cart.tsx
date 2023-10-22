@@ -1,5 +1,5 @@
 'use client'
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useMemo, useState } from "react";
 import { ProductWithTotalPrice } from "@/helpers/product";
 
 export interface CartProduct extends ProductWithTotalPrice {
@@ -15,6 +15,9 @@ interface ICartContext {
     decreaseProductQuantity(productId: string): void;
     increaseProductQuantity(productId: string): void;
     removeProductFromCart(productId: string): void;
+    subtotal: number;
+    total: number;
+    totalDiscount: number
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -22,14 +25,33 @@ export const CartContext = createContext<ICartContext>({
     cartTotalPrice: 0,
     cartBasePrice: 0,
     cartTotalDiscount: 0,
-    addProductToCart: () => {},
-    decreaseProductQuantity: () => {},
-    increaseProductQuantity: () => {},
-    removeProductFromCart: () => {},
+    addProductToCart: () => { },
+    decreaseProductQuantity: () => { },
+    increaseProductQuantity: () => { },
+    removeProductFromCart: () => { },
+    subtotal: 0,
+    total: 0,
+    totalDiscount: 0,
 })
 
 export default function CartProvider({ children }: { children: ReactNode }) {
-    const [products, setProducts] = useState<CartProduct[]>([])
+    const [products, setProducts] = useState<CartProduct[]>([]);
+
+    const subtotal = useMemo(() => {
+        return products.reduce((acc, product) => {
+            return acc + Number(product.basePrice);
+        }, 0)
+    }, [products])
+
+    const total = useMemo(() => {
+        return products.reduce((acc, product) => {
+            return acc + Number(product.totalPrice);
+        }, 0)
+    }, [products])
+
+    const totalDiscount = useMemo(() => {
+        return subtotal - total
+    }, [subtotal, total])
 
     function addProductToCart(product: CartProduct) {
         const productsIsAlreadyOnCart = products.some(cartProduct => cartProduct.id === product.id)
@@ -84,8 +106,8 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         );
     }
 
-    function removeProductFromCart(productId : string){
-        setProducts(prev => prev.filter(cartProduct  => cartProduct.id !== productId));
+    function removeProductFromCart(productId: string) {
+        setProducts(prev => prev.filter(cartProduct => cartProduct.id !== productId));
     }
 
     return (
@@ -98,6 +120,9 @@ export default function CartProvider({ children }: { children: ReactNode }) {
             cartTotalPrice: 0,
             cartBasePrice: 0,
             cartTotalDiscount: 0,
+            subtotal,
+            total,
+            totalDiscount
         }}>
             {children}
         </CartContext.Provider>
