@@ -8,7 +8,7 @@ interface CartItemProps {
     product: CartProduct;
 }
 export default function CartItem({ product }: CartItemProps) {
-    const { decreaseProductQuantity, increaseProductQuantity } = useContext(CartContext)
+    const { decreaseProductQuantity, increaseProductQuantity, removeProductFromCart } = useContext(CartContext)
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -26,7 +26,7 @@ export default function CartItem({ product }: CartItemProps) {
                     <p className="text-xs">{product.name}</p>
                     <div className="flex items-center gap-2">
                         <p className="text-sm font-bold">
-                            {product.totalPrice.toFixed(2)}
+                           R$ {product.totalPrice.toFixed(2)}
                         </p>
                         {product.discountPercentage > 0 && (
                             <p className="opacity-75 line-through text-xs">R$ {Number(product.basePrice)}</p>
@@ -46,7 +46,7 @@ export default function CartItem({ product }: CartItemProps) {
                 </div>
             </div>
 
-            <Button size="icon" variant="outline">
+            <Button size="icon" variant="outline" onClick={() => removeProductFromCart(product.id)}>
                 <TrashIcon size={16} />
             </Button>
         </div>
