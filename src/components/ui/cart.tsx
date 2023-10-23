@@ -37,9 +37,11 @@ export default function Cart() {
             <div className="flex flex-col gap-5 h-full max-h-full overflow-hidden">
                 {products.length > 0 ? (
                     <ScrollArea className='h-full'>
-                        {products.map(product => (
-                            <CartItem key={product.id} product={computeProductTotalPrice(product as any) as any} />
-                        ))}
+                        <div className='flex flex-col gap-5'>
+                            {products.map(product => (
+                                <CartItem key={product.id} product={computeProductTotalPrice(product as any) as any} />
+                            ))}
+                        </div>
                     </ScrollArea>
                 ) : (
                     <p className='text-center font-semibold'>Você ainda não possui nenhum produto no carrinho</p>
