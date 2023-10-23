@@ -14,7 +14,7 @@ import { CartContext } from "@/providers/cart";
 
 export default function Header() {
     const { status, data } = useSession();
-    const {products} = useContext(CartContext)
+    const { products } = useContext(CartContext)
 
     async function handleLoginClick() {
         await signIn();
@@ -105,9 +105,11 @@ export default function Header() {
         <Sheet>
             <SheetTrigger asChild>
                 <Button size='icon' variant='outline' className="relative">
-                    <Badge className="absolute top-0 -right-2 px-1.5">
-                        <p className="text-xs">{products.length}</p>
-                    </Badge>
+                    {products.length > 0 && (
+                        <Badge className="absolute top-0 -right-2 px-1.5">
+                            <p className="text-xs">{products.length}</p>
+                        </Badge>
+                    )}
                     <ShoppingCartIcon />
                 </Button>
             </SheetTrigger>
