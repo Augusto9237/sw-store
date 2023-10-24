@@ -1,3 +1,4 @@
+'use client'
 import { useContext } from 'react'
 import { Badge } from './badge'
 import { ShoppingCartIcon } from 'lucide-react'
@@ -9,11 +10,17 @@ import { ScrollArea } from './scroll-area'
 import { Button } from './button'
 import { createCheckout } from '@/actions/checkout'
 import { loadStripe } from '@stripe/stripe-js'
+import { createOrder } from '@/actions/order'
+import { useSession } from 'next-auth/react'
 
 export default function Cart() {
     const { products, subtotal, total, totalDiscount } = useContext(CartContext)
+    const { data } = useSession();
 
     async function handleFinishPurchaseClick() {
+        if (!data?.user) return;
+        
+        await createOrder(products, (data.user as any).id)
         const checkout = await createCheckout(products);
 
         const stripe = await loadStripe(
