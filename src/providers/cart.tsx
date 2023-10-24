@@ -1,6 +1,7 @@
-'use client'
-import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
+"use client";
+
 import { ProductWithTotalPrice } from "@/helpers/product";
+import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 
 export interface CartProduct extends ProductWithTotalPrice {
     quantity: number;
@@ -11,13 +12,13 @@ interface ICartContext {
     cartTotalPrice: number;
     cartBasePrice: number;
     cartTotalDiscount: number;
-    addProductToCart(product: CartProduct): void;
-    decreaseProductQuantity(productId: string): void;
-    increaseProductQuantity(productId: string): void;
-    removeProductFromCart(productId: string): void;
-    subtotal: number;
     total: number;
-    totalDiscount: number
+    subtotal: number;
+    totalDiscount: number;
+    addProductToCart: (product: CartProduct) => void;
+    decreaseProductQuantity: (productId: string) => void;
+    increaseProductQuantity: (productId: string) => void;
+    removeProductFromCart: (productId: string) => void;
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -25,112 +26,128 @@ export const CartContext = createContext<ICartContext>({
     cartTotalPrice: 0,
     cartBasePrice: 0,
     cartTotalDiscount: 0,
+    total: 0,
+    subtotal: 0,
+    totalDiscount: 0,
     addProductToCart: () => { },
     decreaseProductQuantity: () => { },
     increaseProductQuantity: () => { },
     removeProductFromCart: () => { },
-    subtotal: 0,
-    total: 0,
-    totalDiscount: 0,
-})
+});
 
-export default function CartProvider({ children }: { children: ReactNode }) {
-    const [products, setProducts] = useState<CartProduct[]>(
-        JSON.parse(localStorage.getItem('@sw-store/cart-produts') || "[]"),
-    );
+const CartProvider = ({ children }: { children: ReactNode }) => {
+    const [products, setProducts] = useState<CartProduct[]>([]);
 
     useEffect(() => {
-        localStorage.setItem('@sw-store/cart-produts', JSON.stringify(products))
-    })
-    
+        setProducts(
+            JSON.parse(localStorage.getItem("@fsw-store/cart-products") || "[]"),
+        );
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("@fsw-store/cart-products", JSON.stringify(products));
+    }, [products]);
+
+    // Total sem descontos
     const subtotal = useMemo(() => {
         return products.reduce((acc, product) => {
             return acc + Number(product.basePrice) * product.quantity;
-        }, 0)
-    }, [products])
+        }, 0);
+    }, [products]);
 
+    // Total com descontos
     const total = useMemo(() => {
         return products.reduce((acc, product) => {
-            return acc + Number(product.totalPrice) * product.quantity;
-        }, 0)
-    }, [products])
+            return acc + product.totalPrice * product.quantity;
+        }, 0);
+    }, [products]);
 
-    const totalDiscount = useMemo(() => {
-        return subtotal - total
-    }, [subtotal, total])
+    const totalDiscount = subtotal - total;
 
-    function addProductToCart(product: CartProduct) {
-        const productsIsAlreadyOnCart = products.some(cartProduct => cartProduct.id === product.id)
+    const addProductToCart = (product: CartProduct) => {
+        // se o produto já estiver no carrinho, apenas aumente a sua quantidade
+        const productIsAlreadyOnCart = products.some(
+            (cartProduct) => cartProduct.id === product.id,
+        );
 
-        if (productsIsAlreadyOnCart) {
+        if (productIsAlreadyOnCart) {
             setProducts((prev) =>
                 prev.map((cartProduct) => {
                     if (cartProduct.id === product.id) {
                         return {
                             ...cartProduct,
-                            quantity: cartProduct.quantity + product.quantity
+                            quantity: cartProduct.quantity + product.quantity,
+                        };
+                    }
+
+                    return cartProduct;
+                }),
+            );
+
+            return;
+        }
+
+        // se não, adicione o produto à lista
+        setProducts((prev) => [...prev, product]);
+    };
+
+    const decreaseProductQuantity = (productId: string) => {
+        setProducts((prev) =>
+            prev
+                .map((cartProduct) => {
+                    if (cartProduct.id === productId) {
+                        return {
+                            ...cartProduct,
+                            quantity: cartProduct.quantity - 1,
                         };
                     }
 
                     return cartProduct;
                 })
-            )
-            return;
-        }
-
-        setProducts((prev) => [...prev, product])
-    }
-
-    function decreaseProductQuantity(productId: string) {
-        setProducts((prev) =>
-            prev
-                .map(cartProduct => {
-                    if (cartProduct.id === productId) {
-                        return {
-                            ...cartProduct,
-                            quantity: cartProduct.quantity - 1
-                        }
-                    }
-                    return cartProduct;
-                })
                 .filter((cartProduct) => cartProduct.quantity > 0),
         );
-    }
+    };
 
-    function increaseProductQuantity(productId: string) {
+    const increaseProductQuantity = (productId: string) => {
         setProducts((prev) =>
-            prev
-                .map(cartProduct => {
-                    if (cartProduct.id === productId) {
-                        return {
-                            ...cartProduct,
-                            quantity: cartProduct.quantity + 1
-                        }
-                    }
-                    return cartProduct;
-                })
-        );
-    }
+            prev.map((cartProduct) => {
+                if (cartProduct.id === productId) {
+                    return {
+                        ...cartProduct,
+                        quantity: cartProduct.quantity + 1,
+                    };
+                }
 
-    function removeProductFromCart(productId: string) {
-        setProducts(prev => prev.filter(cartProduct => cartProduct.id !== productId));
-    }
+                return cartProduct;
+            }),
+        );
+    };
+
+    const removeProductFromCart = (productId: string) => {
+        setProducts((prev) =>
+            prev.filter((cartProduct) => cartProduct.id !== productId),
+        );
+    };
 
     return (
-        <CartContext.Provider value={{
-            products,
-            addProductToCart,
-            decreaseProductQuantity,
-            increaseProductQuantity,
-            removeProductFromCart,
-            cartTotalPrice: 0,
-            cartBasePrice: 0,
-            cartTotalDiscount: 0,
-            subtotal,
-            total,
-            totalDiscount
-        }}>
+        <CartContext.Provider
+            value={{
+                products,
+                addProductToCart,
+                decreaseProductQuantity,
+                increaseProductQuantity,
+                removeProductFromCart,
+                total,
+                subtotal,
+                totalDiscount,
+                cartTotalPrice: 0,
+                cartBasePrice: 0,
+                cartTotalDiscount: 0,
+            }}
+        >
             {children}
         </CartContext.Provider>
-    )
-}
+    );
+};
+
+export default CartProvider;
