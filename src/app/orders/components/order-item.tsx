@@ -40,7 +40,7 @@ export default function OrderItem({ order }: OrderItemProps) {
         <Card className="px-5">
             <Accordion type="single" className="w-full" collapsible>
                 <AccordionItem value={order.id}>
-                    <AccordionTrigger>
+                    <AccordionTrigger className="hover:no-underline">
                         <div className="flex flex-col gap-1 text-left">
                             <p>Pedido com {order.orderProducts.length} produto(s)</p>
                             <p className="text-xs opacity-75">Feito em {format(order.createdAt, "d/MM/y 'às' HH:mm")}</p>
