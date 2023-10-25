@@ -19,7 +19,6 @@ export default function Cart(){
 
     const handleFinishPurchaseClick = async () => {
         if (!data?.user) {
-            // TODO: redirecionar para o login
             return;
         }
 
@@ -29,7 +28,6 @@ export default function Cart(){
 
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-        // Criar pedido no banco
 
         stripe?.redirectToCheckout({
             sessionId: checkout.id,

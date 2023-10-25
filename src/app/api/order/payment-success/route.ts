@@ -21,6 +21,7 @@ export const POST = async (request: Request) => {
         process.env.STRIPE_WEBHOOK_SECRET_KEY,
     );
 
+
     if (event.type === "checkout.session.completed") {
         const session = event.data.object as any;
 
