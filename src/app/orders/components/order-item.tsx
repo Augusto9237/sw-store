@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { useMemo } from "react";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { getOrderStatus } from "../helpers/status";
+import { formatReal } from "@/helpers/formatReal";
 
 interface OrderItemProps {
     order: Prisma.OrderGetPayload<{
@@ -55,12 +56,12 @@ export default function OrderItem({ order }: OrderItemProps) {
                                 </div>
 
                                 <div>
-                                    <p className="font-bold">Status</p>
+                                    <p className="font-bold">Data</p>
                                     <p className="opacity-75">{format(order.createdAt, "d/MM/y")}</p>
                                 </div>
 
                                 <div>
-                                    <p className="font-bold">Status</p>
+                                    <p className="font-bold">Pagamento</p>
                                     <p className="opacity-75">Cartão</p>
                                 </div>
                             </div>
@@ -72,7 +73,7 @@ export default function OrderItem({ order }: OrderItemProps) {
 
                                 <div className="flex items-center justify-between text-xs">
                                     <p>Subtotal</p>
-                                    <p>R$ {subtotal.toFixed(2)}</p>
+                                    <p>{formatReal(subtotal)}</p>
                                 </div>
 
                                 <Separator />
@@ -86,14 +87,14 @@ export default function OrderItem({ order }: OrderItemProps) {
 
                                 <div className="flex items-center justify-between text-xs">
                                     <p>Descontos</p>
-                                    <p>- R$ {totalDiscounts.toFixed(2)}</p>
+                                    <p>- {formatReal(totalDiscounts)}</p>
                                 </div>
 
                                 <Separator />
 
                                 <div className="flex items-center justify-between text-sm font-bold">
                                     <p>Total</p>
-                                    <p>R$ {total.toFixed(2)}</p>
+                                    <p>{formatReal(total)}</p>
                                 </div>
                             </div>
                         </div>

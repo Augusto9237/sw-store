@@ -4,6 +4,7 @@ import { Badge } from "./badge";
 import { ArrowBigDown } from "lucide-react";
 import Link from "next/link";
 import DiscountBadge from "./discount-badge";
+import { formatReal } from "@/helpers/formatReal";
 
 interface ProductItemProps {
     product: ProductWithTotalPrice
@@ -39,14 +40,14 @@ export default function ProductItem({ product }: ProductItemProps) {
                     <div className="flex items-center gap-2">
                         {product.discountPercentage > 0 ? (
                             <>
-                                <p className="overflow-hidden whitespace-nowrap font-semibold">R$ {Number(product.totalPrice).toFixed(2)}</p>
+                                <p className="overflow-hidden whitespace-nowrap font-semibold">{formatReal(Number(product.totalPrice))}</p>
                                 <p className="overflow-hidden text-ellipsis whitespace-nowrap line-through opacity-75 text-xs">
-                                    R$ {Number(product.basePrice).toFixed(2)}
+                                    {formatReal(Number(product.basePrice))}
                                 </p>
                             </>
                         ) : (
                             <p className="overflow-hidden whitespace-nowrap font-semibold">
-                                R$ {Number(product.basePrice).toFixed(2)}
+                                {formatReal(Number(product.basePrice))}
                             </p>
                         )}
                     </div>

@@ -1,3 +1,4 @@
+import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Prisma } from "@prisma/client"
 import Image from "next/image";
@@ -11,6 +12,7 @@ interface OrderProductItemProps {
 }
 export default function OrderProductItem({ orderProduct }: OrderProductItemProps) {
     const productWithTotalPrice = computeProductTotalPrice(orderProduct.product)
+
     return (
         <div className="flex items-center gap-4">
             <div className="bg-accent rounded-lg w-[85px] h-[77px] flex items-center justify-center">
@@ -32,15 +34,16 @@ export default function OrderProductItem({ orderProduct }: OrderProductItemProps
 
                 <div className="flex w-full items-center justify-between gap-1">
                     <div className="flex items-center gap-1">
-                        <p className="text-sm font-bold">R$ {productWithTotalPrice.totalPrice.toFixed(2)}</p>
+                        <p className="text-sm font-bold">
+                            {formatReal(Number(productWithTotalPrice.totalPrice))}
+                        </p>
 
                         {productWithTotalPrice.discountPercentage > 0 && (
                             <p className="text-xs line-through opacity-75">
-                                R$ {Number(productWithTotalPrice.basePrice).toFixed(2)}
+                                {formatReal(Number(productWithTotalPrice.basePrice))}
                             </p>
                         )}
                     </div>
-
                     <p className="text-xs opacity-60">Qtd: {orderProduct.quantity}</p>
                 </div>
             </div>

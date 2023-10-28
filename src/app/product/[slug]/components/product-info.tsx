@@ -1,6 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import DiscountBadge from "@/components/ui/discount-badge"
+import { formatReal } from "@/helpers/formatReal"
 import { ProductWithTotalPrice } from "@/helpers/product"
 import { CartContext } from "@/providers/cart"
 import { ArrowLeftIcon, ArrowRightIcon, TruckIcon } from "lucide-react"
@@ -10,28 +11,28 @@ interface ProductInfoProps {
     product: ProductWithTotalPrice
 }
 
-export default function ProductInfo({ product}: ProductInfoProps) {
+export default function ProductInfo({ product }: ProductInfoProps) {
     const [quantity, setQuantity] = useState(1);
-    const {addProductToCart} = useContext(CartContext)
+    const { addProductToCart } = useContext(CartContext)
 
     function handleDecreaseQuantityClick() {
         setQuantity((prev) => prev === 1 ? prev : prev - 1)
     }
 
     function handleIncreaseQuantityClick() {
-        setQuantity((prev) =>  prev + 1)
+        setQuantity((prev) => prev + 1)
     }
 
     function handleAddToCartClick() {
-        addProductToCart({...product, quantity})
-    } 
+        addProductToCart({ ...product, quantity })
+    }
 
     return (
         <div className="flex flex-col px-5">
             <h2 className="text-lg">{product.name}</h2>
 
             <div className="flex items-center gap-1">
-                <h1 className="text-xl font-bold">R$ {product.totalPrice.toFixed(2)}</h1>
+                <h1 className="text-xl font-bold">{formatReal(Number(product.totalPrice))}</h1>
                 {product.discountPercentage > 0 && (
                     <DiscountBadge>
                         {product.discountPercentage}
@@ -40,7 +41,7 @@ export default function ProductInfo({ product}: ProductInfoProps) {
             </div>
             {product.discountPercentage > 0 && (
                 <p className="opacity-75 text-sm line-through">
-                    R$ {Number(product.basePrice).toFixed(2)}
+                    {formatReal(Number(product.basePrice))}
                 </p>
             )}
 
@@ -55,7 +56,7 @@ export default function ProductInfo({ product}: ProductInfoProps) {
                     <ArrowRightIcon size={16} />
                 </Button>
             </div>
-            
+
             <div className="mt-8 flex flex-col gap-3">
                 <h3 className="font-bold">Descrição</h3>
                 <p className="text-sm opacity-60 text-justify">{product.description}</p>
