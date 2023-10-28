@@ -31,7 +31,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         addProductToCart({ ...product, quantity })
         toast({
             variant: 'success',
-            title: "✅ Produto adicionado ao carrino!",
+            title: "✅  Produto adicionado ao carrino!",
         })
     }
 
