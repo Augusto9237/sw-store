@@ -53,11 +53,13 @@ export default async function Home() {
         />
       </div>
 
-      <div className="max-md:hidden flex flex-row  h-[215px] overflow-hidden px-28 gap-8">
+      <div className="max-md:hidden flex flex-row items-center h-[215px] overflow-hidden px-28 gap-8">
+
         <PromoBanner
           src="/Banner-home-02.png"
           alt="Desconto esse mês"
         />
+
         <PromoBanner
           src="/Banner-home-03.png"
           alt="Desconto esse mês"

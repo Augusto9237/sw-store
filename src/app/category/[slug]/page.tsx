@@ -18,7 +18,7 @@ export default async function CategoryProducts({ params }: any) {
     }
 
     return (
-        <div className="flex flex-col gap-8 p-5 md:px-28">
+        <div className="flex flex-col gap-8 p-5 md:py-8 md:px-28">
             <Badge
                 className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
                 variant='outline'
@@ -26,7 +26,7 @@ export default async function CategoryProducts({ params }: any) {
                 {CATEGORY_ICON[params.slug as keyof typeof CATEGORY_ICON]}
                 {category?.name}
             </Badge>
-            <div className="grid grid-cols-2 md:flex gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-6  gap-8 overflow-hidden">
                 {category?.products.map(product => <ProductItem key={product.id} product={computeProductTotalPrice(product)} />)}
             </div>
         </div>

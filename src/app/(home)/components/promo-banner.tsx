@@ -1,16 +1,19 @@
 import { ImageProps } from "next/image";
 import Image from "next/image";
 
-const PromoBanner = ({alt, ...props}: ImageProps) => {
+const PromoBanner = ({ alt, ...props }: ImageProps) => {
     return (
-        <Image
-            height={0}
-            width={0}
-            className="h-auto md:max-h-[500px] w-full px-5 md:px-0"
-            sizes="100vw"
-            alt={alt}
-            {...props}
-        />);
+        <div className="overflow-hidden px-5 h-full w-full md:px-0">
+            <Image
+                height={0}
+                width={0}
+                className="max-md:h-auto h-full md:max-h-[500px] w-full max-md:rounded-[10px]"
+                sizes="100vw"
+                alt={alt}
+                {...props}
+            />
+        </div>
+    );
 }
 
 export default PromoBanner;

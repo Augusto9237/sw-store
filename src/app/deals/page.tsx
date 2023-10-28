@@ -14,7 +14,7 @@ export default async function DealsPage() {
     });
 
     return (
-        <div className="flex flex-col gap-8 p-5">
+        <div className="flex flex-col gap-8 p-5 md:py-8 md:px-28">
             <Badge
                 className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
                 variant="outline"
@@ -23,7 +23,7 @@ export default async function DealsPage() {
                 Ofertas
             </Badge>
 
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-8 overflow-hidden">
                 {deals.map((product) => (
                     <ProductItem
                         key={product.id}

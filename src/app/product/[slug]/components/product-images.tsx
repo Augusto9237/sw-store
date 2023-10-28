@@ -14,8 +14,8 @@ export default function ProductImages({ imagesUrls, name }: ProductImagesProps) 
     }
 
     return (
-        <div className="flex flex-col">
-            <div className="bg-accent h-[380px] w-full items-center flex justify-center">
+        <div className="flex flex-col flex-1 relative">
+            <div className="bg-accent h-[380px] md:h-full md:min-h-[600px] w-full items-center flex justify-center rounded-[10px]">
                 <Image
                     src={currentImage}
                     alt={name}
@@ -29,12 +29,12 @@ export default function ProductImages({ imagesUrls, name }: ProductImagesProps) 
                 />
             </div>
 
-            <div className="grid grid-cols-4 gap-4 mt-8 px-5">
+            <div className="grid grid-cols-4 gap-4 mt-8 px-5 md:absolute md:flex flex-col">
                 {
                     imagesUrls.map(imagesUrl => (
                         <button
                             key={imagesUrl}
-                            className={`bg-accent rounded-lg flex justify-center items-center h-[100px]
+                            className={`bg-accent md:bg-background md:px-3 rounded-lg flex justify-center items-center h-[100px]
                          ${imagesUrl === currentImage && "border-2 border-solid border-primary"}
                         `}
                             onClick={() => handleImageClick(imagesUrl)}

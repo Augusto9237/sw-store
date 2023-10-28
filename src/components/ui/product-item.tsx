@@ -13,7 +13,7 @@ interface ProductItemProps {
 export default function ProductItem({ product }: ProductItemProps) {
     return (
         <Link href={`/product/${product.slug}`}>
-            <div className="flex h-full w-full min-w-[180px] flex-col gap-4">
+            <div className="flex h-full w-full md:min-w-[180px] flex-col gap-4">
                 <div className="relative bg-accent rounded-lg h-[170px] w-full flex items-center justify-center">
                     <Image
                         src={product.imageUrls[0]}

@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@/components/ui/use-toast";
 import { ProductWithTotalPrice } from "@/helpers/product";
 import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 
@@ -127,6 +128,10 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         setProducts((prev) =>
             prev.filter((cartProduct) => cartProduct.id !== productId),
         );
+        toast({
+            variant: "cancel",
+            title: "🗑️ Produto removido do carrino!",
+        })
     };
 
     return (

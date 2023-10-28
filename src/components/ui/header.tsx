@@ -117,7 +117,7 @@ export default function Header() {
             </Sheet>
 
             <Link href="/">
-                <h1 className="font-semibold text-lg">
+                <h1 className="font-semibold text-lg md:text-2xl">
                     <span className="text-primary">SW</span> Store
                 </h1>
             </Link>
@@ -204,7 +204,7 @@ export default function Header() {
                             <ShoppingCartIcon />
                         </Button>
                     </SheetTrigger>
-                    <SheetContent className="w-[350px]">
+                    <SheetContent className="w-full max-w-[350px] md:max-w-[440px]">
                         <Cart />
                     </SheetContent>
                 </Sheet>

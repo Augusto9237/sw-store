@@ -6,6 +6,8 @@ import { AuthProvider } from '@/providers/auth'
 import Footer from '@/components/ui/footer'
 import CartProvider from '@/providers/cart'
 
+import { Toaster } from "@/components/ui/toaster"
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -29,6 +31,7 @@ export default function RootLayout({
                 {children}
               </div>
               <Footer />
+              <Toaster />
             </CartProvider>
           </AuthProvider>
         </div>
