@@ -27,7 +27,7 @@ export default async function OrderPage() {
         }
     })
     return (
-        <div className="p-5 md:px-28">
+        <div className="p-5 xl:px-0 lg:py-8 max-w-[1248px] w-full mx-auto">
             <Badge
                 className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
                 variant='outline'

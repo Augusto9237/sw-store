@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Button } from "./button";
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "lucide-react";
 import { useContext } from "react";
+import { formatReal } from "@/helpers/formatReal";
 
 interface CartItemProps {
     product: CartProduct;
@@ -26,10 +27,10 @@ export default function CartItem({ product }: CartItemProps) {
                     <p className="text-xs">{product.name}</p>
                     <div className="flex items-center gap-2">
                         <p className="text-sm font-bold">
-                           R$ {product.totalPrice.toFixed(2)}
+                           R$ {formatReal(product.totalPrice)}
                         </p>
                         {product.discountPercentage > 0 && (
-                            <p className="opacity-75 line-through text-xs">R$ {Number(product.basePrice)}</p>
+                            <p className="opacity-75 line-through text-xs">{formatReal(Number(product.basePrice))}</p>
                         )}
                     </div>
                     <div className="flex items-center gap-1">

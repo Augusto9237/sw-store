@@ -10,7 +10,7 @@ export default async function Home() {
     where: {
       discountPercentage: {
         gt: 0,
-      }
+      },
     }
   })
 
@@ -37,11 +37,11 @@ export default async function Home() {
         alt="Desconto esse mês"
       />
 
-      <div className="px-5 md:px-28">
+      <div className="px-5 md:px-0 max-w-[1248px] w-full mx-auto">
         <Categories />
       </div>
 
-      <div className="md:px-28">
+      <div className="max-w-[1248px] w-full mx-auto">
         <SectionTitle>Ofertas</SectionTitle>
         <ProductList products={deals} />
       </div>
@@ -53,8 +53,7 @@ export default async function Home() {
         />
       </div>
 
-      <div className="max-md:hidden flex flex-row items-center h-[215px] overflow-hidden px-28 gap-8">
-
+      <div className="max-md:hidden flex flex-row items-center h-[215px] overflow-hidden max-w-[1248px] w-full mx-auto gap-8">
         <PromoBanner
           src="/Banner-home-02.png"
           alt="Desconto esse mês"
@@ -66,7 +65,7 @@ export default async function Home() {
         />
       </div>
 
-      <div className="md:px-28">
+      <div className="max-w-[1248px] w-full mx-auto">
         <SectionTitle>Teclados</SectionTitle>
         <ProductList products={keyboards} />
       </div>
@@ -76,7 +75,7 @@ export default async function Home() {
         alt="Desconto esse mês"
       />
 
-      <div className="md:px-28">
+      <div className="max-w-[1248px] w-full mx-auto">
         <SectionTitle>Mouses</SectionTitle>
         <ProductList products={mouses} />
       </div>

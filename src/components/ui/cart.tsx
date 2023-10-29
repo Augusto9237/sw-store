@@ -11,6 +11,7 @@ import { createCheckout } from "@/actions/checkout";
 import { loadStripe } from "@stripe/stripe-js";
 import { createOrder } from "@/actions/order";
 import { useSession } from "next-auth/react";
+import { formatReal } from "@/helpers/formatReal";
 
 export default function Cart(){
     const { data } = useSession();
@@ -69,7 +70,7 @@ export default function Cart(){
 
                     <div className="flex items-center justify-between text-xs">
                         <p>Subtotal</p>
-                        <p>R$ {subtotal.toFixed(2)}</p>
+                        <p>{formatReal(subtotal)}</p>
                     </div>
 
                     <Separator />
@@ -83,14 +84,14 @@ export default function Cart(){
 
                     <div className="flex items-center justify-between text-xs">
                         <p>Descontos</p>
-                        <p>- R$ {totalDiscount.toFixed(2)}</p>
+                        <p>- {formatReal(totalDiscount)}</p>
                     </div>
 
                     <Separator />
 
                     <div className="flex items-center justify-between text-sm font-bold">
                         <p>Total</p>
-                        <p>R$ {total.toFixed(2)}</p>
+                        <p>{formatReal(total)}</p>
                     </div>
 
                     <Button
