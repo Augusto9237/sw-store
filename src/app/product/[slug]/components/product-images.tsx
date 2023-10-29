@@ -34,7 +34,7 @@ export default function ProductImages({ imagesUrls, name }: ProductImagesProps) 
                     imagesUrls.map(imagesUrl => (
                         <button
                             key={imagesUrl}
-                            className={`bg-accent md:bg-background md:px-3 rounded-lg flex justify-center items-center h-[100px]
+                            className={`bg-accent md:bg-background md:px-3 rounded-lg flex justify-center items-center h-[77px] md:max-w-[77px]
                          ${imagesUrl === currentImage && "border-2 border-solid border-primary"}
                         `}
                             onClick={() => handleImageClick(imagesUrl)}

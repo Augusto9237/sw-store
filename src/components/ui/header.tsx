@@ -145,11 +145,22 @@ export default function Header() {
 
                 <div className="flex items-center gap-8">
                     <Popover>
-                        <PopoverTrigger asChild className="max-md:hidden">
-                            <Button size='icon' variant='outline' className="relative">
-                                <User2 />
-                            </Button>
-                        </PopoverTrigger>
+                        {status === "authenticated" && data?.user && (
+                            <PopoverTrigger asChild className="max-md:hidden">
+                                <Avatar className="h-10 w-10">
+                                    {data?.user?.image && <AvatarImage src={data.user.image!} />}
+                                </Avatar>
+                            </PopoverTrigger>
+                        )}
+
+                        {status === "unauthenticated" && (
+                            <PopoverTrigger asChild className="max-md:hidden">
+                                <Button size='icon' variant='outline' className="relative">
+                                    <User2 />
+                                </Button>
+                            </PopoverTrigger>
+                        )}
+
                         {status === "authenticated" && data?.user && (
                             <PopoverContent className="max-md:hidden">
                                 <div className="flex flex-col gap-4">
