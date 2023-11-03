@@ -11,7 +11,7 @@ export default async function OrderPage() {
     const user = getServerSession(authOptions);
 
     if (!user) {
-        return <p>Acesso Denied</p>
+        return null
     }
 
     const orders = await prismaClient.order.findMany({

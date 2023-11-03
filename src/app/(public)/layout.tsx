@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import {Maven_Pro} from 'next/font/google'
+import '../globals.css'
 import Header from '@/components/ui/header'
 import { AuthProvider } from '@/providers/auth'
 import Footer from '@/components/ui/footer'
@@ -8,7 +8,8 @@ import CartProvider from '@/providers/cart'
 
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Maven_Pro({ weight: [ '400', '600', '900'],
+                      subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'SW Store',
