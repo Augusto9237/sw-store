@@ -1,13 +1,9 @@
 'use client'
-import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon, User2 } from "lucide-react";
+import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
 import { Button } from "./button";
-import { Card } from "./card";
+import { Card, CardContent } from "./card";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
+
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
@@ -17,6 +13,7 @@ import Cart from "./cart";
 import { Badge } from "./badge";
 import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
+import { ActiveLink } from "./active-link";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
@@ -39,11 +36,7 @@ export default function HeaderAdmin() {
                         </Button>
                     </SheetTrigger>
 
-                    <SheetContent side="left">
-                        <SheetHeader className="text-left text-lg font-semibold">
-                            Menu
-                        </SheetHeader>
-
+                    <SheetContent side='left' className="max-w-[200px] md:max-w-[440px]">
                         {status === "authenticated" && data?.user && (
                             <div className="flex-col">
                                 <div className="flex items-center gap-2 py-4">
@@ -56,7 +49,7 @@ export default function HeaderAdmin() {
                                     </Avatar>
                                     <div className="flex-col">
                                         <p className="font-medium">{data.user.name}</p>
-                                        <p className="text-sm opacity-75">Boas compras!</p>
+                                        <p className="text-sm opacity-75">Administrador</p>
                                     </div>
                                 </div>
                                 <Separator />
@@ -64,55 +57,27 @@ export default function HeaderAdmin() {
                         )}
 
                         <div className="mt-4 flex flex-col gap-2">
-                            {status === "unauthenticated" && (
-                                <Button onClick={handleLoginClick} variant='outline' className="w-full justify-start gap-2">
-                                    <LogInIcon size={16} />
-                                    Fazer Login
-                                </Button>
-                            )}
+                            <CardContent className="w-full flex-1 px-0 pt-8 flex flex-col gap-8 ">
+                                <ActiveLink href="/dashboard">
+                                    <LucideLayoutDashboard size={16} />
+                                    Dashboard
+                                </ActiveLink>
 
-                            {status === "authenticated" && (
-                                <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
-                                    <LogOutIcon size={16} />
-                                    Fazer Logout
-                                </Button>
-                            )}
+                                <ActiveLink href="/orders">
+                                    <ShoppingCartIcon size={16} />
+                                    Pedidos
+                                </ActiveLink>
 
-                            <SheetClose asChild>
-                                <Link href="/">
-                                    <Button variant='outline' className="w-full justify-start gap-2">
-                                        <HomeIcon size={16} />
-                                        Início
-                                    </Button>
-                                </Link>
-                            </SheetClose>
+                                <ActiveLink href="/products">
+                                    <PackageSearchIcon size={16} />
+                                    Produtos
+                                </ActiveLink>
 
-                            <SheetClose asChild>
-                                <Link href="/orders">
-                                    <Button variant='outline' className="w-full justify-start gap-2">
-                                        <PackageSearchIcon size={16} />
-                                        Meus Pedidos
-                                    </Button>
-                                </Link>
-                            </SheetClose>
-
-                            <SheetClose asChild>
-                                <Link href="/deals">
-                                    <Button variant='outline' className="w-full justify-start gap-2">
-                                        <PercentIcon size={16} />
-                                        Ofertas
-                                    </Button>
-                                </Link>
-                            </SheetClose>
-
-                            <SheetClose asChild>
-                                <Link href="/catalog">
-                                    <Button variant='outline' className="w-full justify-start gap-2">
-                                        <ListOrderedIcon size={16} />
-                                        Catálogo
-                                    </Button>
-                                </Link>
-                            </SheetClose>
+                                <ActiveLink href="/products">
+                                    <Users size={16} />
+                                    Clientes
+                                </ActiveLink>
+                            </CardContent>
                         </div>
                     </SheetContent>
                 </Sheet>

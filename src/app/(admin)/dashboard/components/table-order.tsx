@@ -1,8 +1,10 @@
+'use client'
+
 import { getOrderStatus } from "@/app/(public)/orders/helpers/status";
+import { format } from 'date-fns'
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -12,7 +14,13 @@ import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Prisma } from "@prisma/client"
 import { useMemo } from "react";
-
+interface Users {
+    id: string;
+    name: string | null;
+    email: string | null;
+    emailVerified: Date | null;
+    image: string | null;
+}[]
 interface OrderItemProps {
     orders: Prisma.OrderGetPayload<{
         include: {
@@ -22,15 +30,20 @@ interface OrderItemProps {
                 }
             }
         }
-    }>[]
+    }>[];
+    users: Users[]
 };
-export default function TableOrder({ orders }: OrderItemProps) {
+
+
+export default function TableOrder({ orders, users }: OrderItemProps) {
+
+
     return (
         <Table>
             <TableHeader>
-                <TableRow className='text-base text-foreground/70 border-b-2 hover:bg-transparent'>
-                    <TableHead >Codigo</TableHead>
+                <TableRow className='text-base text-foreground/70 max-md:text-sm border-b-2 hover:bg-transparent'>
                     <TableHead>Cliente</TableHead>
+                    <TableHead>Data</TableHead>
                     <TableHead>Método</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Total</TableHead>
@@ -38,6 +51,7 @@ export default function TableOrder({ orders }: OrderItemProps) {
             </TableHeader>
             <TableBody>
                 {orders.map(order => {
+                    const user = users?.find(user => user.id === order.userId);
                     // eslint-disable-next-line react-hooks/rules-of-hooks
                     const total = useMemo(() => {
                         return order.orderProducts.reduce((acc, orderProduct) => {
@@ -45,14 +59,16 @@ export default function TableOrder({ orders }: OrderItemProps) {
                             return acc + productWithTotalPrice.totalPrice * orderProduct.quantity;
                         }, 0);
                     }, [order.orderProducts]);
-                    
+
+                    const date = format(new Date(order.createdAt), 'dd/MM/yyyy')
+
                     return (
-                        <TableRow key={order.id} className='border-b-[1px]'>
-                            <TableCell className="font-medium">{order.id}</TableCell>
-                            <TableCell>{order.userId}</TableCell>
+                        <TableRow key={order.id} className='border-b-[1px] max-md:text-sm'>
+                            <TableCell>{user?.name}</TableCell>
+                            <TableCell>{date}</TableCell>
                             <TableCell>Cartão credito</TableCell>
                             <TableCell>{getOrderStatus(order.status)}</TableCell>
-                            <TableCell className="text-right">{formatReal(total)}</TableCell>
+                            <TableCell className="text-right font-bold">{formatReal(total)}</TableCell>
                         </TableRow>
                     )
                 })}
