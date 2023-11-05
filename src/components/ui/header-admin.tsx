@@ -2,7 +2,7 @@
 import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from "./sheet";
 
 
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -14,10 +14,17 @@ import { Badge } from "./badge";
 import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
 import { ActiveLink } from "./active-link";
+import { usePathname } from "next/navigation";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
-    const { products } = useContext(CartContext)
+    const path = usePathname()
+
+    const ROUTE_NAME = {
+        dashboard: "Dashboard",
+        products: "Produtos",
+        users: "Usuários",
+    }
 
     async function handleLoginClick() {
         await signIn();
@@ -36,7 +43,7 @@ export default function HeaderAdmin() {
                         </Button>
                     </SheetTrigger>
 
-                    <SheetContent side='left' className="max-w-[200px] md:max-w-[440px]">
+                    <SheetContent side='left' className="w-full max-md:max-w-[100px] md:max-w-[440px]">
                         {status === "authenticated" && data?.user && (
                             <div className="flex-col">
                                 <div className="flex items-center gap-2 py-4">
@@ -79,10 +86,17 @@ export default function HeaderAdmin() {
                                 </ActiveLink>
                             </CardContent>
                         </div>
+                        <SheetFooter className="absolute bottom-5 left-5 right-5">
+                            <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
+                                <LogOutIcon size={16} />
+                                Fazer Logout
+                            </Button>
+                        </SheetFooter>
                     </SheetContent>
+
                 </Sheet>
 
-                <h1 className="font-bold text-xl">Dashboard</h1>
+                <h1 className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</h1>
 
                 <div>
                     <BellIcon />

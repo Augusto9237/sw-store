@@ -34,9 +34,7 @@ interface OrderItemProps {
     users: Users[]
 };
 
-
 export default function TableOrder({ orders, users }: OrderItemProps) {
-
 
     return (
         <Table>
@@ -66,7 +64,7 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
                         <TableRow key={order.id} className='border-b-[1px] max-md:text-sm'>
                             <TableCell>{user?.name}</TableCell>
                             <TableCell>{date}</TableCell>
-                            <TableCell>Cartão credito</TableCell>
+                            <TableCell>Cartão de credito</TableCell>
                             <TableCell>{getOrderStatus(order.status)}</TableCell>
                             <TableCell className="text-right font-bold">{formatReal(total)}</TableCell>
                         </TableRow>

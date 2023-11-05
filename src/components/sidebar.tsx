@@ -1,10 +1,15 @@
+'use client'
 import { HomeIcon, LayoutDashboard, LayoutDashboardIcon, LogOutIcon, LucideLayoutDashboard, PackageSearchIcon, ShoppingCartIcon, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { ActiveLink } from "./ui/active-link";
+import { signOut } from "next-auth/react";
 
 export default function Sidebar() {
+    async function handleLogoutClick() {
+        await signOut();
+    }
     return (
         <Card className="w-64 rounded-none px-0 max-md:hidden">
             <CardHeader className="pl-10">
@@ -29,14 +34,14 @@ export default function Sidebar() {
                     Produtos
                 </ActiveLink>
 
-                <ActiveLink href="/products">
+                <ActiveLink href="/users">
                     <Users size={16} />
                     Clientes
                 </ActiveLink>
             </CardContent>
 
             <CardFooter className="absolute bottom-0 left-0">
-                <Button  variant='outline' className="w-full justify-start gap-2">
+                <Button onClick={handleLogoutClick}  variant='outline' className="w-full justify-start gap-2">
                     <LogOutIcon size={16} />
                     Fazer Logout
                 </Button>
