@@ -22,10 +22,10 @@ const formSchema = z.object({
         message: "Por favor! Digite o nome da categoria",
     }),
     slug: z.string().min(2, {
-        message: "Por favor! Digite o nome da categoria",
+        message: "Por favor! Digite o slug da categoria",
     }),
     imageUrl: z.string().min(2, {
-        message: "Por favor! Digite o nome da categoria",
+        message: "Por favor! Cole uma url valida da imagem da categoria",
     }),
 
 })
