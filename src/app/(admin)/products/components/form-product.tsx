@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -16,13 +15,15 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-const formSchema = z.object({
-    name: z.string().min(2, {
-        message: "Por favor! Digite o nome do produto",
-    }),
-})
+
 
 export function FormProduct() {
+    const formSchema = z.object({
+        name: z.string().min(2, {
+            message: "Por favor! Digite o nome do produto",
+        }),
+    })
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
