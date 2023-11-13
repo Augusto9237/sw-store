@@ -7,15 +7,15 @@ interface CategoryProps {
     slug: string;
     description: string;
     categoryId: string;
-    imageUrls: [];
+    imageUrls: string[];
     basePrice: number;
-    discountPercentage: number;
+    discountPercentage?: number;
 }
 
-export const createCategory = async (
+export const createProduct = async (
     product: CategoryProps
 ) => {
-    const Category = await prismaClient.product.create({
+    const createdProduct = await prismaClient.product.create({
         data: {
             name: product.name,
             slug: product.slug,
@@ -27,5 +27,15 @@ export const createCategory = async (
         },
     });
 
-    return Category;
+    return createdProduct;
 };
+
+export const deleteProduct = async (id: string) => {
+    const deletedProduct = await prismaClient.product.delete({
+        where: {
+            id: id,
+        }
+    });
+
+    return deletedProduct;
+}

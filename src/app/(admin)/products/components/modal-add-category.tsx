@@ -88,7 +88,7 @@ export default function ModalAddCategory() {
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="text-accent-foreground">Nome da categoria</FormLabel>
+                                    <FormLabel className="text-accent-foreground">Nome</FormLabel>
                                     <FormControl>
                                         <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome da categoria' {...field} />
                                     </FormControl>
@@ -101,7 +101,7 @@ export default function ModalAddCategory() {
                             name="slug"
                             render={({ field }) => (
                                 <FormItem >
-                                    <FormLabel className="text-accent-foreground">Slug da categoria</FormLabel>
+                                    <FormLabel className="text-accent-foreground">Slug</FormLabel>
                                     <FormControl>
                                         <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o slug da categoria' {...field} />
                                     </FormControl>
@@ -131,6 +131,7 @@ export default function ModalAddCategory() {
                         </div>
                     </form>
                 </Form>
+                
             </DialogContent>
         </Dialog>
 

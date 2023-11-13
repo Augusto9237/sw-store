@@ -1,7 +1,5 @@
 import { ProductWithTotalPrice } from "@/helpers/product";
 import Image from "next/image";
-import { Badge } from "./badge";
-import { ArrowBigDown } from "lucide-react";
 import Link from "next/link";
 import DiscountBadge from "./discount-badge";
 import { formatReal } from "@/helpers/formatReal";
