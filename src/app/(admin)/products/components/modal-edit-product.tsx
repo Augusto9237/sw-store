@@ -32,10 +32,11 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { CATEGORY_ICON } from "@/constants/category-icon";
-import { Plus, X } from "lucide-react"
+import { Pencil, Plus, X } from "lucide-react"
 import { createCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
-import { createProduct } from "@/actions/products"
+import { createProduct, updateProduct } from "@/actions/products"
+import { Decimal } from "@prisma/client/runtime/library"
 
 interface categories {
     id: string;
@@ -44,11 +45,23 @@ interface categories {
     imageUrl: string;
 }
 
-interface ModalProductProps {
-    categories: categories[]
+interface Product {
+    id: string;
+    name: string;
+    slug: string;
+    description: string;
+    basePrice: Decimal;
+    imageUrls: string[];
+    categoryId: string;
+    discountPercentage: number;
 }
 
-export default function ModalAddProduct({ categories }: ModalProductProps) {
+interface ModalProductProps {
+    categories: categories[];
+    product: Product
+}
+
+export default function ModalEditProduct({ categories, product }: ModalProductProps) {
 
     const formSchema = z.object({
         categoryId: z.string().min(2, {
@@ -63,7 +76,7 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
         description: z.string().min(2, {
             message: "Por favor, preencha o campo descrição",
         }),
-        basePrice: z.coerce.number().min(1).max(100),
+        basePrice: z.coerce.number().min(1),
         discountPercentage: z.coerce.number().min(1).max(100),
         imageUrls: z.array(z.object({
             url: z.string().min(2, {
@@ -78,13 +91,13 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            categoryId: "",
-            name: "",
-            slug: "",
-            description: "",
-            basePrice: 0,
-            discountPercentage: 0,
-            imageUrls: [],
+            categoryId: product.categoryId ? product.categoryId : '',
+            name: product.name ? product.name : '',
+            slug: product.slug ? product.slug : '',
+            description: product.description ? product.description : '',
+            basePrice: product.basePrice ? Number(product.basePrice) : 0,
+            discountPercentage: product.discountPercentage ? Number(product.discountPercentage) : 0,
+            imageUrls: product.imageUrls ? product.imageUrls.map(img => ({ url: img })) : [],
         },
     })
 
@@ -94,7 +107,7 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const imagesStrings: string[] = values.imageUrls.map(img => img.url);
         try {
-            await createProduct({ ...values, imageUrls: imagesStrings });
+            await updateProduct({id: product.id, ...values, imageUrls: imagesStrings});
             form.reset();
             toast({
                 variant: 'success',
@@ -112,9 +125,9 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="uppercase font-bold flex items-center gap-2">
-                    <Plus size={16} />
-                    Produto
+                <Button variant='save' className='gap-2'>
+                    <Pencil size={16} />
+                    Editar
                 </Button>
             </DialogTrigger>
             <DialogContent>

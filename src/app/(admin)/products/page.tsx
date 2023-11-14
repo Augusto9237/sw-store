@@ -6,7 +6,7 @@ import { prismaClient } from "@/lib/prisma"
 import ModalAddProduct from "./components/modal-add-product"
 import ModalAddCategory from "./components/modal-add-category"
 import ButtonDelete from "./components/button-delete"
-import ButtonEdit from "./components/button-edit"
+import ModalEditProduct from "./components/modal-edit-product"
 
 export default async function Products() {
   const products = await prismaClient.product.findMany({
@@ -23,10 +23,11 @@ export default async function Products() {
         </div>
         <div className="grid grid-cols-6 gap-2 pr-5 items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
           {products.map(product => (
-            <div key={product.id}  className="relative p-2">
+            <div key={product.id} className="relative p-2">
               <div className="absolute flex flex-col gap-4 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
-                <ButtonDelete idProduct={product.id}/>
-                <ButtonEdit idProduct={product.id}/>
+                <ModalEditProduct categories={categories} product={product}/>
+                <ButtonDelete idProduct={product.id} />
+
               </div>
               <ProductItem product={computeProductTotalPrice(product)} />
             </div>
