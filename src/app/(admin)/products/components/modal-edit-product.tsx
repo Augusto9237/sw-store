@@ -76,8 +76,8 @@ export default function ModalEditProduct({ categories, product }: ModalProductPr
         description: z.string().min(2, {
             message: "Por favor, preencha o campo descrição",
         }),
-        basePrice: z.coerce.number().min(1),
-        discountPercentage: z.coerce.number().min(1).max(100),
+        basePrice: z.coerce.number().min(0),
+        discountPercentage: z.coerce.number().min(0),
         imageUrls: z.array(z.object({
             url: z.string().min(2, {
                 message: "Por favor, preencha o campo URL",
@@ -111,7 +111,7 @@ export default function ModalEditProduct({ categories, product }: ModalProductPr
             form.reset();
             toast({
                 variant: 'success',
-                title: "✅  Produto criado com sucesso!",
+                title: "✅  Produto editado com sucesso!",
             })
         } catch (error) {
             toast({
