@@ -54,6 +54,6 @@ export const deleteProduct = async (id: string) => {
             id: id,
         }
     });
-
+    
     return deletedProduct;
 }

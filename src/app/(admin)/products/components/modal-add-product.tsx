@@ -159,7 +159,7 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
                                 <FormItem>
                                     <FormLabel className="text-accent-foreground">Nome</FormLabel>
                                     <FormControl>
-                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome da categoria' {...field} />
+                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome do produto' {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -242,7 +242,7 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
                                         <Input
                                             type='url'
                                             className="placeholder:text-accent-foreground/50"
-                                            placeholder='Cole a url da imagem da categoria'
+                                            placeholder='Digite ou cole a url da imagem do produto'
                                             {...form.register(`imageUrls.${index}.url`)}
                                             {...field}
                                         />

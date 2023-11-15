@@ -24,11 +24,16 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Plus} from "lucide-react"
+import { Pencil, Plus} from "lucide-react"
 import { createCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
+import { Category } from "@prisma/client"
 
-export default function ModalAddCategory() {
+interface ModalEditCategoryProps {
+    category: Category
+}
+
+export default function ModalEditCategory({category}: ModalEditCategoryProps) {
     const formSchema = z.object({
         name: z.string().min(2, {
             message: "Por favor, preencha o campo nome",
@@ -45,9 +50,9 @@ export default function ModalAddCategory() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            slug: "",
-            imageUrl: "",
+            name: category.name? category.name : "",
+            slug: category.slug ? category.slug : "",
+            imageUrl: category.imageUrl ? category.imageUrl : "",
         },
     })
 
@@ -71,14 +76,13 @@ export default function ModalAddCategory() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="uppercase font-bold flex items-center gap-2">
-                    <Plus size={16} />
-                    Categoria
+                <Button variant='save' size='icon' className='gap-2'>
+                    <Pencil size={16} />
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle className="text-center">Adicionar Categoria</DialogTitle>
+                    <DialogTitle className="text-center">Editar Categoria</DialogTitle>
                 </DialogHeader>
 
                 <Form {...form}>
@@ -116,7 +120,7 @@ export default function ModalAddCategory() {
                                 <FormItem>
                                     <FormLabel className="text-accent-foreground">Imagem da categoria</FormLabel>
                                     <FormControl>
-                                        <Input type='url' className="placeholder:text-accent-foreground/50" placeholder='Digite ou cole a url da imagem da categoria' {...field} />
+                                        <Input type='url' className="placeholder:text-accent-foreground/50" placeholder='Cole a url da imagem da categoria' {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

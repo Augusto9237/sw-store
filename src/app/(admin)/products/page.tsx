@@ -7,6 +7,10 @@ import ModalAddProduct from "./components/modal-add-product"
 import ModalAddCategory from "./components/modal-add-category"
 import ButtonDelete from "./components/button-delete"
 import ModalEditProduct from "./components/modal-edit-product"
+import { Button } from "@/components/ui/button"
+import { Pencil, Trash2 } from "lucide-react"
+import ButtonDeleteCategory from "./components/button-delete-category"
+import ModalEditCategory from "./components/modal-edit-category"
 
 export default async function Products() {
   const products = await prismaClient.product.findMany({
@@ -25,9 +29,8 @@ export default async function Products() {
           {products.map(product => (
             <div key={product.id} className="relative p-2">
               <div className="absolute flex flex-col gap-4 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
-                <ModalEditProduct categories={categories} product={product}/>
+                <ModalEditProduct categories={categories} product={product} />
                 <ButtonDelete idProduct={product.id} />
-
               </div>
               <ProductItem product={computeProductTotalPrice(product)} />
             </div>
@@ -42,7 +45,16 @@ export default async function Products() {
           <ModalAddCategory />
         </div>
         <CardContent className='w-full p-0 gap-4 flex flex-col max-md:grid grid-cols-2 mt-8'>
-          {categories.map(category => <CategoryItem key={category.id} category={category} />)}
+          {categories.map(category => (
+            <div key={category.id} className="relative">
+              <div className="absolute flex items-center justify-end gap-2 px-4 rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
+                <ModalEditCategory category={category}/>
+
+                <ButtonDeleteCategory id={category.id}/>
+              </div>
+              <CategoryItem key={category.id} category={category} />
+            </div>
+          ))}
         </CardContent>
       </Card>
     </div>

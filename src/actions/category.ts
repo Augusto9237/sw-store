@@ -21,3 +21,13 @@ export const createCategory = async (
 
     return Category;
 };
+
+export const deleteCategory = async (id: string) => {
+    const deletedCategory = await prismaClient.category.delete({
+        where: {
+            id: id,
+        }
+    });
+
+    return deletedCategory;
+}

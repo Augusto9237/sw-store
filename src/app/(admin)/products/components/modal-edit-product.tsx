@@ -37,27 +37,10 @@ import { createCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { createProduct, updateProduct } from "@/actions/products"
 import { Decimal } from "@prisma/client/runtime/library"
-
-interface categories {
-    id: string;
-    name: string;
-    slug: string;
-    imageUrl: string;
-}
-
-interface Product {
-    id: string;
-    name: string;
-    slug: string;
-    description: string;
-    basePrice: Decimal;
-    imageUrls: string[];
-    categoryId: string;
-    discountPercentage: number;
-}
+import { Category, Product } from "@prisma/client"
 
 interface ModalProductProps {
-    categories: categories[];
+    categories: Category[];
     product: Product
 }
 
@@ -132,7 +115,7 @@ export default function ModalEditProduct({ categories, product }: ModalProductPr
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle className="text-center">Adicionar Produto</DialogTitle>
+                    <DialogTitle className="text-center">Editar Produto</DialogTitle>
                 </DialogHeader>
 
                 <Form {...form}>
