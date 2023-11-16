@@ -24,16 +24,25 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Pencil, Plus} from "lucide-react"
-import { createCategory } from "@/actions/category"
+import { Pencil, Plus } from "lucide-react"
+import { createCategory, updateCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { Category } from "@prisma/client"
+import { useEffect, useState } from "react"
 
 interface ModalEditCategoryProps {
     category: Category
 }
 
-export default function ModalEditCategory({category}: ModalEditCategoryProps) {
+export default function ModalEditCategory({ category }: ModalEditCategoryProps) {
+    const [formData, setFormData] = useState<Category>()
+    const [isOpen, setIsOpen] = useState(false)
+ 
+    useEffect(() => {
+        setFormData(category)
+    }, [category])
+
+
     const formSchema = z.object({
         name: z.string().min(2, {
             message: "Por favor, preencha o campo nome",
@@ -49,20 +58,24 @@ export default function ModalEditCategory({category}: ModalEditCategoryProps) {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            name: category.name? category.name : "",
-            slug: category.slug ? category.slug : "",
-            imageUrl: category.imageUrl ? category.imageUrl : "",
+        values: {
+            name: formData?.name!,
+            slug: formData?.slug!,
+            imageUrl: formData?.imageUrl!,
         },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            await createCategory(values);
+            await updateCategory({ id: category.id, ...values });
+
             form.reset();
+
+            setIsOpen(false)
+
             toast({
                 variant: 'success',
-                title: "✅  Categoria criada com sucesso!",
+                title: "✅  Categoria atualizada com sucesso!",
             })
         } catch (error) {
             toast({
@@ -70,73 +83,76 @@ export default function ModalEditCategory({category}: ModalEditCategoryProps) {
                 title: "⛔  Algo deu errado, tente novamente!",
             })
         }
-        
+
     }
-    
+
     return (
-        <Dialog>
+        <Dialog modal={isOpen}>
             <DialogTrigger asChild>
-                <Button variant='save' size='icon' className='gap-2'>
+                <Button variant='save' size='icon' className='gap-2' onClick={() => setIsOpen(true)}>
                     <Pencil size={16} />
                 </Button>
             </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle className="text-center">Editar Categoria</DialogTitle>
-                </DialogHeader>
 
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-accent-foreground">Nome</FormLabel>
-                                    <FormControl>
-                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome da categoria' {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="slug"
-                            render={({ field }) => (
-                                <FormItem >
-                                    <FormLabel className="text-accent-foreground">Slug</FormLabel>
-                                    <FormControl>
-                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o slug da categoria' {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="imageUrl"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-accent-foreground">Imagem da categoria</FormLabel>
-                                    <FormControl>
-                                        <Input type='url' className="placeholder:text-accent-foreground/50" placeholder='Cole a url da imagem da categoria' {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="flex w-full justify-center gap-5 ">
-                            <Button variant='save' className="uppercase font-semibold" type="submit">Salvar</Button>
+            {isOpen && (
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle className="text-center">Editar Categoria</DialogTitle>
+                    </DialogHeader>
 
-                            <DialogClose asChild>
-                                <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
-                            </DialogClose>
-                        </div>
-                    </form>
-                </Form>
-                
-            </DialogContent>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-accent-foreground">Nome</FormLabel>
+                                        <FormControl>
+                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome da categoria' {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="slug"
+                                render={({ field }) => (
+                                    <FormItem >
+                                        <FormLabel className="text-accent-foreground">Slug</FormLabel>
+                                        <FormControl>
+                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o slug da categoria' {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="imageUrl"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-accent-foreground">Imagem da categoria</FormLabel>
+                                        <FormControl>
+                                            <Input type='url' className="placeholder:text-accent-foreground/50" placeholder='Cole a url da imagem da categoria' {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="flex w-full justify-center gap-5 ">
+                                <Button variant='save' className="uppercase font-semibold" type="submit">Salvar</Button>
+
+                                <DialogClose asChild>
+                                    <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
+                                </DialogClose>
+                            </div>
+                        </form>
+                    </Form>
+
+                </DialogContent>
+            )}
         </Dialog>
 
     )

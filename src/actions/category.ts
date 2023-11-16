@@ -1,5 +1,6 @@
 "use server";
 import { prismaClient } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 interface CategoryProps {
     id?: string;
@@ -11,7 +12,7 @@ interface CategoryProps {
 export const createCategory = async (
     category: CategoryProps
 ) => {
-    const Category = await prismaClient.category.create({
+    await prismaClient.category.create({
         data: {
             name: category.name,
             slug: category.slug,
@@ -19,15 +20,32 @@ export const createCategory = async (
         },
     });
 
-    return Category;
+    return revalidatePath('/products');
+};
+
+export const updateCategory = async (
+    category: CategoryProps
+) => {
+    await prismaClient.category.update({
+        where: {
+            id: category.id
+        },
+        data: {
+            name: category.name,
+            slug: category.slug,
+            imageUrl: category.imageUrl
+        },
+    });
+
+    return revalidatePath('/products');
 };
 
 export const deleteCategory = async (id: string) => {
-    const deletedCategory = await prismaClient.category.delete({
+    await prismaClient.category.delete({
         where: {
             id: id,
         }
     });
 
-    return deletedCategory;
+    return revalidatePath('/products');
 }

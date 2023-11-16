@@ -1,6 +1,7 @@
 "use server";
 import { prismaClient } from "@/lib/prisma";
 import { Product } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 interface ProductProps {
     id?: string;
@@ -14,7 +15,7 @@ interface ProductProps {
 }
 
 export const createProduct = async (product: ProductProps) => {
-    const createdProduct = await prismaClient.product.create({
+    await prismaClient.product.create({
         data: {
             name: product.name,
             slug: product.slug,
@@ -26,11 +27,11 @@ export const createProduct = async (product: ProductProps) => {
         },
     });
 
-    return createdProduct;
+    return revalidatePath('/products');
 };
 
 export const updateProduct = async (product: ProductProps) => {
-    const updatedProduct = await prismaClient.product.update({
+    await prismaClient.product.update({
         where: {
             id: product.id,
         },
@@ -45,15 +46,15 @@ export const updateProduct = async (product: ProductProps) => {
         },
     });
 
-    return updatedProduct;
+    return revalidatePath('/products');
 };
 
 export const deleteProduct = async (id: string) => {
-    const deletedProduct = await prismaClient.product.delete({
+    await prismaClient.product.delete({
         where: {
             id: id,
         }
     });
-    
-    return deletedProduct;
+
+    return revalidatePath('/products');
 }
