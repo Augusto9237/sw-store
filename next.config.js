@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     domains: [
       "fsw-store.s3.sa-east-1.amazonaws.com",
-      "martinelloeletrodomesticos.fbitsstatic.net",
+      "ptpgchjrmufogcdszupk.supabase.co",
     ],
   },
   experimental: {
