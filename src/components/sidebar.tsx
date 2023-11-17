@@ -24,7 +24,7 @@ export default function Sidebar() {
                     Dashboard
                 </ActiveLink>
 
-                <ActiveLink href="/orders">
+                <ActiveLink href="/order">
                     <ShoppingCartIcon size={16}/>
                     Pedidos
                 </ActiveLink>

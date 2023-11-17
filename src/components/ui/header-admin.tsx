@@ -22,6 +22,7 @@ export default function HeaderAdmin() {
 
     const ROUTE_NAME = {
         dashboard: "Dashboard",
+        order: "Pedidos",
         products: "Produtos",
         users: "Usuários",
     }

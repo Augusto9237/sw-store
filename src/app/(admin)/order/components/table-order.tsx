@@ -14,6 +14,10 @@ import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Prisma } from "@prisma/client"
 import { useMemo } from "react";
+import ModalOrder from "./modal-order";
+import ModalEditOrder from "./modal-edit-order";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 interface Users {
     id: string;
     name: string | null;
@@ -43,9 +47,10 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
                     <TableHead>Cliente</TableHead>
                     <TableHead>Data</TableHead>
                     <TableHead>Método</TableHead>
-                    <TableHead>Itens</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Total</TableHead>
+                    <TableHead>Itens</TableHead>
+                    <TableHead className="text-center">Total</TableHead>
+                    <TableHead className="text-end"></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -66,9 +71,16 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
                             <TableCell>{user?.name}</TableCell>
                             <TableCell>{date}</TableCell>
                             <TableCell>Cartão de credito</TableCell>
-                            <TableCell>{}</TableCell>
                             <TableCell>{getOrderStatus(order.status)}</TableCell>
-                            <TableCell className="text-right font-bold">{formatReal(total)}</TableCell>
+                            <TableCell>{order.orderProducts.length} itens</TableCell>
+                            <TableCell className="text-center">{formatReal(total)}</TableCell>
+                            <TableCell className="flex justify-end gap-4 items-center">
+                                <ModalOrder />
+                                <ModalEditOrder />
+                                <Button variant='outline' size='icon'>
+                                    <Trash2 size={16} />
+                                </Button>
+                            </TableCell>
                         </TableRow>
                     )
                 })}
