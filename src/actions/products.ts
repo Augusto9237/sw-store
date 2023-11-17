@@ -1,6 +1,5 @@
 "use server";
 import { prismaClient } from "@/lib/prisma";
-import { Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 interface ProductProps {

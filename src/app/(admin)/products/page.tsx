@@ -9,15 +9,22 @@ import ButtonDelete from "./components/button-delete"
 import ModalEditProduct from "./components/modal-edit-product"
 import ButtonDeleteCategory from "./components/button-delete-category"
 import ModalEditCategory from "./components/modal-edit-category"
+import { revalidatePath } from "next/cache"
 
-const dynamic = 'force-dynamic'
-
-export default async function Products() {
+async function getData() {
   const products = await prismaClient.product.findMany({
     take: 18
   })
-
   const categories = await prismaClient.category.findMany()
+
+  revalidatePath('/products')
+
+
+  return { products, categories }
+}
+
+export default async function Products() {
+  const { products, categories } = await getData()
   return (
     <div className="flex flex-1  h-full gap-8 overflow-hidden">
       <div className='flex flex-col w-full h-full py-5 pl-5 bg-background rounded-lg'>
@@ -29,7 +36,7 @@ export default async function Products() {
           {products.map(product => (
             <div key={product.id} className="relative p-2">
               <div className="absolute flex flex-col gap-4 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
-                <ModalEditProduct categories={categories} product={{ ...product, basePrice: Number(product.basePrice)}} />
+                <ModalEditProduct categories={categories} product={{ ...product, basePrice: Number(product.basePrice) }} />
                 <ButtonDelete idProduct={product.id} />
               </div>
               <ProductItem product={computeProductTotalPrice(product)} />
@@ -48,9 +55,9 @@ export default async function Products() {
           {categories.map(category => (
             <div key={category.id} className="relative">
               <div className="absolute flex items-center justify-end gap-2 px-4 rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
-                <ModalEditCategory category={category}/>
+                <ModalEditCategory category={category} />
 
-                <ButtonDeleteCategory id={category.id}/>
+                <ButtonDeleteCategory id={category.id} />
               </div>
               <CategoryItem key={category.id} category={category} />
             </div>
