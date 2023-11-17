@@ -7,10 +7,10 @@ import ModalAddProduct from "./components/modal-add-product"
 import ModalAddCategory from "./components/modal-add-category"
 import ButtonDelete from "./components/button-delete"
 import ModalEditProduct from "./components/modal-edit-product"
-import { Button } from "@/components/ui/button"
-import { Pencil, Trash2 } from "lucide-react"
 import ButtonDeleteCategory from "./components/button-delete-category"
 import ModalEditCategory from "./components/modal-edit-category"
+
+const dynamic = 'force-dynamic'
 
 export default async function Products() {
   const products = await prismaClient.product.findMany({
