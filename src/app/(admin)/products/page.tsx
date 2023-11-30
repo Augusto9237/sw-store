@@ -26,7 +26,7 @@ async function getData() {
 export default async function Products() {
   const { products, categories } = await getData()
   return (
-    <div className="flex flex-1  h-full gap-8 overflow-hidden">
+    <div className="flex flex-1 max-md:flex-col-reverse  h-full gap-8 md:overflow-hidden max-md:overflow-y-auto">
       <div className='flex flex-col w-full h-full py-5 pl-5 bg-background rounded-lg'>
         <div className="flex w-full justify-between items-center pr-5">
           <h2 className='text-lg font-bold leading-none'>Produtos</h2>
@@ -46,7 +46,7 @@ export default async function Products() {
         </div>
       </div>
 
-      <Card className='p-5  md:max-w-[355px] w-full h-full min-h-fit max-md:min-h-[380px] overflow-hidden'>
+      <Card className='p-5 md:max-w-[355px] max-md:max-h-fit w-full h-full min-h-fit max-md:min-h-[300px] overflow-hidden'>
         <div className="flex w-full justify-between items-center">
           <h2 className='text-lg font-bold leading-none'>Categorias</h2>
           <ModalAddCategory />

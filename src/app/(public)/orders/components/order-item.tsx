@@ -65,9 +65,11 @@ export default function OrderItem({ order }: OrderItemProps) {
                                     <p className="opacity-75">Cartão</p>
                                 </div>
                             </div>
+                            
                             {order.orderProducts.map(orderProduct => (
                                 <OrderProductItem key={orderProduct.id} orderProduct={orderProduct} />
                             ))}
+
                             <div className="flex flex-col gap-3">
                                 <Separator />
 

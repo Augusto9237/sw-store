@@ -27,7 +27,7 @@ export default function OrderProductItem({ orderProduct }: OrderProductItemProps
             </div>
 
             <div className="flex flex-col gap-1 w-full">
-                <div className="bg-accent flex w-fit rounded-md px-3 py-1">
+                <div className="bg-accent flex w-fit rounded-md px-3">
                     <p>Vendido e entregue por SW Store</p>
                 </div>
                 <p className="text-xs">{orderProduct.product.name}</p>

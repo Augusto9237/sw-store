@@ -1,9 +1,6 @@
 import { prismaClient } from "@/lib/prisma"
 import TableOrder from "./components/table-order";
 
-
-
-
 async function getData() {
     const orders = await prismaClient.order.findMany({
         include: {

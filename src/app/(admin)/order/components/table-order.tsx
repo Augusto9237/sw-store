@@ -75,7 +75,7 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
                             <TableCell>{order.orderProducts.length} itens</TableCell>
                             <TableCell className="text-center">{formatReal(total)}</TableCell>
                             <TableCell className="flex justify-end gap-4 items-center">
-                                <ModalOrder />
+                                <ModalOrder order={order} />
                                 <ModalEditOrder />
                                 <Button variant='outline' size='icon'>
                                     <Trash2 size={16} />
