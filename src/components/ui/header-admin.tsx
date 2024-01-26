@@ -1,5 +1,5 @@
 'use client'
-import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
+import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from "./sheet";
@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
 import { ActiveLink } from "./active-link";
 import { usePathname } from "next/navigation";
+import { Input } from "./input";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
@@ -35,8 +36,8 @@ export default function HeaderAdmin() {
         await signOut();
     }
     return (
-        <Card className="px-8 py-6 w-full items-center flex rounded-none border-x-0" >
-            <div className="flex justify-between  items-center w-full">
+        <Card className="px-8 max-md:px-4 min-h-[74px] w-full items-center flex rounded-none border-x-0" >
+            <div className="flex justify-between  items-center w-full max-md:gap-4">
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">
                         <Button size='icon' variant='outline'>
@@ -97,7 +98,24 @@ export default function HeaderAdmin() {
 
                 </Sheet>
 
-                <h1 className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</h1>
+                {path.slice(1) !== 'dashboard' && (
+                    <div className="w-full flex-1">
+                        <form>
+                            <div className="relative">
+                                <SearchIcon className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                <Input
+                                    className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
+                                    placeholder="Pesquisar"
+                                    type="search"
+                                />
+                            </div>
+                        </form>
+                    </div>
+                )}
+
+                {path.slice(1) === 'dashboard' && (
+                    <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
+                )}
 
                 <div>
                     <BellIcon />
