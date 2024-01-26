@@ -50,7 +50,7 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
                     <TableHead>Status</TableHead>
                     <TableHead>Itens</TableHead>
                     <TableHead className="text-center">Total</TableHead>
-                    <TableHead className="text-end"></TableHead>
+                    <TableHead className="text-end">Ações</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -76,7 +76,7 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
                             <TableCell className="text-center">{formatReal(total)}</TableCell>
                             <TableCell className="flex justify-end gap-4 items-center">
                                 <ModalOrder order={order} />
-                                <ModalEditOrder />
+                                <ModalEditOrder order={order} />
                                 <Button variant='outline' size='icon'>
                                     <Trash2 size={16} />
                                 </Button>
