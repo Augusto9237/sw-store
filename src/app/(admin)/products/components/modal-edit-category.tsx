@@ -89,7 +89,7 @@ export default function ModalEditCategory({ category }: ModalEditCategoryProps) 
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild>
-                <Button variant='save' size='icon' onClick={() => setIsOpen(true)}>
+                <Button variant='save' size='icon' className="h-8 w-8" onClick={() => setIsOpen(true)}>
                     <Pencil size={16} />
                 </Button>
             </DialogTrigger>

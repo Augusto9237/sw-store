@@ -10,6 +10,8 @@ import ModalEditProduct from "./components/modal-edit-product"
 import ButtonDeleteCategory from "./components/button-delete-category"
 import ModalEditCategory from "./components/modal-edit-category"
 import { revalidatePath } from "next/cache"
+import { CATEGORY_ICON } from "@/constants/category-icon"
+import Link from "next/link"
 
 async function getData() {
   const products = await prismaClient.product.findMany({
@@ -53,13 +55,21 @@ export default async function Products() {
         </div>
         <CardContent className='w-full p-0 gap-4 flex flex-col max-md:grid grid-cols-2 mt-8'>
           {categories.map(category => (
-            <div key={category.id} className="relative">
-              <div className="absolute flex items-center justify-end gap-2 px-4 rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
+            <div key={category.id} className="flex border border-input bg-background hover:bg-accent/60 hover:text-accent-foreground w-full justify-between px-2 py-1 items-center gap-2 rounded-lg">
+              
+                <Link href={`/category/${category.slug}`} className="flex gap-2">
+                  {CATEGORY_ICON[category.slug as keyof typeof CATEGORY_ICON]}
+                  <span className="font-bold text-xs">
+                    {category.name}
+                  </span>
+                </Link>
+              
+
+              <div className="flex items-center gap-2">
                 <ModalEditCategory category={category} />
 
                 <ButtonDeleteCategory id={category.id} />
               </div>
-              <CategoryItem key={category.id} category={category} />
             </div>
           ))}
         </CardContent>

@@ -27,7 +27,7 @@ export default function ButtonDeleteCategory({ id }: ButtonDeleteProps) {
         }
     }
     return (
-        <Button variant='outline' size='icon' onClick={() => handleDelete(id)}>
+        <Button variant='outline' size='icon' className="h-9 w-9" onClick={() => handleDelete(id)}>
             <Trash2 size={16} />
         </Button>
     )
