@@ -2,6 +2,7 @@
 
 import { prismaClient } from "@/lib/prisma";
 import { CartProduct } from "@/providers/cart";
+import { revalidatePath } from "next/cache";
 
 export const createOrder = async (
     cartProducts: CartProduct[],
@@ -26,3 +27,22 @@ export const createOrder = async (
 
     return order;
 };
+
+export const deleteOrder = async (id: string) => {
+    await prismaClient.orderProduct.deleteMany({
+        where: {
+            orderId: id,
+        },
+    });
+
+    await prismaClient.order.delete({
+        where: {
+            id: id,
+        },
+        include: {
+            orderProducts: true,
+        },
+    });
+
+    return revalidatePath('/order');
+}

@@ -51,7 +51,7 @@ export default function ModalOrder({ order }: ModalOrderProps) {
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-                <Button variant='secondary' size='icon'>
+                <Button variant='secondary' size='icon' className="h-9 w-9">
                     <GanttChartSquare size={16} />
                 </Button>
             </DialogTrigger>

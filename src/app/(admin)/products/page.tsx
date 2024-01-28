@@ -1,4 +1,3 @@
-import CategoryItem from "@/app/(public)/(home)/components/category-item"
 import { Card, CardContent } from "@/components/ui/card"
 import ProductItem from "@/components/ui/product-item"
 import { computeProductTotalPrice } from "@/helpers/product"

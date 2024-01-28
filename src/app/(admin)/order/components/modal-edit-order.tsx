@@ -58,7 +58,7 @@ export default function ModalEditOrder({order}:ModalOrderProps) {
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-                <Button variant='save' size='icon'>
+                <Button variant='save' size='icon' className="h-8 w-8">
                     <Pencil size={16} />
                 </Button>
             </DialogTrigger>

@@ -1,5 +1,4 @@
 import { Card, CardContent } from '@/components/ui/card'
-import CardInfo from './components/card-invoicing-total'
 import { prismaClient } from '@/lib/prisma'
 import TableOrder from './components/table-order'
 import TopProductItem from './components/top-product-item'
