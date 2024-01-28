@@ -35,6 +35,14 @@ interface OrderItemProps {
 };
 
 export default function TableOrder({ orders, users }: OrderItemProps) {
+    const total = useMemo(() => {
+        return orders.reduce((acc, order) => {
+            return acc + order.orderProducts.reduce((orderAcc, orderProduct) => {
+                const productWithTotalPrice = computeProductTotalPrice(orderProduct.product);
+                return orderAcc + productWithTotalPrice.totalPrice * orderProduct.quantity;
+            }, 0);
+        }, 0);
+    }, [orders]);
 
     return (
         <Table>
@@ -51,13 +59,13 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
             <TableBody>
                 {orders.map(order => {
                     const user = users?.find(user => user.id === order.userId);
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
-                    const total = useMemo(() => {
-                        return order.orderProducts.reduce((acc, orderProduct) => {
-                            const productWithTotalPrice = computeProductTotalPrice(orderProduct.product)
-                            return acc + productWithTotalPrice.totalPrice * orderProduct.quantity;
-                        }, 0);
-                    }, [order.orderProducts]);
+                    // // eslint-disable-next-line react-hooks/rules-of-hooks
+                    // const total = useMemo(() => {
+                    //     return order.orderProducts.reduce((acc, orderProduct) => {
+                    //         const productWithTotalPrice = computeProductTotalPrice(orderProduct.product)
+                    //         return acc + productWithTotalPrice.totalPrice * orderProduct.quantity;
+                    //     }, 0);
+                    // }, [order.orderProducts]);
 
                     const date = format(new Date(order.createdAt), 'dd/MM/yyyy')
 
@@ -66,7 +74,7 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
                             <TableCell>{user?.name}</TableCell>
                             <TableCell>{date}</TableCell>
                             <TableCell>Cartão de credito</TableCell>
-                            <TableCell>{}</TableCell>
+                            <TableCell>{order.orderProducts.length}</TableCell>
                             <TableCell>{getOrderStatus(order.status)}</TableCell>
                             <TableCell className="text-right font-bold">{formatReal(total)}</TableCell>
                         </TableRow>
