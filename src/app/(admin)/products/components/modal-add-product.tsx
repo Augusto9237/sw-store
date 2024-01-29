@@ -32,8 +32,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { CATEGORY_ICON } from "@/constants/category-icon";
-import { Plus, X } from "lucide-react"
-import { createCategory } from "@/actions/category"
+import { Plus, X, Trash2} from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { createProduct } from "@/actions/products"
 
@@ -231,7 +230,9 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
                                 </FormLabel>
 
                                 {fields.length < 4 && (
-                                    <Button type='button' size='icon' variant='outline' onClick={() => append({ url: '' })}><Plus size={14} /></Button>
+                                    <Button type='button' size='icon' variant='outline' onClick={() => append({ url: '' })}>
+                                        <Plus size={14} />
+                                    </Button>
                                 )}
                             </div>
 
@@ -247,7 +248,7 @@ export default function ModalAddProduct({ categories }: ModalProductProps) {
                                             {...field}
                                         />
                                         <Button type="button" size='icon' variant='outline' onClick={() => remove(index)}>
-                                            <X size={14} />
+                                            <Trash2 size={16} />
                                         </Button>
                                     </div>
                                 )

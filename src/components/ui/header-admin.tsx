@@ -8,11 +8,6 @@ import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTrigger
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
-import Link from "next/link";
-import Cart from "./cart";
-import { Badge } from "./badge";
-import { useContext } from "react";
-import { CartContext } from "@/providers/cart";
 import { ActiveLink } from "./active-link";
 import { usePathname } from "next/navigation";
 import { Input } from "./input";
@@ -82,7 +77,7 @@ export default function HeaderAdmin() {
                                     Produtos
                                 </ActiveLink>
 
-                                <ActiveLink href="/products">
+                                <ActiveLink href="/users">
                                     <Users size={16} />
                                     Clientes
                                 </ActiveLink>

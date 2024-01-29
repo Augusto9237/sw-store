@@ -24,7 +24,6 @@ import {
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -32,11 +31,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { CATEGORY_ICON } from "@/constants/category-icon";
-import { Pencil, Plus, X } from "lucide-react"
-import { createCategory } from "@/actions/category"
+import { Pencil, Plus, Trash2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
-import { createProduct, updateProduct } from "@/actions/products"
-import { Decimal } from "@prisma/client/runtime/library"
+import { updateProduct } from "@/actions/products"
 import { Category } from "@prisma/client"
 import { useEffect, useState } from "react"
 
@@ -142,7 +139,7 @@ export default function ModalEditProduct({ categories, product }: ModalProductPr
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
                 <Button variant='save' className='gap-2' >
-                    <Pencil size={16}  />
+                    <Pencil size={16} />
                     Editar
                 </Button>
             </DialogTrigger>
@@ -278,7 +275,7 @@ export default function ModalEditProduct({ categories, product }: ModalProductPr
                                                 {...field}
                                             />
                                             <Button type="button" size='icon' variant='outline' onClick={() => remove(index)}>
-                                                <X size={14} />
+                                                <Trash2 size={16} />
                                             </Button>
                                         </div>
                                     )
