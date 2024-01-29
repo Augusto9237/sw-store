@@ -4,6 +4,10 @@ import { computeProductTotalPrice } from "@/helpers/product";
 import { Prisma } from "@prisma/client"
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
+import { ModalOrderProps } from "./modal-edit-order";
+import { toast } from "@/components/ui/use-toast";
+
 
 interface OrderProductItemProps {
     orderProduct: Prisma.OrderProductGetPayload<{
@@ -11,9 +15,71 @@ interface OrderProductItemProps {
             product: true;
         }
     }>
+    setOrderSelected: Dispatch<SetStateAction<ModalOrderProps['order']>>;
+    quantityItems: number
 }
-export default function OrderProductItemEdit({ orderProduct }: OrderProductItemProps) {
-    const productWithTotalPrice = computeProductTotalPrice(orderProduct.product)
+export default function OrderProductItemEdit({ orderProduct, setOrderSelected, quantityItems }: OrderProductItemProps) {
+    const productWithTotalPrice = computeProductTotalPrice(orderProduct.product);
+
+
+    function handleIncrementQuantity() {
+        setOrderSelected(prev => {
+            const orderProducts = prev.orderProducts.map(orderProduct => {
+                if (orderProduct.id === orderProduct.id) {
+                    return {
+                        ...orderProduct,
+                        quantity: orderProduct.quantity + 1
+                    }
+                }
+
+                return orderProduct;
+            })
+
+            return {
+                ...prev,
+                orderProducts
+            }
+        })
+    }
+
+    function handleDecrementQuantity() {
+        setOrderSelected(prev => {
+            const orderProducts = prev.orderProducts.map(orderProduct => {
+                if (orderProduct.id === orderProduct.id) {
+                    return {
+                        ...orderProduct,
+                        quantity: orderProduct.quantity - 1
+                    }
+                }
+
+                return orderProduct;
+            })
+
+            return {
+                ...prev,
+                orderProducts
+            }
+        })
+    }
+
+    function handleRemoveProduct() {
+        if (quantityItems <= 1) {
+            toast({
+                variant: 'cancel',
+                title: "⛔  Exite apenas este item no pedido, exlcua o pedido",
+            })
+            return null
+        };
+
+        setOrderSelected(prev => {
+            const orderProducts = prev.orderProducts.filter(orderProduct => orderProduct.id !== orderProduct.id)
+
+            return {
+                ...prev,
+                orderProducts
+            }
+        })
+    }
 
     return (
         <div className="flex items-center gap-4 relative">
@@ -48,18 +114,20 @@ export default function OrderProductItemEdit({ orderProduct }: OrderProductItemP
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <Button size="icon" variant='outline' className="w-8 h-8">
+                        <Button size="icon"
+                            variant='outline' className="w-8 h-8"
+                            onClick={() => orderProduct.quantity <= 1 ? handleRemoveProduct() : handleDecrementQuantity()}>
                             <ArrowLeftIcon size={14} />
                         </Button>
 
                         <span className="text-xs">{orderProduct.quantity}</span>
 
-                        <Button size="icon" variant='outline' className="w-8 h-8">
+                        <Button size="icon" variant='outline' className="w-8 h-8" onClick={() => handleIncrementQuantity()}>
                             <ArrowRightIcon size={16} />
                         </Button>
                     </div>
 
-                    <div className="absolute top-0 right-0">
+                    <div className="absolute top-0 right-0" onClick={() => handleRemoveProduct()}>
                         <Button size="icon" variant="ghost" className="w-8 h-8 text-red-500 hover:text-red-500">
                             <TrashIcon size={16} />
                         </Button>

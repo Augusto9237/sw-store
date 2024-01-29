@@ -17,7 +17,7 @@ import { GanttChartSquare, Pencil } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import OrderProductItemEdit from "./order-product-item-edit";
 
-interface ModalOrderProps {
+export interface ModalOrderProps {
     order: Prisma.OrderGetPayload<{
         include: {
             orderProducts: {
@@ -29,15 +29,15 @@ interface ModalOrderProps {
     }>
 }
 
-export default function ModalEditOrder({order}:ModalOrderProps) {
+export default function ModalEditOrder({ order }: ModalOrderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [orderSelected, setOrderSelected] = useState<ModalOrderProps['order']>(null!);
 
     useEffect(() => {
         setOrderSelected(order)
     }, [order, isOpen])
-    
-    
+
+
     const subtotal = useMemo(() => {
         if (!orderSelected?.orderProducts) return 0;
 
@@ -89,7 +89,11 @@ export default function ModalEditOrder({order}:ModalOrderProps) {
 
                         <div>
                             {orderSelected.orderProducts.map(orderProduct => (
-                                <OrderProductItemEdit key={orderProduct.id} orderProduct={orderProduct} />
+                                <OrderProductItemEdit
+                                    key={orderProduct.id}
+                                    orderProduct={orderProduct}
+                                    setOrderSelected={setOrderSelected}
+                                    quantityItems={orderSelected.orderProducts.length} />
                             ))}
                         </div>
 
