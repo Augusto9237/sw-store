@@ -16,23 +16,23 @@ interface OrderProductItemProps {
         }
     }>
     setOrderSelected: Dispatch<SetStateAction<ModalOrderProps['order']>>;
-    quantityItems: number
+    quantityItems: number;
 }
-export default function OrderProductItemEdit({ orderProduct, setOrderSelected, quantityItems }: OrderProductItemProps) {
+export default function OrderProductItemEdit({ orderProduct, setOrderSelected, quantityItems}: OrderProductItemProps) {
     const productWithTotalPrice = computeProductTotalPrice(orderProduct.product);
 
 
     function handleIncrementQuantity() {
         setOrderSelected(prev => {
-            const orderProducts = prev.orderProducts.map(orderProduct => {
-                if (orderProduct.id === orderProduct.id) {
+            const orderProducts = prev.orderProducts.map(product => {
+                if (product.id === orderProduct.id) {
                     return {
-                        ...orderProduct,
-                        quantity: orderProduct.quantity + 1
+                        ...product,
+                        quantity: product.quantity + 1
                     }
                 }
 
-                return orderProduct;
+                return product;
             })
 
             return {
@@ -44,15 +44,15 @@ export default function OrderProductItemEdit({ orderProduct, setOrderSelected, q
 
     function handleDecrementQuantity() {
         setOrderSelected(prev => {
-            const orderProducts = prev.orderProducts.map(orderProduct => {
-                if (orderProduct.id === orderProduct.id) {
+            const orderProducts = prev.orderProducts.map(product => {
+                if (product.id === orderProduct.id) {
                     return {
-                        ...orderProduct,
-                        quantity: orderProduct.quantity - 1
+                        ...product,
+                        quantity: product.quantity - 1
                     }
                 }
 
-                return orderProduct;
+                return product;
             })
 
             return {
@@ -72,7 +72,7 @@ export default function OrderProductItemEdit({ orderProduct, setOrderSelected, q
         };
 
         setOrderSelected(prev => {
-            const orderProducts = prev.orderProducts.filter(orderProduct => orderProduct.id !== orderProduct.id)
+            const orderProducts = prev.orderProducts.filter(product => product.id !== orderProduct.id)
 
             return {
                 ...prev,

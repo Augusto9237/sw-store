@@ -55,6 +55,7 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
     }, [orderSelected?.orderProducts]);
 
     const totalDiscounts = subtotal - total
+    
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
@@ -88,12 +89,13 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
                         </div>
 
                         <div>
-                            {orderSelected.orderProducts.map(orderProduct => (
+                            {orderSelected.orderProducts.map((orderProduct)=> (
                                 <OrderProductItemEdit
                                     key={orderProduct.id}
                                     orderProduct={orderProduct}
                                     setOrderSelected={setOrderSelected}
-                                    quantityItems={orderSelected.orderProducts.length} />
+                                    quantityItems={orderSelected.orderProducts.length} 
+                                    />
                             ))}
                         </div>
 
