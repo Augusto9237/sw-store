@@ -18,7 +18,7 @@ export default function Sidebar() {
                 </h1>
             </CardHeader>
 
-            <CardContent className="w-full flex-1 px-0 pt-8 flex flex-col gap-8 ">
+            <CardContent className="w-full flex-1 px-0 pt-6 flex flex-col gap-6 ">
                 <ActiveLink href="/dashboard">
                     <LucideLayoutDashboard size={16} />
                     Dashboard
