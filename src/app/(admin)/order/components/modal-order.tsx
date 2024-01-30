@@ -1,5 +1,4 @@
 'use client'
-import OrderProductItem from "@/app/(public)/orders/components/order-product-item";
 import { getOrderStatus } from "@/app/(public)/orders/helpers/status";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,10 +12,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
-import { Order, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { format } from "date-fns";
 import { GanttChartSquare } from "lucide-react";
 import { useMemo, useState } from "react";
+import OrderProductItemEdit from "./order-product-item-edit";
 
 interface ModalOrderProps {
     order: Prisma.OrderGetPayload<{
@@ -80,9 +80,15 @@ export default function ModalOrder({ order }: ModalOrderProps) {
                             </div>
                         </div>
 
-                        <div>
+                        <div className="flex flex-col gap-2">
                             {order.orderProducts.map(orderProduct => (
-                                <OrderProductItem key={orderProduct.id} orderProduct={orderProduct} />
+                                <OrderProductItemEdit
+                                    key={orderProduct.id}
+                                    edit={false}
+                                    orderProduct={orderProduct}
+                                    quantityItems={order.orderProducts.length}
+
+                                />
                             ))}
                         </div>
 

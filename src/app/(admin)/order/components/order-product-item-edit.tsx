@@ -15,15 +15,16 @@ interface OrderProductItemProps {
             product: true;
         }
     }>
-    setOrderSelected: Dispatch<SetStateAction<ModalOrderProps['order']>>;
+    setOrderSelected?: Dispatch<SetStateAction<ModalOrderProps['order']>>;
     quantityItems: number;
+    edit: boolean;
 }
-export default function OrderProductItemEdit({ orderProduct, setOrderSelected, quantityItems}: OrderProductItemProps) {
+export default function OrderProductItemEdit({ orderProduct, setOrderSelected, quantityItems, edit }: OrderProductItemProps) {
     const productWithTotalPrice = computeProductTotalPrice(orderProduct.product);
 
 
     function handleIncrementQuantity() {
-        setOrderSelected(prev => {
+        setOrderSelected!(prev => {
             const orderProducts = prev.orderProducts.map(product => {
                 if (product.id === orderProduct.id) {
                     return {
@@ -43,7 +44,7 @@ export default function OrderProductItemEdit({ orderProduct, setOrderSelected, q
     }
 
     function handleDecrementQuantity() {
-        setOrderSelected(prev => {
+        setOrderSelected!(prev => {
             const orderProducts = prev.orderProducts.map(product => {
                 if (product.id === orderProduct.id) {
                     return {
@@ -71,7 +72,7 @@ export default function OrderProductItemEdit({ orderProduct, setOrderSelected, q
             return null
         };
 
-        setOrderSelected(prev => {
+        setOrderSelected!(prev => {
             const orderProducts = prev.orderProducts.filter(product => product.id !== orderProduct.id)
 
             return {
@@ -114,24 +115,30 @@ export default function OrderProductItemEdit({ orderProduct, setOrderSelected, q
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <Button size="icon"
-                            variant='outline' className="w-8 h-8"
-                            onClick={() => orderProduct.quantity <= 1 ? handleRemoveProduct() : handleDecrementQuantity()}>
-                            <ArrowLeftIcon size={14} />
-                        </Button>
+                        {edit === true && (
+                            <Button size="icon"
+                                variant='outline' className="w-8 h-8"
+                                onClick={() => orderProduct.quantity <= 1 ? handleRemoveProduct() : handleDecrementQuantity()}>
+                                <ArrowLeftIcon size={14} />
+                            </Button>
+                        )}
 
                         <span className="text-xs">{orderProduct.quantity}</span>
 
-                        <Button size="icon" variant='outline' className="w-8 h-8" onClick={() => handleIncrementQuantity()}>
-                            <ArrowRightIcon size={16} />
-                        </Button>
+                        {edit === true && (
+                            <Button size="icon" variant='outline' className="w-8 h-8" onClick={() => handleIncrementQuantity()}>
+                                <ArrowRightIcon size={16} />
+                            </Button>
+                        )}
                     </div>
 
-                    <div className="absolute top-0 right-0" onClick={() => handleRemoveProduct()}>
-                        <Button size="icon" variant="ghost" className="w-8 h-8 text-red-500 hover:text-red-500">
-                            <TrashIcon size={16} />
-                        </Button>
-                    </div>
+                    {edit === true && (
+                        <div className="absolute top-0 right-0" >
+                            <Button size="icon" variant="ghost" className="w-8 h-8 text-red-500 hover:text-red-500" onClick={() => handleRemoveProduct()}>
+                                <TrashIcon size={16} />
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

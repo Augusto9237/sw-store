@@ -89,9 +89,10 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
                             </div>
                         </div>
 
-                        <div>
+                        <div className="flex flex-col gap-2">
                             {orderSelected.orderProducts.map((orderProduct) => (
                                 <OrderProductItemEdit
+                                    edit
                                     key={orderProduct.id}
                                     orderProduct={orderProduct}
                                     setOrderSelected={setOrderSelected}
