@@ -67,7 +67,7 @@ export default function HeaderAdmin() {
                                     Dashboard
                                 </ActiveLink>
 
-                                <ActiveLink href="/orders">
+                                <ActiveLink href="/order">
                                     <ShoppingCartIcon size={16} />
                                     Pedidos
                                 </ActiveLink>

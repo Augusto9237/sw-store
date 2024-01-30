@@ -3,6 +3,7 @@ import { getOrderStatus } from "@/app/(public)/orders/helpers/status";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogHeader,
     DialogTitle,
@@ -55,7 +56,7 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
     }, [orderSelected?.orderProducts]);
 
     const totalDiscounts = subtotal - total
-    
+
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
@@ -89,13 +90,13 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
                         </div>
 
                         <div>
-                            {orderSelected.orderProducts.map((orderProduct)=> (
+                            {orderSelected.orderProducts.map((orderProduct) => (
                                 <OrderProductItemEdit
                                     key={orderProduct.id}
                                     orderProduct={orderProduct}
                                     setOrderSelected={setOrderSelected}
-                                    quantityItems={orderSelected.orderProducts.length} 
-                                    />
+                                    quantityItems={orderSelected.orderProducts.length}
+                                />
                             ))}
                         </div>
 
@@ -129,6 +130,14 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
                             </div>
                         </div>
 
+                    </div>
+                    <div className="flex w-full justify-center gap-5 ">
+                        <Button variant='save' className="uppercase font-semibold" type="button">Salvar</Button>
+
+
+                        <DialogClose asChild>
+                            <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
+                        </DialogClose>
                     </div>
                 </DialogContent>
             )}
