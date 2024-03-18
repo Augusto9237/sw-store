@@ -119,7 +119,7 @@ export default function Header() {
 
                 <Link href="/">
                     <h1 className="font-semibold text-lg md:text-2xl">
-                        <span className="text-primary">SW</span> Store
+                        <span className="text-primary">AUTO</span> Tech
                     </h1>
                 </Link>
 

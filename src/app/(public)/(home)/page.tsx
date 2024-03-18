@@ -3,6 +3,7 @@ import { prismaClient } from "@/lib/prisma";
 import PromoBanner from "./components/promo-banner";
 import SectionTitle from "@/components/ui/section-title";
 import ProductList from "@/components/ui/product-list";
+import CarouselPromo from "@/components/CarouselPromo";
 
 export default async function Home() {
   const deals = await prismaClient.product.findMany({
@@ -31,10 +32,14 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-8 md:gap-10 py-8">
-      <PromoBanner
+      {/* <PromoBanner
         src="/Banner-home-01.png"
         alt="Desconto esse mês"
-      />
+      /> */}
+       <section className="flex flex-1 w-full h-full justify-center">
+        <CarouselPromo />
+       </section>
+      
 
       <div className="px-5 md:px-0 max-w-[1248px] w-full mx-auto">
         <Categories />
