@@ -13,9 +13,9 @@ export default function Sidebar() {
     return (
         <Card className="w-64 rounded-none px-0 max-md:hidden">
             <CardHeader className="pl-10">
-                <h1 className="font-semibold text-lg md:text-2xl">
-                    <span className="text-primary">SW</span> Store
-                </h1>
+                <Link href="/dashboard" className="font-semibold text-lg md:text-2xl">
+                    <span className="text-primary">Auto</span> Tech
+                </Link>
             </CardHeader>
 
             <CardContent className="w-full flex-1 px-0 pt-6 flex flex-col gap-6 ">

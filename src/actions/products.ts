@@ -1,6 +1,7 @@
 "use server";
 import { prismaClient } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { cookies } from 'next/headers'
 
 interface ProductProps {
     id?: string;
@@ -11,6 +12,27 @@ interface ProductProps {
     imageUrls: string[];
     basePrice: number;
     discountPercentage?: number;
+}
+
+
+export async function getData(take?: number) {
+    const cookie = cookies()
+    const productName = cookie.get('products')
+
+    const products = await prismaClient.product.findMany({
+        // take: take ? take : 18,
+        where: {
+            name: {
+                contains: productName?.value !== '' ? productName?.value : undefined,
+                mode: 'insensitive'
+            }
+        }
+    })
+    const categories = await prismaClient.category.findMany()
+
+    revalidatePath('/products')
+
+    return { products, categories }
 }
 
 export const createProduct = async (product: ProductProps) => {

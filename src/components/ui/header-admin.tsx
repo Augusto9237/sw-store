@@ -1,4 +1,5 @@
 'use client'
+import { FormEvent, useEffect, useState } from "react";
 import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
@@ -11,10 +12,50 @@ import { Separator } from "./separator";
 import { ActiveLink } from "./active-link";
 import { usePathname } from "next/navigation";
 import { Input } from "./input";
+import { useCookies } from 'react-cookie';
+import { getData } from "@/actions/products";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
-    const path = usePathname()
+    const [search, setSearch] = useState("");
+    const [cookies, setCookie] = useCookies(['products', 'orders', 'users']);
+    const path = usePathname();
+
+    useEffect(() => {
+        setSearch('')
+        if (path.slice(1) !== 'products') {
+            setCookie('products', '');
+            getData()
+        }
+        if (path.slice(1) !== 'order') {
+            setCookie('orders', '');
+        }
+        if (path.slice(1) !== 'users') {
+            setCookie('users', '');
+        }
+        
+    }, [path,])
+
+ 
+
+    function handleSearchSubmit(e: FormEvent) {
+        e.preventDefault();
+
+        if (path.slice(1) === 'products') {
+            setCookie('products', search);
+            getData()
+        }
+
+        if (path.slice(1) === 'order') {
+            setCookie('orders', search);
+        }
+
+        if (path.slice(1) === 'users') {
+            setCookie('users', search);
+        }
+    }
+
+
 
     const ROUTE_NAME = {
         dashboard: "Dashboard",
@@ -95,13 +136,15 @@ export default function HeaderAdmin() {
 
                 {path.slice(1) !== 'dashboard' && (
                     <div className="w-full flex-1">
-                        <form>
+                        <form onSubmit={handleSearchSubmit}>
                             <div className="relative">
                                 <SearchIcon className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
                                 <Input
                                     className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
-                                    placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'order' && 'pedidos'|| path.slice(1) === 'users' && 'usuários'}`}
+                                    placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'order' && 'pedidos' || path.slice(1) === 'users' && 'usuários'}`}
                                     type="search"
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    value={search}
                                 />
                             </div>
                         </form>
