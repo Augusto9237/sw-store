@@ -9,6 +9,7 @@ import CartProvider from '@/providers/cart'
 import { Toaster } from "@/components/ui/toaster"
 import HeaderAdmin from '@/components/ui/header-admin'
 import Sidebar from '@/components/sidebar'
+import AdminProvider from '@/providers/admin'
 
 const maven = Maven_Pro({
   weight: ['400', '600', '900'],
@@ -30,16 +31,18 @@ export default function RootLayout({
       <body className={maven.className}>
         <div className='flex h-full flex-col'>
           <AuthProvider>
-            <div className="flex h-full w-full">
-              <Sidebar />
-              <div className='flex flex-col w-full h-full min-h-full bg-accent'>
-                <HeaderAdmin />
-                <main className='flex flex-1 w-full items-center p-8 overflow-hidden max-md:p-4 max-md:overflow-y-auto'>
-                  {children}
-                </main>
+            <AdminProvider>
+              <div className="flex h-full w-full">
+                <Sidebar />
+                <div className='flex flex-col w-full h-full min-h-full bg-accent'>
+                  <HeaderAdmin />
+                  <main className='flex flex-1 w-full items-center p-8 overflow-hidden max-md:p-4 max-md:overflow-y-auto'>
+                    {children}
+                  </main>
+                </div>
               </div>
-            </div>
-            <Toaster />
+              <Toaster />
+            </AdminProvider>
           </AuthProvider>
         </div>
       </body>

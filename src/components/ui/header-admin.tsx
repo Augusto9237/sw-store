@@ -1,5 +1,5 @@
 'use client'
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
@@ -14,44 +14,41 @@ import { usePathname } from "next/navigation";
 import { Input } from "./input";
 import { useCookies } from 'react-cookie';
 import { getData } from "@/actions/products";
+import { AdminContext } from "@/providers/admin";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
+    const { setProducts } = useContext(AdminContext)
     const [search, setSearch] = useState("");
-    const [cookies, setCookie] = useCookies(['products', 'orders', 'users']);
     const path = usePathname();
+
+    async function resetData() {
+        const { products } = await getData()
+        setProducts(products)
+    }
 
     useEffect(() => {
         setSearch('')
-        if (path.slice(1) !== 'products') {
-            setCookie('products', '');
-            getData()
-        }
-        if (path.slice(1) !== 'order') {
-            setCookie('orders', '');
-        }
-        if (path.slice(1) !== 'users') {
-            setCookie('users', '');
-        }
-        
+        resetData()
+
     }, [path,])
 
- 
 
-    function handleSearchSubmit(e: FormEvent) {
+
+    async function handleSearchSubmit(e: FormEvent) {
         e.preventDefault();
 
         if (path.slice(1) === 'products') {
-            setCookie('products', search);
-            getData()
+            const { products } = await getData(search)
+            setProducts(products);
         }
 
         if (path.slice(1) === 'order') {
-            setCookie('orders', search);
+         console.log('test')
         }
 
         if (path.slice(1) === 'users') {
-            setCookie('users', search);
+            console.log('test')
         }
     }
 

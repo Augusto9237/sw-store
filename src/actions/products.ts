@@ -15,15 +15,12 @@ interface ProductProps {
 }
 
 
-export async function getData(take?: number) {
-    const cookie = cookies()
-    const productName = cookie.get('products')
-
+export async function getData(name?: string, take?: number) {
     const products = await prismaClient.product.findMany({
-        // take: take ? take : 18,
+        take: take ? take : 18,
         where: {
             name: {
-                contains: productName?.value !== '' ? productName?.value : undefined,
+                contains: name,
                 mode: 'insensitive'
             }
         }
