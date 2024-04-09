@@ -13,14 +13,9 @@ import {
 import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Prisma } from "@prisma/client"
-import { useMemo } from "react";
-interface Users {
-    id: string;
-    name: string | null;
-    email: string | null;
-    emailVerified: Date | null;
-    image: string | null;
-}[]
+import { useContext, useMemo } from "react";
+import { AdminContext } from "@/providers/admin";
+
 interface OrderItemProps {
     orders: Prisma.OrderGetPayload<{
         include: {
@@ -31,10 +26,10 @@ interface OrderItemProps {
             }
         }
     }>[];
-    users: Users[]
 };
 
-export default function TableOrder({ orders, users }: OrderItemProps) {
+export default function TableOrder({ orders }: OrderItemProps) {
+    const {users} = useContext(AdminContext)
     const total = useMemo(() => {
         return orders.reduce((acc, order) => {
             return acc + order.orderProducts.reduce((orderAcc, orderProduct) => {

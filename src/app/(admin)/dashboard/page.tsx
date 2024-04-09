@@ -46,7 +46,7 @@ export default async function DashboardPage() {
 
         <div className='flex flex-1 flex-col p-5 bg-background rounded-lg'>
           <h2 className='text-lg font-bold'>Ultimos Pedidos</h2>
-          <TableOrder orders={orders} users={users} />
+          <TableOrder orders={orders} />
         </div>
       </div>
     </div>
