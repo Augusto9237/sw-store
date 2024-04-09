@@ -35,19 +35,11 @@ import { CATEGORY_ICON } from "@/constants/category-icon";
 import { Plus, X, Trash2} from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { createProduct } from "@/actions/products"
+import { AdminContext } from "@/providers/admin"
+import { useContext } from "react"
 
-interface categories {
-    id: string;
-    name: string;
-    slug: string;
-    imageUrl: string;
-}
-
-interface ModalProductProps {
-    categories: categories[]
-}
-
-export default function ModalAddProduct({ categories }: ModalProductProps) {
+export default function ModalAddProduct() {
+    const { categories } = useContext(AdminContext)
 
     const formSchema = z.object({
         categoryId: z.string().min(2, {
