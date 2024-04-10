@@ -1,8 +1,11 @@
+"use client"
 import { Card } from '@/components/ui/card'
 import { formatReal } from '@/helpers/formatReal';
 import { computeProductTotalPrice } from '@/helpers/product';
+import { AdminContext } from '@/providers/admin';
 import { Prisma } from '@prisma/client';
 import { CircleDollarSign, PackageSearch } from 'lucide-react'
+import { useContext } from 'react';
 
 interface CardTotalProps {
     orders: Prisma.OrderGetPayload<{
@@ -16,7 +19,9 @@ interface CardTotalProps {
     }>[];
 }
 
-export default function CardInvoicingTotal({ orders }: CardTotalProps) {
+export default function CardInvoicingTotal() {
+    const { orders } = useContext(AdminContext)
+    
     function somarNumeroDeOrderProducts(orders: CardTotalProps['orders']) {
         let soma = 0;
         for (const obj of orders) {

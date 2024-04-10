@@ -1,5 +1,4 @@
 'use client'
-
 import { getOrderStatus } from "@/app/(public)/orders/helpers/status";
 import { format } from 'date-fns'
 import {
@@ -12,24 +11,12 @@ import {
 } from "@/components/ui/table"
 import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
-import { Prisma } from "@prisma/client"
 import { useContext, useMemo } from "react";
 import { AdminContext } from "@/providers/admin";
 
-interface OrderItemProps {
-    orders: Prisma.OrderGetPayload<{
-        include: {
-            orderProducts: {
-                include: {
-                    product: true;
-                }
-            }
-        }
-    }>[];
-};
 
-export default function TableOrder({ orders }: OrderItemProps) {
-    const {users} = useContext(AdminContext)
+export default function TableOrder() {
+    const {users, orders} = useContext(AdminContext)
     const total = useMemo(() => {
         return orders.reduce((acc, order) => {
             return acc + order.orderProducts.reduce((orderAcc, orderProduct) => {

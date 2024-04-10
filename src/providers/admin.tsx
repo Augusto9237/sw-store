@@ -1,14 +1,24 @@
 'use client'
+import { getOrders } from "@/actions/order";
 import { getData } from "@/actions/products";
 import { getUsers } from "@/actions/users";
-import { Category, Product, User } from "@prisma/client";
+import { Category, Order, Prisma, Product, User } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
-import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, use, useEffect, useState } from "react";
 
 interface ICartContext {
     products: Product[];
     categories: Category[];
     users: User[];
+    orders: Prisma.OrderGetPayload<{
+        include: {
+            orderProducts: {
+                include: {
+                    product: true;
+                }
+            }
+        }
+    }>[];
     setProducts: Dispatch<SetStateAction<{
         id: string;
         name: string;
@@ -26,19 +36,24 @@ export const AdminContext = createContext<ICartContext>({
     categories: [],
     setProducts: () => { },
     users: [],
+    orders: [],
 });
 
 const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([])
     const [categories, setCategories] = useState<Category[]>([])
-    const [users, setUsers] = useState<User[]>([])
+    const [users, setUsers] = useState<User[]>([]);
+    const [orders, setOrders] = useState<ICartContext['orders']>([])
 
     async function loadMoreData() {
         const { categories, products } = await getData()
         const { users } = await getUsers()
+        const { orders } = await getOrders()
+
         setProducts(products)
         setCategories(categories)
         setUsers(users)
+        setOrders(orders)
     }
 
     useEffect(() => {
@@ -46,7 +61,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, users, setProducts }}>
+        <AdminContext.Provider value={{ products, categories, users, orders, setProducts }}>
             {children}
         </AdminContext.Provider>
     )

@@ -8,29 +8,16 @@ import CardTotalUsers from './components/card-total-users'
 
 export default async function DashboardPage() {
 
-  const orders = await prismaClient.order.findMany({
-    include: {
-      orderProducts: {
-        include: {
-          product: true
-        }
-      }
-    }
-  })
-
   const topProducts = await prismaClient.product.findMany({
     take: 8
   })
 
-  const users = await prismaClient.user.findMany();
-
- 
   return (
     <div className='flex flex-1 flex-col h-full gap-8'>
       <div className='grid grid-cols-4 gap-8 max-md:gap-4 w-full'>
-        <CardTotalOrders countOrders={orders.length} />
-        <CardInvoicingTotal orders={orders} />
-        <CardTotalUsers countUsers={users.length}/>
+        <CardTotalOrders />
+        <CardInvoicingTotal/>
+        <CardTotalUsers/>
       </div>
 
       <div className='flex max-md:flex-col  h-full gap-8'>
@@ -46,7 +33,7 @@ export default async function DashboardPage() {
 
         <div className='flex flex-1 flex-col p-5 bg-background rounded-lg'>
           <h2 className='text-lg font-bold'>Ultimos Pedidos</h2>
-          <TableOrder orders={orders} />
+          <TableOrder />
         </div>
       </div>
     </div>

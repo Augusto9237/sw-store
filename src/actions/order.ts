@@ -3,6 +3,21 @@ import { prismaClient } from "@/lib/prisma";
 import { CartProduct } from "@/providers/cart";
 import { revalidatePath } from "next/cache";
 
+
+export const getOrders = async () => {
+    const orders = await prismaClient.order.findMany({
+        include: {
+            orderProducts: {
+                include: {
+                    product: true
+                }
+            }
+        }
+    })
+
+    return { orders }
+}
+
 export const createOrder = async (
     cartProducts: CartProduct[],
     userId: string,
