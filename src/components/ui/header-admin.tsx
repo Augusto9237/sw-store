@@ -18,8 +18,7 @@ import { AdminContext } from "@/providers/admin";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
-    const { setProducts } = useContext(AdminContext)
-    const [search, setSearch] = useState("");
+    const { setProducts, search, setSearch } = useContext(AdminContext)
     const path = usePathname();
 
     async function resetData() {

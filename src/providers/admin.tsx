@@ -19,6 +19,8 @@ interface ICartContext {
             }
         }
     }>[];
+    search: string;
+    setSearch: Dispatch<SetStateAction<string>>;
     setProducts: Dispatch<SetStateAction<{
         id: string;
         name: string;
@@ -37,13 +39,16 @@ export const AdminContext = createContext<ICartContext>({
     setProducts: () => { },
     users: [],
     orders: [],
+    search: "",
+    setSearch: () => { }
 });
 
 const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([])
     const [categories, setCategories] = useState<Category[]>([])
     const [users, setUsers] = useState<User[]>([]);
-    const [orders, setOrders] = useState<ICartContext['orders']>([])
+    const [orders, setOrders] = useState<ICartContext['orders']>([]);
+    const [search, setSearch] = useState("");
 
     async function loadMoreData() {
         const { categories, products } = await getData()
@@ -61,7 +66,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, users, orders, setProducts }}>
+        <AdminContext.Provider value={{ products, categories, users, orders, search, setSearch, setProducts }}>
             {children}
         </AdminContext.Provider>
     )
