@@ -14,7 +14,7 @@ export default function ProductList() {
     const { products, categories, setProducts, search } = useContext(AdminContext)
     const [ref, inView] = useInView();
     const [loading, setLoading] = useState(false)
-
+  
     async function loadMoreData(takeNumber: number) {
         const { products: newProducts } = await getData('', takeNumber)
 
@@ -60,7 +60,7 @@ export default function ProductList() {
                             </div>
                         )
                         )}
-                        <div ref={ref} />
+                        {/* <div ref={ref} /> */}
                     </div>
                 </>
             )}

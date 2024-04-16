@@ -1,7 +1,6 @@
 "use server";
 import { prismaClient } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { cookies } from 'next/headers'
 
 interface ProductProps {
     id?: string;
@@ -17,7 +16,7 @@ interface ProductProps {
 
 export async function getData(name?: string, take?: number) {
     const products = await prismaClient.product.findMany({
-        take: take ? take : 18,
+        take,
         where: {
             name: {
                 contains: name,

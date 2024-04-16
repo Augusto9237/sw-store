@@ -1,23 +1,20 @@
 import { Card, CardContent } from '@/components/ui/card'
-import { prismaClient } from '@/lib/prisma'
 import TableOrder from './components/table-order'
 import TopProductItem from './components/top-product-item'
 import CardTotalOrders from './components/card-total-orders'
 import CardInvoicingTotal from './components/card-invoicing-total'
 import CardTotalUsers from './components/card-total-users'
+import { getData } from '@/actions/products'
 
 export default async function DashboardPage() {
-
-  const topProducts = await prismaClient.product.findMany({
-    take: 8
-  })
+  const { products } = await getData('', 8)
 
   return (
     <div className='flex flex-1 flex-col h-full gap-8'>
       <div className='grid grid-cols-4 gap-8 max-md:gap-4 w-full'>
         <CardTotalOrders />
-        <CardInvoicingTotal/>
-        <CardTotalUsers/>
+        <CardInvoicingTotal />
+        <CardTotalUsers />
       </div>
 
       <div className='flex max-md:flex-col  h-full gap-8'>
@@ -25,7 +22,7 @@ export default async function DashboardPage() {
           <h2 className='text-lg font-bold'>Top Produtos</h2>
 
           <CardContent className='w-full p-0 gap-4 flex flex-col max-md:grid grid-cols-2  mt-8'>
-            {topProducts.map(product => (
+            {products.map(product => (
               <TopProductItem key={product.id} product={product} />
             ))}
           </CardContent>
