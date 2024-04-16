@@ -1,10 +1,9 @@
 'use client'
-import { FormEvent, useContext, useEffect, useState } from "react";
-import { BellIcon, HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
+import { FormEvent, useContext, useEffect } from "react";
+import { BellIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from "./sheet";
-
+import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
@@ -12,7 +11,6 @@ import { Separator } from "./separator";
 import { ActiveLink } from "./active-link";
 import { usePathname } from "next/navigation";
 import { Input } from "./input";
-import { useCookies } from 'react-cookie';
 import { getData } from "@/actions/products";
 import { AdminContext } from "@/providers/admin";
 
@@ -22,7 +20,7 @@ export default function HeaderAdmin() {
     const path = usePathname();
 
     async function resetData() {
-        const { products } = await getData()
+        const { products } = await getData('', 18)
         setProducts(products)
     }
 
@@ -31,8 +29,6 @@ export default function HeaderAdmin() {
         resetData()
 
     }, [path,])
-
-
 
     async function handleSearchSubmit(e: FormEvent) {
         e.preventDefault();
@@ -43,7 +39,7 @@ export default function HeaderAdmin() {
         }
 
         if (path.slice(1) === 'order') {
-         console.log('test')
+            console.log('test')
         }
 
         if (path.slice(1) === 'users') {
