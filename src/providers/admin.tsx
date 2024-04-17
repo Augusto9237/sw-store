@@ -51,7 +51,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [search, setSearch] = useState("");
 
     async function loadMoreData() {
-        const { categories, products } = await getData('', 4)
+        const { categories, products } = await getData('', 18)
         const { users } = await getUsers()
         const { orders } = await getOrders()
 

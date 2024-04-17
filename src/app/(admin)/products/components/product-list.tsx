@@ -9,33 +9,35 @@ import { AdminContext } from '@/providers/admin'
 import ModalAddProduct from './modal-add-product'
 import { getData } from '@/actions/products'
 import Spinner from '@/components/spinner'
+import { ChevronDown } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function ProductList() {
     const { products, categories, setProducts, search } = useContext(AdminContext)
     const [ref, inView] = useInView();
-    const [loading, setLoading] = useState(false)
-  
+    const [totaLoading, setTotalLoading] = useState(false);
+    const { toast } = useToast()
+
     async function loadMoreData(takeNumber: number) {
-        const { products: newProducts } = await getData('', takeNumber)
+        const { products: newProducts } = await getData('', takeNumber);
+
+        if (newProducts.length === products.length) {
+            setTotalLoading(true)
+            toast({
+                variant: 'success',
+                title: "✅  Todos os produtos já foram carregados!",
+            })
+            return;
+        }
 
         if (newProducts.length > 0 && newProducts.length > products.length) {
             setProducts(newProducts)
         }
-        setLoading(false)
     }
 
-    useEffect(() => {
-        const take = products.length + 18
-
-        if (inView && search === '') {
-            setLoading(true)
-            loadMoreData(take)
-        }
-    }, [inView])
-
-
     return (
-        <div className='flex flex-col w-full h-full py-5 pl-5 bg-background rounded-lg'>
+        <div className='flex flex-col w-full h-full py-5 pl-5 bg-background rounded-lg relative'>
             <div className="flex w-full justify-between items-center pr-5">
                 <h2 className='text-lg font-bold leading-none'>Produtos</h2>
                 <ModalAddProduct />
@@ -49,7 +51,7 @@ export default function ProductList() {
 
             {products.length > 0 && (
                 <>
-                    <div className="grid grid-cols-6 gap-2 pr-5 items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
+                    <div className="relative grid grid-cols-6 gap-2 pr-5 items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
                         {products.map(product => (
                             <div key={product.id} className="relative p-2">
                                 <div className="absolute flex flex-col gap-4 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
@@ -60,8 +62,16 @@ export default function ProductList() {
                             </div>
                         )
                         )}
-                        {/* <div ref={ref} /> */}
+
+                        <div ref={ref} />
                     </div>
+                    {inView && search === '' && !totaLoading && (
+                        <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center">
+                            <Button variant='outline' size='icon' onClick={() => loadMoreData(products.length + 18)} className="animate-bounce w-6 h-6 z-30">
+                                <ChevronDown />
+                            </Button>
+                        </div>
+                    )}
                 </>
             )}
         </div>
