@@ -38,7 +38,8 @@ interface ICartContext {
         email: string | null;
         emailVerified: Date | null;
         image: string | null;
-    }[]>>
+    }[]>>;
+    loading: boolean
 }
 
 export const AdminContext = createContext<ICartContext>({
@@ -49,7 +50,8 @@ export const AdminContext = createContext<ICartContext>({
     users: [],
     orders: [],
     search: "",
-    setSearch: () => { }
+    setSearch: () => { },
+    loading: false
 });
 
 const AdminProvider = ({ children }: { children: ReactNode }) => {
@@ -58,6 +60,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [users, setUsers] = useState<User[]>([]);
     const [orders, setOrders] = useState<ICartContext['orders']>([]);
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true)
 
     async function loadMoreData() {
         const { products } = await getProducts('', 18);
@@ -73,10 +76,12 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         loadMoreData()
+        setLoading(false)
+        
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, users, orders, search, setSearch, setUsers, setProducts }}>
+        <AdminContext.Provider value={{ products, categories, users, orders, search, setSearch, setUsers, setProducts, loading }}>
             {children}
         </AdminContext.Provider>
     )
