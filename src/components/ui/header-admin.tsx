@@ -1,6 +1,6 @@
 'use client'
 import { FormEvent, useContext, useEffect } from "react";
-import { BellIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
+import { BellIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
@@ -22,7 +22,7 @@ export default function HeaderAdmin() {
 
     async function resetData() {
         if (path.slice(1) === 'products') {
-            const { products } = await getProducts()
+            const { products } = await getProducts('', 18)
             setProducts(products);
         }
 
