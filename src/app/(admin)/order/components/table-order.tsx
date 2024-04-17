@@ -12,39 +12,17 @@ import {
 import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Prisma } from "@prisma/client"
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import ModalOrder from "./modal-order";
 import ModalEditOrder from "./modal-edit-order";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { deleteOrder } from "@/actions/order";
 import { toast } from "@/components/ui/use-toast";
-interface Users {
-    id: string;
-    name: string | null;
-    email: string | null;
-    emailVerified: Date | null;
-    image: string | null;
-}[]
-interface OrderItemProps {
-    orders: Prisma.OrderGetPayload<{
-        include: {
-            orderProducts: {
-                include: {
-                    product: true;
-                }
-            }
-        }
-    }>[];
-    users: Users[]
-};
+import { AdminContext } from "@/providers/admin";
 
-export default function TableOrder({ orders, users }: OrderItemProps) {
-    const [listOrders, setListOrders] = useState<OrderItemProps['orders']>([])
-
-    useEffect(() => {
-        setListOrders(orders)
-    }, [orders])
+export default function TableOrder() {
+    const { orders, users } = useContext(AdminContext)
 
     const total = useMemo(() => {
         return orders.reduce((acc, order) => {
@@ -85,7 +63,7 @@ export default function TableOrder({ orders, users }: OrderItemProps) {
             </TableHeader>
             <TableBody>
                 {
-                    listOrders.map(order => {
+                    orders.map(order => {
                         const user = users?.find(user => user.id === order.userId);
                         const date = format(new Date(order.createdAt), 'dd/MM/yyyy')
 

@@ -17,6 +17,7 @@ import { AdminContext } from "@/providers/admin";
 
 export default function TableOrder() {
     const {users, orders} = useContext(AdminContext)
+    
     const total = useMemo(() => {
         return orders.reduce((acc, order) => {
             return acc + order.orderProducts.reduce((orderAcc, orderProduct) => {

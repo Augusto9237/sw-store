@@ -1,28 +1,13 @@
+'use client'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { AdminContext } from "@/providers/admin";
 import { Prisma } from "@prisma/client";
+import { useContext } from "react";
 
-interface Users {
-    id: string;
-    name: string | null;
-    email: string | null;
-    emailVerified: Date | null;
-    image: string | null;
-}[]
 
-interface TableUsersProps {
-    orders: Prisma.OrderGetPayload<{
-        include: {
-            orderProducts: {
-                include: {
-                    product: true;
-                }
-            }
-        }
-    }>[];
-    users: Users[]
-}
+export function TableUsers() {
+    const {orders, users } = useContext(AdminContext)
 
-export function TableUsers({ users, orders}: TableUsersProps) {
     return (
         <Table>
             <TableHeader>
