@@ -4,10 +4,10 @@ import TopProductItem from './components/top-product-item'
 import CardTotalOrders from './components/card-total-orders'
 import CardInvoicingTotal from './components/card-invoicing-total'
 import CardTotalUsers from './components/card-total-users'
-import { getData } from '@/actions/products'
+import { getProducts } from '@/actions/products'
 
 export default async function DashboardPage() {
-  const { products } = await getData('', 8)
+  const { products } = await getProducts('', 8)
 
   return (
     <div className='flex flex-1 flex-col h-full gap-8'>

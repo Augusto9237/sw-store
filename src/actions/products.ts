@@ -14,7 +14,7 @@ interface ProductProps {
 }
 
 
-export async function getData(name?: string, take?: number) {
+export async function getProducts(name?: string, take?: number) {
     const products = await prismaClient.product.findMany({
         take,
         where: {
@@ -24,11 +24,9 @@ export async function getData(name?: string, take?: number) {
             }
         }
     })
-    const categories = await prismaClient.category.findMany()
+    // 
 
-    revalidatePath('/products')
-
-    return { products, categories }
+    return { products}
 }
 
 export const createProduct = async (product: ProductProps) => {

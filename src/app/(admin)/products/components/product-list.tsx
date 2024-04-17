@@ -7,7 +7,7 @@ import { computeProductTotalPrice } from '@/helpers/product';
 import { useInView } from 'react-intersection-observer'
 import { AdminContext } from '@/providers/admin'
 import ModalAddProduct from './modal-add-product'
-import { getData } from '@/actions/products'
+import { getProducts } from '@/actions/products'
 import Spinner from '@/components/spinner'
 import { ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -20,7 +20,7 @@ export default function ProductList() {
     const { toast } = useToast()
 
     async function loadMoreData(takeNumber: number) {
-        const { products: newProducts } = await getData('', takeNumber);
+        const { products: newProducts } = await getProducts('', takeNumber);
 
         if (newProducts.length === products.length) {
             setTotalLoading(true)

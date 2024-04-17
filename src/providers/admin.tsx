@@ -1,6 +1,7 @@
 'use client'
+import { getCategories } from "@/actions/category";
 import { getOrders } from "@/actions/order";
-import { getData } from "@/actions/products";
+import { getProducts } from "@/actions/products";
 import { getUsers } from "@/actions/users";
 import { Category, Order, Prisma, Product, User } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
@@ -30,6 +31,13 @@ interface ICartContext {
         imageUrls: string[];
         categoryId: string;
         discountPercentage: number;
+    }[]>>,
+    setUsers: Dispatch<SetStateAction<{
+        id: string;
+        name: string | null;
+        email: string | null;
+        emailVerified: Date | null;
+        image: string | null;
     }[]>>
 }
 
@@ -37,6 +45,7 @@ export const AdminContext = createContext<ICartContext>({
     products: [],
     categories: [],
     setProducts: () => { },
+    setUsers: () => { },
     users: [],
     orders: [],
     search: "",
@@ -51,7 +60,8 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [search, setSearch] = useState("");
 
     async function loadMoreData() {
-        const { categories, products } = await getData('', 18)
+        const { products } = await getProducts('', 18);
+        const { categories } = await getCategories()
         const { users } = await getUsers()
         const { orders } = await getOrders()
 
@@ -66,7 +76,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, users, orders, search, setSearch, setProducts }}>
+        <AdminContext.Provider value={{ products, categories, users, orders, search, setSearch, setUsers, setProducts }}>
             {children}
         </AdminContext.Provider>
     )

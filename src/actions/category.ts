@@ -9,6 +9,12 @@ interface CategoryProps {
     imageUrl: string;
 }
 
+export async function getCategories() {
+    const categories = await prismaClient.category.findMany()
+
+    return { categories }
+}
+
 export const createCategory = async (
     category: CategoryProps
 ) => {

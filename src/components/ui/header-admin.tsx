@@ -11,17 +11,29 @@ import { Separator } from "./separator";
 import { ActiveLink } from "./active-link";
 import { usePathname } from "next/navigation";
 import { Input } from "./input";
-import { getData } from "@/actions/products";
+import { getProducts } from "@/actions/products";
 import { AdminContext } from "@/providers/admin";
+import { getUsers } from "@/actions/users";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
-    const { setProducts, search, setSearch } = useContext(AdminContext)
+    const { setProducts, setUsers, search, setSearch } = useContext(AdminContext)
     const path = usePathname();
 
     async function resetData() {
-        const { products } = await getData('', 18)
-        setProducts(products)
+        if (path.slice(1) === 'products') {
+            const { products } = await getProducts()
+            setProducts(products);
+        }
+
+        if (path.slice(1) === 'order') {
+            console.log('test')
+        }
+
+        if (path.slice(1) === 'users') {
+            const { users } = await getUsers()
+            setUsers(users)
+        }
     }
 
     useEffect(() => {
@@ -34,7 +46,7 @@ export default function HeaderAdmin() {
         e.preventDefault();
 
         if (path.slice(1) === 'products') {
-            const { products } = await getData(search)
+            const { products } = await getProducts(search)
             setProducts(products);
         }
 
@@ -43,7 +55,8 @@ export default function HeaderAdmin() {
         }
 
         if (path.slice(1) === 'users') {
-            console.log('test')
+            const { users } = await getUsers(search)
+            setUsers(users)
         }
     }
 
