@@ -80,7 +80,7 @@ export default function AuthAdmin() {
                             )}
                         />
                         <div className="flex w-full justify-center gap-5 ">
-                            <Button variant='save' className="uppercase font-semibold" type="submit">Salvar</Button>
+                            <Button variant='save' className="uppercase font-semibold" type="submit">Entrar</Button>
                             <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
                         </div>
                     </form>
