@@ -38,6 +38,11 @@ export default function Sidebar() {
                     <Users size={16} />
                     Clientes
                 </ActiveLink>
+
+                <ActiveLink href="/members">
+                    <Users size={16} />
+                    Usúarios
+                </ActiveLink>
             </CardContent>
 
             <CardFooter className="absolute bottom-0 left-0">
