@@ -42,8 +42,6 @@ export const updateCategory = async (
             imageUrl: category.imageUrl
         },
     });
-
-    return revalidatePath('/products');
 };
 
 export const deleteCategory = async (id: string) => {

@@ -33,9 +33,11 @@ import { Input } from "@/components/ui/input"
 import { CATEGORY_ICON } from "@/constants/category-icon";
 import { Pencil, Plus, Trash2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
-import { updateProduct } from "@/actions/products"
+import { getProducts, updateProduct } from "@/actions/products"
 import { Category } from "@prisma/client"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AdminContext } from "@/providers/admin"
+import { get } from "http"
 
 interface Product {
     id: string;
@@ -64,7 +66,8 @@ const defaultValues = {
     imageUrls: [],
 }
 
-export default function ModalEditProduct({ categories, product }: ModalProductProps) {
+export default function ModalEditProduct({ product }: ModalProductProps) {
+    const { categories, setProducts, } = useContext(AdminContext)
     const [formData, setFormData] = useState<Product>(defaultValues)
     const [isOpen, setIsOpen] = useState(false);
 
@@ -117,9 +120,10 @@ export default function ModalEditProduct({ categories, product }: ModalProductPr
         const imagesStrings: string[] = values.imageUrls.map(img => img.url);
         try {
             await updateProduct({ id: product.id, ...values, imageUrls: imagesStrings });
+            const { products } = await getProducts('', 18);
 
             form.reset();
-
+            setProducts(products);
             setIsOpen(false);
 
             toast({
