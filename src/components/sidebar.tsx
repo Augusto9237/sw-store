@@ -39,9 +39,9 @@ export default function Sidebar() {
                     Clientes
                 </ActiveLink>
 
-                <ActiveLink href="/members">
+                <ActiveLink href="/team">
                     <Users size={16} />
-                    Usúarios
+                    Usuários
                 </ActiveLink>
             </CardContent>
 

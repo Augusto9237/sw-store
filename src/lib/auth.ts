@@ -15,8 +15,21 @@ export const authOptions: NextAuthOptions = {
             },
 
             async authorize(credentials, req) {
-                const test = console.log(credentials)
-                return null
+                const user = await prismaClient.userTeam.findFirst({
+                    where: {
+                        email: credentials?.email,
+                    }
+                })
+
+                if (!user) {
+                    return null
+                }
+
+                if (user.password !== credentials?.password) {
+                    return null
+                }
+
+                return user
             },
         }),
         GoogleProvider({

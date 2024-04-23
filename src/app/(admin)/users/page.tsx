@@ -1,5 +1,3 @@
-import { prismaClient } from "@/lib/prisma";
-import TableOrder from "../dashboard/components/table-order";
 import { TableUsers } from "./components/table-users";
 
 

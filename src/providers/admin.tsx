@@ -2,15 +2,18 @@
 import { getCategories } from "@/actions/category";
 import { getOrders } from "@/actions/order";
 import { getProducts } from "@/actions/products";
+import { getUsersTeam } from "@/actions/team";
 import { getUsers } from "@/actions/users";
-import { Category, Order, Prisma, Product, User } from "@prisma/client";
+import { Category, Order, Prisma, Product, User, UserTeam } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
+import { set } from "date-fns";
 import { Dispatch, ReactNode, SetStateAction, createContext, use, useEffect, useState } from "react";
 
 interface ICartContext {
     products: Product[];
     categories: Category[];
     users: User[];
+    usersTeam: UserTeam[];
     orders: Prisma.OrderGetPayload<{
         include: {
             orderProducts: {
@@ -48,6 +51,7 @@ export const AdminContext = createContext<ICartContext>({
     setProducts: () => { },
     setUsers: () => { },
     users: [],
+    usersTeam: [],
     orders: [],
     search: "",
     setSearch: () => { },
@@ -58,6 +62,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([])
     const [categories, setCategories] = useState<Category[]>([])
     const [users, setUsers] = useState<User[]>([]);
+    const [usersTeam, setUsersTeam] = useState<UserTeam[]>([]);
     const [orders, setOrders] = useState<ICartContext['orders']>([]);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true)
@@ -67,11 +72,13 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
         const { categories } = await getCategories()
         const { users } = await getUsers()
         const { orders } = await getOrders()
+        const { userTeam } = await getUsersTeam()
 
         setProducts(products)
         setCategories(categories)
         setUsers(users)
         setOrders(orders)
+        setUsersTeam(userTeam)
     }
 
     useEffect(() => {
@@ -81,7 +88,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, users, orders, search, setSearch, setUsers, setProducts, loading }}>
+        <AdminContext.Provider value={{ products, categories, users, usersTeam, orders, search, setSearch, setUsers, setProducts, loading }}>
             {children}
         </AdminContext.Provider>
     )

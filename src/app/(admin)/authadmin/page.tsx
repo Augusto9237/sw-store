@@ -35,8 +35,14 @@ export default function AuthAdmin() {
         },
     })
 
-    async function handleLoginClick() {
-        await signIn('google', { callbackUrl: '/' });
+    async function onSubmit(event: React.SyntheticEvent) {
+        event.preventDefault();
+
+        await signIn<"credentials">('credentials', { 
+            email: form.getValues('email'),
+            password: form.getValues('password'),
+            redirect: true,
+            callbackUrl: '/dashboard', });
     }
 
     return (
@@ -49,7 +55,7 @@ export default function AuthAdmin() {
 
                 <Form {...form}>
                     <form 
-                    // onSubmit={form.handleSubmit(onSubmit)} 
+                    onSubmit={onSubmit} 
                     className="space-y-8 text-left">
                         <FormField
                             control={form.control}
