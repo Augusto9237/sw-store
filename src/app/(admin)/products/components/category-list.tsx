@@ -10,7 +10,7 @@ import Spinner from "@/components/spinner";
 import ModalAddCategory from "./modal-add-category";
 
 export default function CategoriesList() {
-    const { categories } = useContext(AdminContext)
+    const { categories} = useContext(AdminContext)
 
     return (
         <Card className='p-5 md:max-w-[355px] max-md:max-h-fit w-full h-full min-h-fit max-md:min-h-[300px] overflow-hidden'>

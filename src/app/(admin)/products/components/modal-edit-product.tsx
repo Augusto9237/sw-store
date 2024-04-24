@@ -51,8 +51,8 @@ interface Product {
 }
 
 interface ModalProductProps {
-    categories: Category[];
-    product: Product
+    product: Product;
+    setTotalLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const defaultValues = {
@@ -66,7 +66,7 @@ const defaultValues = {
     imageUrls: [],
 }
 
-export default function ModalEditProduct({ product }: ModalProductProps) {
+export default function ModalEditProduct({ product, setTotalLoading }: ModalProductProps) {
     const { categories, setProducts, } = useContext(AdminContext)
     const [formData, setFormData] = useState<Product>(defaultValues)
     const [isOpen, setIsOpen] = useState(false);
@@ -97,7 +97,6 @@ export default function ModalEditProduct({ product }: ModalProductProps) {
         })).min(2, {
             message: "Por favor, insira pelo menos uma URL",
         }).max(4)
-
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -125,6 +124,7 @@ export default function ModalEditProduct({ product }: ModalProductProps) {
             form.reset();
             setProducts(products);
             setIsOpen(false);
+            setTotalLoading(false)
 
             toast({
                 variant: 'success',

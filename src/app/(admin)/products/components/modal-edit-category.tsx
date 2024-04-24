@@ -16,7 +16,6 @@ import {
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -25,19 +24,21 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { Pencil, Plus } from "lucide-react"
-import { createCategory, updateCategory } from "@/actions/category"
+import { createCategory, getCategories, updateCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { Category } from "@prisma/client"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AdminContext } from "@/providers/admin"
 
 interface ModalEditCategoryProps {
     category: Category
 }
 
 export default function ModalEditCategory({ category }: ModalEditCategoryProps) {
+    const { setCategories } = useContext(AdminContext)
     const [formData, setFormData] = useState<Category>()
     const [isOpen, setIsOpen] = useState(false)
- 
+
     useEffect(() => {
         setFormData(category)
     }, [category])
@@ -68,9 +69,10 @@ export default function ModalEditCategory({ category }: ModalEditCategoryProps) 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             await updateCategory({ id: category.id, ...values });
+            const { categories } = await getCategories()
 
             form.reset();
-
+            setCategories(categories)
             setIsOpen(false)
 
             toast({
