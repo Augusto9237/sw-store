@@ -8,7 +8,7 @@ export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prismaClient),
     providers: [
         CredentialsProvider({
-            name: 'credentials',
+            name: 'Credentials',
             credentials: {
                 email: { label: 'email', type: 'email' },
                 password: { label: 'password', type: 'password' },
@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials, req) {
                 const user = await prismaClient.userTeam.findFirst({
                     where: {
-                        email: credentials?.email,
+                        email: credentials?.email!,
                     }
                 })
 
@@ -25,11 +25,11 @@ export const authOptions: NextAuthOptions = {
                     return null
                 }
 
-                if (user.password !== credentials?.password) {
+                if (user.password === credentials?.password) {
+                    return user
+                } else {
                     return null
                 }
-
-                return user
             },
         }),
         GoogleProvider({
@@ -44,7 +44,6 @@ export const authOptions: NextAuthOptions = {
                 name: string;
                 email: string;
             };
-
             return session;
         }
     },

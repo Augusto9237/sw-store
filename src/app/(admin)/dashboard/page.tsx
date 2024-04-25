@@ -5,9 +5,13 @@ import CardTotalOrders from './components/card-total-orders'
 import CardInvoicingTotal from './components/card-invoicing-total'
 import CardTotalUsers from './components/card-total-users'
 import { getProducts } from '@/actions/products'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export default async function DashboardPage() {
-  const { products } = await getProducts('', 8)
+  const session = await getServerSession(authOptions)
+  const { products } = await getProducts('', 8);
+  console.log(session)
 
   return (
     <div className='flex flex-1 flex-col h-full gap-8'>
@@ -20,7 +24,7 @@ export default async function DashboardPage() {
       <div className='flex max-md:flex-col  h-full gap-8'>
         <Card className='p-5  md:max-w-[355px] w-full h-full min-h-fit max-md:min-h-[380px] overflow-hidden'>
           <h2 className='text-lg font-bold'>Top Produtos</h2>
-
+          {session?.user?.name}
           <CardContent className='w-full p-0 gap-4 flex flex-col max-md:grid grid-cols-2  mt-8'>
             {products.map(product => (
               <TopProductItem key={product.id} product={product} />

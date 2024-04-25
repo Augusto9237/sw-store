@@ -38,11 +38,11 @@ export default function AuthAdmin() {
     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
 
-        await signIn<"credentials">('credentials', { 
+        await signIn("credentials", {
             email: form.getValues('email'),
             password: form.getValues('password'),
-            redirect: true,
-            callbackUrl: '/dashboard', });
+            callbackUrl: '/dashboard',
+        });
     }
 
     return (
@@ -54,9 +54,9 @@ export default function AuthAdmin() {
                 <h1 className="font-bold">Faça o login de membros</h1>
 
                 <Form {...form}>
-                    <form 
-                    onSubmit={onSubmit} 
-                    className="space-y-8 text-left">
+                    <form
+                        onSubmit={onSubmit}
+                        className="space-y-8 text-left">
                         <FormField
                             control={form.control}
                             name="email"
@@ -78,7 +78,7 @@ export default function AuthAdmin() {
                                 <FormItem >
                                     <FormLabel className="text-accent-foreground">Senha</FormLabel>
                                     <FormControl>
-                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o sua senha' {...field}  type="password"/>
+                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o sua senha' {...field} type="password" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
