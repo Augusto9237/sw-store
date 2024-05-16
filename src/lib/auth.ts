@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
             },
 
             async authorize(credentials, req) {
-                const user = await prismaClient.userTeam.findFirst({
+                const user = await prismaClient.userTeam.findUnique({
                     where: {
                         email: credentials?.email!,
                     }
@@ -26,7 +26,12 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 if (user.password === credentials?.password) {
-                    return user
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                    }
                 } else {
                     return null
                 }

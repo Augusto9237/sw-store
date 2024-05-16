@@ -38,7 +38,7 @@ export default function AuthAdmin() {
     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
 
-        await signIn("credentials", {
+        await signIn("Credentials", {
             email: form.getValues('email'),
             password: form.getValues('password'),
             callbackUrl: '/dashboard',
