@@ -1,6 +1,6 @@
 'use client'
 import { FormEvent, useContext, useEffect } from "react";
-import { BellIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, Users } from "lucide-react";
+import { BellIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
@@ -40,7 +40,7 @@ export default function HeaderAdmin() {
         setSearch('')
         resetData()
 
-    }, [path,])
+    }, [path])
 
     async function handleSearchSubmit(e: FormEvent) {
         e.preventDefault();
@@ -159,8 +159,11 @@ export default function HeaderAdmin() {
                     <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
                 )}
 
-                <div>
-                    <BellIcon />
+                <div className="flex items-center gap-2">
+                    <User2 />
+                    {status === "authenticated" && data?.user && (
+                        data.user.name
+                    )}
                 </div>
             </div>
         </Card>

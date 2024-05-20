@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
 import { Maven_Pro } from 'next/font/google'
 import '../globals.css'
-import Header from '@/components/ui/header'
 import { AuthProvider } from '@/providers/auth'
-import Footer from '@/components/ui/footer'
-import CartProvider from '@/providers/cart'
 
 import { Toaster } from "@/components/ui/toaster"
 import HeaderAdmin from '@/components/ui/header-admin'

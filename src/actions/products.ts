@@ -24,7 +24,6 @@ export async function getProducts(name?: string, take?: number) {
             }
         }
     })
-    // 
 
     return { products}
 }

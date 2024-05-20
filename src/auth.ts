@@ -1,24 +1,42 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
-import Google from "next-auth/providers/google"
 import { prismaClient } from "./lib/prisma"
 import Credentials from "next-auth/providers/credentials"
-
+import { compareSync } from "bcrypt-ts"
 export const { auth, handlers, signIn, signOut } = NextAuth({
-    adapter: PrismaAdapter(prismaClient),
     providers: [Credentials({
         credentials: {
             email: {},
             password: {}
         },
-        authorize(credentials) {
-            console.log(credentials)
+        async authorize(credentials) {
+            const email = credentials.email as string
+            const password = credentials.password as string
 
-            if (credentials.password === "1234" ) {
-                return { id: "1", name: "teste", email: "august@test.com", image: "" }
-            } else {
-                return null;
+            if (!email || !password) {
+                return null
+            }
+
+            const user = await prismaClient.userTeam.findUnique({
+                where: {
+                    email: email
+                }
+            });
+
+            if (!user) {
+                return null
+            }
+
+            const matches = compareSync(password, user.password ?? '')
+
+
+            if (!matches) {
+                throw new Error("User not found.")
+            }
+
+            // return user object with the their profile data
+            return {
+                id: user.id, name: user.name, email: user.email, role: user.role
             }
         }
     })],
