@@ -32,7 +32,7 @@ export default function Header() {
     }
     return (
         <Card className="p-[1.875rem]" >
-            <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-8">
+            <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-4 lg:gap-8">
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">
                         <Button size='icon' variant='outline'>
