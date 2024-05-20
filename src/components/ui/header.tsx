@@ -1,5 +1,5 @@
 'use client'
-import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon, User2 } from "lucide-react";
+import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2 } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
@@ -17,6 +17,7 @@ import Cart from "./cart";
 import { Badge } from "./badge";
 import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
+import { Input } from "./input";
 
 export default function Header() {
     const { status, data } = useSession();
@@ -31,7 +32,7 @@ export default function Header() {
     }
     return (
         <Card className="p-[1.875rem]" >
-            <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto">
+            <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-8">
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">
                         <Button size='icon' variant='outline'>
@@ -123,6 +124,21 @@ export default function Header() {
                     </h1>
                 </Link>
 
+                <div className="w-full flex-1">
+                    <form >
+                        <div className="relative">
+                            <SearchIcon className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                            <Input
+                                className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 "
+                                placeholder="Pesquisar"
+                            type="search"
+                            // onChange={(e) => setSearch(e.target.value)}
+                            // value={search}
+                            />
+                        </div>
+                    </form>
+                </div>
+
                 <div className="flex gap-8 justify-between max-md:hidden">
                     <Link href="/">
                         <h1 className="font-semibold">
@@ -143,7 +159,7 @@ export default function Header() {
                     </Link>
                 </div>
 
-                <div className="flex items-center gap-8">
+                <div className="flex items-center gap-4">
                     <Popover>
                         {status === "authenticated" && data?.user && (
                             <PopoverTrigger asChild className="max-md:hidden">

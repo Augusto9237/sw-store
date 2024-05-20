@@ -2,9 +2,9 @@
 import { signIn } from "@/auth"
 import { AuthError } from "next-auth";
 
-export default async function Auth(email: string, password: string) {
+export default async function AuthAdmin(formData: FormData) {
     try {
-        await signIn('credentials', { email: email!, password: password! })
+        await signIn('credentials', formData)
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
