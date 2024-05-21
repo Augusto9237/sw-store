@@ -134,22 +134,7 @@ export default function Header() {
                     </h1>
                 </Link>
 
-                <div className="w-full flex-1">
-                    <form onSubmit={handleSearchSubmit} >
-                        <div className="relative">
-                            <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                            <Input
-                                className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 "
-                                placeholder="Pesquisar"
-                                type="search"
-                                onChange={(e) => setSearch(e.target.value)}
-                                value={search}
-                            />
-                        </div>
-                    </form>
-                </div>
-
-                <div className="flex gap-8 justify-between max-md:hidden">
+                <div className="flex flex-1 gap-8 items-center max-md:hidden">
                     <Link href="/">
                         <h1 className="font-semibold">
                             Inicio
@@ -167,6 +152,21 @@ export default function Header() {
                             Ofertas
                         </h1>
                     </Link>
+                </div>
+
+                <div className="w-full flex-1">
+                    <form onSubmit={handleSearchSubmit} >
+                        <div className="relative">
+                            <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                            <Input
+                                className="w-full bg-accent shadow-none appearance-none pl-8 max-lg:w-2/3 "
+                                placeholder="Pesquisar"
+                                type="search"
+                                onChange={(e) => setSearch(e.target.value)}
+                                value={search}
+                            />
+                        </div>
+                    </form>
                 </div>
 
                 <div className="flex items-center gap-4">
