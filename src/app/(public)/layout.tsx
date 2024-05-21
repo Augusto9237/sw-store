@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import {Maven_Pro} from 'next/font/google'
+import { Maven_Pro } from 'next/font/google'
 import '../globals.css'
 import Header from '@/components/ui/header'
 import { AuthProvider } from '@/providers/auth'
@@ -7,9 +7,13 @@ import Footer from '@/components/ui/footer'
 import CartProvider from '@/providers/cart'
 
 import { Toaster } from "@/components/ui/toaster"
+import { Suspense } from 'react'
+import Spinner from '@/components/spinner'
 
-const inter = Maven_Pro({ weight: [ '400', '600', '900'],
-                      subsets: ['latin'] })
+const inter = Maven_Pro({
+  weight: ['400', '600', '900'],
+  subsets: ['latin']
+})
 
 export const metadata: Metadata = {
   title: 'SW Store',
@@ -28,9 +32,11 @@ export default function RootLayout({
           <AuthProvider>
             <CartProvider>
               <Header />
-              <div className="flex-1">
+              <Suspense fallback={<Loading />}>
+                <div className='flex-1'>
                 {children}
-              </div>
+                </div>
+              </Suspense>
               <Footer />
               <Toaster />
             </CartProvider>
@@ -39,4 +45,10 @@ export default function RootLayout({
       </body>
     </html>
   )
+}
+
+function Loading() {
+  return <div className="flex flex-1 h-full justify-center items-center">
+    <Spinner />
+  </div>;
 }

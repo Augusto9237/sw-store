@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2 } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
@@ -7,7 +8,7 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
@@ -15,13 +16,16 @@ import { Separator } from "./separator";
 import Link from "next/link";
 import Cart from "./cart";
 import { Badge } from "./badge";
-import { useContext } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { CartContext } from "@/providers/cart";
 import { Input } from "./input";
 
 export default function Header() {
     const { status, data } = useSession();
-    const { products } = useContext(CartContext)
+    const [search, setSearch] = useState("")
+    const { products } = useContext(CartContext);
+
+    const router = useRouter()
 
     async function handleLoginClick() {
         await signIn();
@@ -30,6 +34,12 @@ export default function Header() {
     async function handleLogoutClick() {
         await signOut();
     }
+
+    async function handleSearchSubmit(e: FormEvent) {
+        e.preventDefault();
+        router.push(`/search/${search}`)
+    }
+
     return (
         <Card className="p-[1.875rem]" >
             <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-4 lg:gap-8">
@@ -125,15 +135,15 @@ export default function Header() {
                 </Link>
 
                 <div className="w-full flex-1">
-                    <form >
+                    <form onSubmit={handleSearchSubmit} >
                         <div className="relative">
                             <SearchIcon className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
                             <Input
                                 className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 "
                                 placeholder="Pesquisar"
-                            type="search"
-                            // onChange={(e) => setSearch(e.target.value)}
-                            // value={search}
+                                type="search"
+                                onChange={(e) => setSearch(e.target.value)}
+                                value={search}
                             />
                         </div>
                     </form>
