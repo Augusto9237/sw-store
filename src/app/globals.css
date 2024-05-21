@@ -40,9 +40,11 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply h-full bg-background text-foreground [&::-webkit-scrollbar]:bg-inherit [&::-webkit-scrollbar]:w-[4px];
+    @apply h-full bg-background text-foreground [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar-thumb]:bg-foreground/30;
   }
+
   html {
     @apply h-full;
   }
