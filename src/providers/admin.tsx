@@ -4,9 +4,8 @@ import { getOrders } from "@/actions/order";
 import { getProducts } from "@/actions/products";
 import { getUsersTeam } from "@/actions/team";
 import { getUsers } from "@/actions/users";
-import { Category, Order, Prisma, Product, User, UserTeam } from "@prisma/client";
+import { Category, Prisma, Product, User, UserTeam } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
-import { set } from "date-fns";
 import { Dispatch, ReactNode, SetStateAction, createContext, use, useEffect, useState } from "react";
 
 interface ICartContext {
@@ -44,9 +43,11 @@ interface ICartContext {
     setUsers: Dispatch<SetStateAction<{
         id: string;
         name: string | null;
-        email: string | null;
+        email: string;
         emailVerified: Date | null;
         image: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>>;
     loading: boolean
 }
@@ -91,7 +92,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         loadMoreData()
         setLoading(false)
-        
+
     }, [])
 
     return (
