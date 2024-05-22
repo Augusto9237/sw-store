@@ -9,7 +9,7 @@ import { AdminContext } from '@/providers/admin'
 import ModalAddProduct from './modal-add-product'
 import { getProducts } from '@/actions/products'
 import Spinner from '@/components/spinner'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, PackageX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 
@@ -53,7 +53,10 @@ export default function ProductList() {
                 <>
                     {
                         products.length < 1 ?
-                            <div>Nenhum produto encontrado</div>
+                            <div className="flex w-full justify-center gap-2">
+                                <PackageX />
+                                <h1 className="font-semibold">Nenhum produto encontrado</h1>
+                            </div>
                             :
                             <>
                                 <div className="relative grid grid-cols-6 gap-2 pr-5 items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
