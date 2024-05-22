@@ -31,7 +31,7 @@ export default async function Home() {
   })
 
   return (
-    <div className="flex flex-col gap-8 md:gap-10 py-8">
+    <div className="flex flex-col gap-8 md:gap-10 pb-8">
   
        <section className="flex flex-1 w-full h-full justify-center">
         <CarouselPromo />
