@@ -15,7 +15,7 @@ export default auth((req) => {
         if (!user) {
             return NextResponse.redirect(
                 new URL(
-                    `${process.env.HOST_URL}/api/auth/signin?callbackUrl=${encodeURIComponent(reqUrl.pathname)}`, req.url)
+                    `${process.env.HOST_URL}/admin`, req.url)
             );
         }
         return NextResponse.next();
