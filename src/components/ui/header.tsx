@@ -137,7 +137,7 @@ export default function Header() {
                 <div className="flex flex-1 gap-8 items-center justify-center max-md:hidden">
                     <Link href="/">
                         <h1 className="font-semibold">
-                            Inicio
+                            Início
                         </h1>
                     </Link>
 

@@ -1,6 +1,6 @@
 'use client'
 import { FormEvent, useContext, useEffect } from "react";
-import { BellIcon, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2, Users } from "lucide-react";
+import { LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, SearchIcon, ShoppingCartIcon, UserCog, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
@@ -160,7 +160,7 @@ export default function HeaderAdmin() {
                 )}
 
                 <div className="flex items-center gap-2">
-                    <User2 />
+                    <UserCog />
                     {status === "authenticated" && data?.user && (
                         data.user.name
                     )}

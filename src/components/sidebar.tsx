@@ -1,5 +1,5 @@
 'use client'
-import { HomeIcon, LayoutDashboard, LayoutDashboardIcon, LogOutIcon, LucideLayoutDashboard, PackageSearchIcon, ShoppingCartIcon, Users } from "lucide-react";
+import { Boxes, LogOutIcon, LucideLayoutDashboard, ShoppingCartIcon, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -30,7 +30,7 @@ export default function Sidebar() {
                 </ActiveLink>
 
                 <ActiveLink href="/products">
-                    <PackageSearchIcon size={16} />
+                    <Boxes  size={16} />
                     Produtos
                 </ActiveLink>
 

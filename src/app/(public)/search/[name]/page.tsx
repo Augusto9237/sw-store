@@ -2,7 +2,7 @@ import { getProducts } from "@/actions/products";
 import { Badge } from "@/components/ui/badge";
 import ProductItem from "@/components/ui/product-item";
 import { computeProductTotalPrice } from "@/helpers/product";
-import { PackageX } from "lucide-react";
+import { PackageSearchIcon, PackageX } from "lucide-react";
 
 export default async function SearchProducts({ params }: any) {
     const { products } = await getProducts(params.name);
@@ -13,6 +13,7 @@ export default async function SearchProducts({ params }: any) {
                 className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
                 variant='outline'
             >
+                <PackageSearchIcon size={16} />
                 Resultado
             </Badge>
             {
