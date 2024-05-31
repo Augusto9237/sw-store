@@ -3,6 +3,8 @@ import NextAuth from "next-auth"
 import { prismaClient } from "./lib/prisma"
 import Credentials from "next-auth/providers/credentials"
 import { compareSync } from "bcrypt-ts"
+import { NextResponse } from "next/server"
+import { redirect } from "next/navigation"
 export const { auth, handlers, signIn, signOut } = NextAuth({
     providers: [Credentials({
         credentials: {
@@ -34,10 +36,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 throw new Error("User not found.")
             }
 
-            // return user object with the their profile data
             return {
                 id: user.id, name: user.name, email: user.email, role: user.role
             }
         }
     })],
+    pages: {
+        signIn: "/admin",
+    },
 })

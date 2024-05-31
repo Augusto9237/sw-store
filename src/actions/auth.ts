@@ -1,21 +1,11 @@
 'use server'
 import { signIn } from "@/auth"
-import { AuthError } from "next-auth";
+import { redirect } from "next/navigation"
 
 export default async function AuthAdmin(formData: FormData) {
-    try {
-        await signIn('credentials', formData)
-    } catch (error) {
-        if (error instanceof AuthError) {
-            switch (error.type) {
-                case "CredentialsSignin":
-                    return { msg: "Invalid credentials", status: "error" };
-                case "CredentialsSignin":
-                    throw error;
-                default:
-                    return { msg: "Something went wrong", status: "error" };
-            }
-        }
-    }
+    const email = formData.get('email')
+    const password = formData.get('password')
 
+    await signIn('credentials', { email: email as string, password: password as string, redirect: true, redirectTo: '/dashboard' })
+    return redirect('/dashboard')
 }
