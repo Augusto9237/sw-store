@@ -6,14 +6,16 @@ import * as z from "zod"
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Suspense, useState } from "react"
+import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { toast } from "@/components/ui/use-toast"
 import Spinner from "@/components/spinner"
+import { useRouter } from "next/navigation"
 
 
 export default function FormLogin() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const router = useRouter();
 
     const formSchema = z.object({
         email: z.string().min(2, {
@@ -84,7 +86,7 @@ export default function FormLogin() {
                     <Button variant='save' className="uppercase font-semibold" type="submit">
                         {isLoading ? <Spinner /> : 'Entrar'}
                     </Button>
-                    <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
+                    <Button variant="secondary" onClick={() => router.push('/')} className="uppercase font-semibold" type="reset">Cancelar</Button>
                 </div>
             </form>
         </Form>
