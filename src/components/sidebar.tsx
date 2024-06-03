@@ -4,15 +4,14 @@ import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { ActiveLink } from "./ui/active-link";
-import { signOut } from "next-auth/react";
-import { useCookies } from 'react-cookie';
+import { SignOutAdmin } from "@/actions/auth";
+
 
 export default function Sidebar() {
-    const [cookies, setCookie, removeCookie] = useCookies(['role_token']);
+
     
     async function handleLogoutClick() {
-        removeCookie('role_token');
-        await signOut();
+       await SignOutAdmin()
     }
     return (
         <Card className="w-64 rounded-none px-0 max-md:hidden">

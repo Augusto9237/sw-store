@@ -41,7 +41,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     throw new Error("User not found.")
                 }
 
-                await cookies().set({ name: "role_token", value: hashSync(user.role)})
+                await cookies().set({ name: "role_token", value: hashSync(user.role), httpOnly: true})
                 return {
                     id: user.id, name: user.name, email: user.email, role: user.role
                 }
