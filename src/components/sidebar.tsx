@@ -5,9 +5,13 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { ActiveLink } from "./ui/active-link";
 import { signOut } from "next-auth/react";
+import { useCookies } from 'react-cookie';
 
 export default function Sidebar() {
+    const [cookies, setCookie, removeCookie] = useCookies(['role_token']);
+    
     async function handleLogoutClick() {
+        removeCookie('role_token');
         await signOut();
     }
     return (

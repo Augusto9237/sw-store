@@ -3,7 +3,8 @@ import { prismaClient } from "./lib/prisma"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import Credentials from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import { compareSync } from "bcrypt-ts"
+import { compareSync, hashSync } from "bcrypt-ts"
+import { cookies } from "next/headers"
 
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -40,6 +41,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     throw new Error("User not found.")
                 }
 
+                await cookies().set({ name: "role_token", value: hashSync(user.role)})
                 return {
                     id: user.id, name: user.name, email: user.email, role: user.role
                 }
@@ -57,6 +59,19 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             },
         }),
     ],
+    callbacks: {
+        async jwt({ token, user }) {
+
+            if (user) {
+                token.id = user.id
+            }
+            return token
+        },
+        async session({ session, token }) {
+            session.user.id = token.id as string
+            return session
+        },
+    },
     pages: {
         signIn: "/login",
     },
