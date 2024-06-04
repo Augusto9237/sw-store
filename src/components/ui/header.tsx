@@ -129,7 +129,7 @@ export default function Header() {
                 </Sheet>
 
                 <Link href="/">
-                    <h1 className="font-semibold text-lg md:text-2xl">
+                    <h1 className="font-semibold text-base md:text-2xl">
                         <span className="text-primary">AUTO</span> Tech
                     </h1>
                 </Link>
@@ -159,7 +159,7 @@ export default function Header() {
                         <div className="relative">
                             <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
                             <Input
-                                className="w-full bg-accent shadow-none appearance-none pl-8 max-lg:w-2/3 "
+                                className="w-full bg-accent shadow-none appearance-none pl-8"
                                 placeholder="Pesquisar"
                                 type="search"
                                 onChange={(e) => setSearch(e.target.value)}
