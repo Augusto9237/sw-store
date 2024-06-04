@@ -41,7 +41,7 @@ export default function Header() {
     }
 
     return (
-        <Card className="p-[1.875rem]" >
+        <Card className="px-[1.875rem] py-2 sm:p-[1.875rem]" >
             <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-4 lg:gap-8">
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">
@@ -129,7 +129,7 @@ export default function Header() {
                 </Sheet>
 
                 <Link href="/">
-                    <h1 className="font-semibold text-base md:text-2xl">
+                    <h1 className="font-semibold text-lg  md:text-2xl">
                         <span className="text-primary">AUTO</span> Tech
                     </h1>
                 </Link>
@@ -154,7 +154,7 @@ export default function Header() {
                     </Link>
                 </div>
 
-                <div className="w-full flex-1">
+                <div className="w-full flex-1 max-sm:hidden">
                     <form onSubmit={handleSearchSubmit} >
                         <div className="relative">
                             <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
@@ -248,6 +248,18 @@ export default function Header() {
                     </Sheet>
                 </div>
             </div>
+
+            <form onSubmit={handleSearchSubmit} className="relative w-full hidden max-sm:flex mt-2" >
+                <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                <Input
+                    className="w-full bg-accent shadow-none appearance-none pl-8"
+                    placeholder="Pesquisar"
+                    type="search"
+                    onChange={(e) => setSearch(e.target.value)}
+                    value={search}
+                />
+            </form>
+
         </Card>
     )
 }
