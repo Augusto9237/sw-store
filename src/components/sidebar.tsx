@@ -9,9 +9,9 @@ import { SignOutAdmin } from "@/actions/auth";
 
 export default function Sidebar() {
 
-    
+
     async function handleLogoutClick() {
-       await SignOutAdmin()
+        await SignOutAdmin()
     }
     return (
         <Card className="w-64 rounded-none px-0 max-md:hidden">
@@ -28,12 +28,19 @@ export default function Sidebar() {
                 </ActiveLink>
 
                 <ActiveLink href="/order">
-                    <ShoppingCartIcon size={16}/>
+                    <ShoppingCartIcon size={16} />
                     Pedidos
                 </ActiveLink>
 
+                <div className="lg:hidden">
+                    <ActiveLink href="/catgories">
+                        <Boxes size={16} />
+                        Categorias
+                    </ActiveLink>
+                </div>
+
                 <ActiveLink href="/products">
-                    <Boxes  size={16} />
+                    <Boxes size={16} />
                     Produtos
                 </ActiveLink>
 
@@ -49,7 +56,7 @@ export default function Sidebar() {
             </CardContent>
 
             <CardFooter className="absolute bottom-0 left-0">
-                <Button onClick={handleLogoutClick}  variant='outline' className="w-full justify-start gap-2">
+                <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
                     <LogOutIcon size={16} />
                     Fazer Logout
                 </Button>
