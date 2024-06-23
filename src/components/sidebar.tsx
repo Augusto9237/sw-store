@@ -56,7 +56,7 @@ export default function Sidebar() {
             </CardContent>
 
             <CardFooter className="absolute bottom-0 left-0 px-6 max-xl:px-4">
-                <Button onClick={handleLogoutClick} variant='outline' className="w-full">
+                <Button onClick={handleLogoutClick} variant='outline' className="w-full gap-2">
                     <LogOutIcon size={16} />
                     Fazer Logout
                 </Button>

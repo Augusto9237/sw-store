@@ -85,7 +85,7 @@ export default function HeaderAdmin() {
                         </Button>
                     </SheetTrigger>
 
-                    <SheetContent side='left' className="w-full max-md:max-w-[240px] md:max-w-[440px] px-0">
+                    <SheetContent side='left' className="w-full max-md:max-w-[240px] max-lg:max-w-[340px] px-0">
                         {status === "authenticated" && data?.user && (
                             <div className="flex-col">
                                 <div className="flex items-center gap-2 py-4 px-6">
@@ -106,7 +106,7 @@ export default function HeaderAdmin() {
                         )}
 
                         <div className="mt-4 flex flex-col gap-2">
-                            <CardContent className="w-full flex-1 px-0 pt-8 flex flex-col gap-8 ">
+                            <CardContent className="w-full flex-1 px-0 flex flex-col gap-8 ">
                                 <ActiveLink href="/dashboard">
                                     <LucideLayoutDashboard size={16} />
                                     Dashboard
@@ -125,6 +125,11 @@ export default function HeaderAdmin() {
                                 <ActiveLink href="/users">
                                     <Users size={16} />
                                     Clientes
+                                </ActiveLink>
+
+                                <ActiveLink href="/team">
+                                    <Users size={16} />
+                                    Usuários
                                 </ActiveLink>
                             </CardContent>
                         </div>

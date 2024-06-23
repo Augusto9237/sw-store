@@ -28,11 +28,13 @@ export function TableUsersTeam() {
                             user?.role === 'admin' && 'Administrador'
                         }</TableCell>
                         <TableCell className="flex items-center gap-2">
-                            <Button variant='save' size='icon' className="h-8 w-8">
+                            <Button variant='save' className='gap-2' >
                                 <Pencil size={16} />
+                                Editar
                             </Button>
-                            <Button variant='outline' size='icon' className="h-9 w-9">
+                            <Button variant='outline' className='gap-2' >
                                 <Trash2 size={16} />
+                                Excluir
                             </Button>
                         </TableCell>
                     </TableRow>

@@ -30,7 +30,9 @@ export default function TableOrder() {
     return (
         <>
             {orders.length < 1 && (
-                <div className="w-full">Nenhum pedido até o momento</div>
+                <div className="flex w-full justify-center gap-2 p-4">
+                    <h1 className="font-semibold">Nenhum pedido até o monento</h1>
+                </div>
             )}
             {orders.length > 0 && (
                 <Table className="max-sm:overflow-x-auto">
