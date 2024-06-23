@@ -16,7 +16,7 @@ export function TableUsersTeam() {
                     <TableHead>Nome</TableHead>
                     <TableHead>E-mail</TableHead>
                     <TableHead>Cargo</TableHead>
-                    <TableHead>Ações</TableHead>
+                    <TableHead className="text-center">Ações</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -27,14 +27,19 @@ export function TableUsersTeam() {
                         <TableCell>{
                             user?.role === 'admin' && 'Administrador'
                         }</TableCell>
-                        <TableCell className="flex items-center gap-2">
+                        <TableCell className="flex items-center gap-4 justify-center">
                             <Button variant='save' className='gap-2' >
                                 <Pencil size={16} />
-                                Editar
+                                <span className="max-sm:hidden">
+                                    Editar
+                                </span>
+
                             </Button>
                             <Button variant='outline' className='gap-2' >
                                 <Trash2 size={16} />
-                                Excluir
+                                <span className="max-sm:hidden">
+                                    Excluir
+                                </span>
                             </Button>
                         </TableCell>
                     </TableRow>

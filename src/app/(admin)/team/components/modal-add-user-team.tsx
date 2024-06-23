@@ -83,7 +83,9 @@ export default function ModalAddUserTeam() {
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
                 <Button className="uppercase font-bold flex items-center gap-2">
                     <Plus size={16} />
-                    Usuário
+                    <span className="max-sm:hidden">
+                        Usuário
+                    </span>
                 </Button>
             </DialogTrigger>
 
@@ -95,7 +97,7 @@ export default function ModalAddUserTeam() {
 
                     <Form {...form}>
                         <form
-                            onSubmit={form.handleSubmit(onSubmit)} 
+                            onSubmit={form.handleSubmit(onSubmit)}
                             className="space-y-8">
                             <FormField
                                 control={form.control}
