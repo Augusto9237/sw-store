@@ -13,7 +13,7 @@ export default function CategoriesList() {
     const { categories} = useContext(AdminContext)
 
     return (
-        <Card className='p-5 md:max-w-[355px] max-md:max-h-fit w-full h-full min-h-fit max-md:min-h-[300px] overflow-hidden'>
+        <Card className='p-5 lg:max-w-[355px] w-full h-full max-sm:min-h-screen max-lg:min-h-[400px] overflow-hidden'>
             <div className="flex w-full justify-between items-center">
                 <h2 className='text-lg font-bold leading-none'>Categorias</h2>
                 <ModalAddCategory />
@@ -26,7 +26,7 @@ export default function CategoriesList() {
             )}
 
             {categories.length > 0 && (
-                <CardContent className='w-full p-0 gap-4 flex flex-col max-md:grid grid-cols-2 mt-8'>
+                <CardContent className='w-full p-0 gap-4 flex flex-col max-lg:grid grid-cols-2 max-sm:grid-cols-1 mt-8'>
                     {categories.map(category => (
                         <div key={category.id} className="flex border border-input bg-background hover:bg-accent/60 hover:text-accent-foreground w-full justify-between px-2 py-1 items-center gap-2 rounded-lg">
                             <Link href={`/category/${category.slug}`} className="flex gap-2">
