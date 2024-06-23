@@ -13,7 +13,7 @@ interface ActiveLinkProps {
 export function ActiveLink({ children, href }: ActiveLinkProps) {
     const router = useRouter()
     const path = usePathname()
-    const style = clsx('flex pl-8 py-2 border-l-8 gap-2 items-center font-semibold hover:bg-muted/50 hover:border-muted/50', path === href ? 'text-primary  border-primary hover:border-primary' : 'border-transparent')
+    const style = clsx('flex pl-8 max-xl:pl-6 py-2 border-l-8 gap-2 items-center font-semibold hover:bg-muted/50 hover:border-muted/50', path === href ? 'text-primary  border-primary hover:border-primary' : 'border-transparent')
 
     function handleClick (e: { preventDefault: () => void; }) {
         e.preventDefault()

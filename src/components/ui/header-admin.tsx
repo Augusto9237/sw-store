@@ -79,16 +79,16 @@ export default function HeaderAdmin() {
         <Card className="px-8 max-md:px-4 min-h-[74px] w-full items-center flex rounded-none border-x-0" >
             <div className="flex justify-between  items-center w-full max-md:gap-4">
                 <Sheet>
-                    <SheetTrigger asChild className="md:hidden">
+                    <SheetTrigger asChild className="lg:hidden mr-4">
                         <Button size='icon' variant='outline'>
                             <MenuIcon />
                         </Button>
                     </SheetTrigger>
 
-                    <SheetContent side='left' className="w-full max-md:max-w-[100px] md:max-w-[440px]">
+                    <SheetContent side='left' className="w-full max-md:max-w-[240px] md:max-w-[440px] px-0">
                         {status === "authenticated" && data?.user && (
                             <div className="flex-col">
-                                <div className="flex items-center gap-2 py-4">
+                                <div className="flex items-center gap-2 py-4 px-6">
                                     <Avatar>
                                         <AvatarFallback>
                                             {data.user.name?.[0].toUpperCase()}
@@ -142,7 +142,7 @@ export default function HeaderAdmin() {
                     <div className="w-full flex-1">
                         <form onSubmit={handleSearchSubmit}>
                             <div className="relative">
-                                <SearchIcon className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
                                 <Input
                                     className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
                                     placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'order' && 'pedidos' || path.slice(1) === 'users' && 'usuários'}`}

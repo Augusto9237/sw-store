@@ -12,25 +12,25 @@ export default async function DashboardPage() {
 
 
   return (
-    <div className='flex flex-1 flex-col h-full gap-8'>
-      <div className='grid grid-cols-4 gap-8 max-md:gap-4 w-full'>
+    <div className='flex w-full flex-col h-full gap-8 max-lg:gap-6'>
+      <div className='grid grid-cols-3 gap-8 max-lg:gap-4 max-md:gap-2 w-full'>
         <CardTotalOrders />
         <CardInvoicingTotal />
         <CardTotalUsers />
       </div>
 
-      <div className='flex max-md:flex-col  h-full gap-8'>
-        <Card className='p-5  md:max-w-[355px] w-full h-full min-h-fit max-md:min-h-[380px] overflow-hidden'>
+      <div className='flex max-lg:flex-col  h-full gap-8 max-lg:gap-4 w-full'>
+        <Card className='p-5 w-full lg:max-w-[355px]  h-full min-h-fit max-lg:min-h-[380px] overflow-hidden'>
           <h2 className='text-lg font-bold'>Top Produtos</h2>
 
-          <CardContent className='w-full p-0 gap-4 flex flex-col max-md:grid grid-cols-2  mt-8'>
+          <CardContent className='w-full p-0 gap-4 flex flex-col max-lg:grid grid-cols-2 max-sm:grid-cols-1 mt-8'>
             {products.map(product => (
               <TopProductItem key={product.id} product={product} />
             ))}
           </CardContent>
         </Card>
 
-        <div className='flex flex-1 flex-col p-5 bg-background rounded-lg'>
+        <div className='flex w-full max-sm:mb-4 flex-col p-5 bg-background rounded-lg'>
           <h2 className='text-lg font-bold'>Ultimos Pedidos</h2>
           <TableOrder />
         </div>

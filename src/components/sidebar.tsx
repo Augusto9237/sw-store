@@ -9,14 +9,14 @@ import { SignOutAdmin } from "@/actions/auth";
 
 export default function Sidebar() {
 
-
     async function handleLogoutClick() {
         await SignOutAdmin()
     }
+    
     return (
-        <Card className="w-64 rounded-none px-0 max-md:hidden">
-            <CardHeader className="pl-10">
-                <Link href="/dashboard" className="font-semibold text-lg md:text-2xl">
+        <Card className="w-64 rounded-none px-0 max-lg:hidden">
+            <CardHeader className="pl-10 max-xl:pl-8">
+                <Link href="/dashboard" className="font-semibold text-2xl max-lg:text-lg flex flex-nowrap">
                     <span className="text-primary">Auto</span> Tech
                 </Link>
             </CardHeader>
@@ -55,8 +55,8 @@ export default function Sidebar() {
                 </ActiveLink>
             </CardContent>
 
-            <CardFooter className="absolute bottom-0 left-0">
-                <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
+            <CardFooter className="absolute bottom-0 left-0 px-6 max-xl:px-4">
+                <Button onClick={handleLogoutClick} variant='outline' className="w-full">
                     <LogOutIcon size={16} />
                     Fazer Logout
                 </Button>
