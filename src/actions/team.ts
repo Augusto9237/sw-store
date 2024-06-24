@@ -31,3 +31,33 @@ export const createUserTeam = async (
 
     return revalidatePath('/team');
 };
+
+export const updateUserTeam = async (
+    user: UserTeamProps
+) => {
+    await prismaClient.userTeam.update({
+        where: {
+            id: user.id,
+        },
+        data: {
+            name: user.name,
+            email: user.email,
+            password: hashSync(user.password),
+            role: user.role
+        },
+    });
+
+    return revalidatePath('/team');
+};
+
+export const deleteUserTeam = async (
+    id: string,
+) => {
+    await prismaClient.userTeam.delete({
+        where: {
+            id,
+        },
+    });
+
+    return revalidatePath('/team');
+};

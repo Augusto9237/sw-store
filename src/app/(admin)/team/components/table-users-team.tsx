@@ -2,12 +2,33 @@
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AdminContext } from "@/providers/admin";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useContext } from "react";
+import ModalEditUserTeam from "./modal-edit-user-team";
+import { deleteUserTeam, getUsersTeam } from "@/actions/team";
+import { toast } from "@/components/ui/use-toast";
 
 
 export function TableUsersTeam() {
-    const { usersTeam } = useContext(AdminContext);
+    const { usersTeam, setUsersTeam } = useContext(AdminContext);
+
+   async function handleDeleteUser(id: string) {
+       try {
+           await deleteUserTeam(id)
+           const { userTeam } = await getUsersTeam()
+           setUsersTeam(userTeam)
+           
+           toast({
+               variant: "cancel",
+               title: "🗑️ Usuário deletado",
+           })
+       } catch (error) {
+           toast({
+               variant: 'cancel',
+               title: "⛔  Algo deu errado, tente novamente!",
+           })
+       }
+    }
 
     return (
         <Table>
@@ -28,14 +49,9 @@ export function TableUsersTeam() {
                             user?.role === 'admin' && 'Administrador'
                         }</TableCell>
                         <TableCell className="flex items-center gap-4 justify-center">
-                            <Button variant='save' className='gap-2' >
-                                <Pencil size={16} />
-                                <span className="max-sm:hidden">
-                                    Editar
-                                </span>
+                            <ModalEditUserTeam user={user} />
 
-                            </Button>
-                            <Button variant='outline' className='gap-2' >
+                            <Button variant='outline' className='gap-2' onClick={() => handleDeleteUser(user.id)} >
                                 <Trash2 size={16} />
                                 <span className="max-sm:hidden">
                                     Excluir

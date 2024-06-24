@@ -79,7 +79,7 @@ export default function HeaderAdmin() {
         <Card className="px-8 max-md:px-4 min-h-[74px] w-full items-center flex rounded-none border-x-0" >
             <div className="flex justify-between  items-center w-full max-md:gap-4">
                 <Sheet>
-                    <SheetTrigger asChild className="lg:hidden mr-4">
+                    <SheetTrigger asChild className="lg:hidden">
                         <Button size='icon' variant='outline'>
                             <MenuIcon />
                         </Button>
@@ -167,7 +167,9 @@ export default function HeaderAdmin() {
                 <div className="flex items-center gap-2">
                     <UserCog />
                     {status === "authenticated" && data?.user && (
-                        data.user.name
+                        <span className="max-sm:hidden">
+                            {data.user.name}
+                        </span>
                     )}
                 </div>
             </div>

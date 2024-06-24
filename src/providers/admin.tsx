@@ -49,6 +49,13 @@ interface ICartContext {
         createdAt: Date;
         updatedAt: Date;
     }[]>>;
+    setUsersTeam: Dispatch<SetStateAction<{
+        id: string;
+        name: string;
+        email: string;
+        password: string;
+        role: string;
+    }[]>>
     loading: boolean
 }
 
@@ -58,6 +65,7 @@ export const AdminContext = createContext<ICartContext>({
     setProducts: () => { },
     setCategories: () => { },
     setUsers: () => { },
+    setUsersTeam: () => { },
     users: [],
     usersTeam: [],
     orders: [],
@@ -96,7 +104,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, users, usersTeam, orders, search, setSearch, setUsers, setProducts, setCategories, loading }}>
+        <AdminContext.Provider value={{ products, categories, users, usersTeam, orders, search, setSearch, setUsers, setUsersTeam, setProducts, setCategories, loading }}>
             {children}
         </AdminContext.Provider>
     )

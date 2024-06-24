@@ -24,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { Pencil, Plus } from "lucide-react"
-import { createCategory, getCategories, updateCategory } from "@/actions/category"
+import { getCategories, updateCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { Category } from "@prisma/client"
 import { useContext, useEffect, useState } from "react"
