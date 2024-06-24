@@ -13,7 +13,7 @@ export default function CategoriesList() {
     const { categories} = useContext(AdminContext)
 
     return (
-        <Card className='p-5 lg:max-w-[355px] w-full h-full max-sm:min-h-screen max-lg:min-h-[400px] overflow-hidden'>
+        <Card className='p-5 w-full h-full max-sm:min-h-fit max-lg:min-h-[400px] overflow-hidden'>
             <div className="flex w-full justify-between items-center">
                 <h2 className='text-lg font-bold leading-none'>Categorias</h2>
                 <ModalAddCategory />

@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 
 export default function ProductList() {
-    const { products, categories, setProducts, search, loading } = useContext(AdminContext)
+    const { products, setProducts, search, loading } = useContext(AdminContext)
     const [ref, inView] = useInView();
     const [totaLoading, setTotalLoading] = useState(false);
     const { toast } = useToast()

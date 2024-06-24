@@ -79,7 +79,7 @@ export default function HeaderAdmin() {
         <Card className="px-8 max-md:px-4 min-h-[74px] w-full items-center flex rounded-none border-x-0" >
             <div className="flex justify-between  items-center w-full max-md:gap-4">
                 <Sheet>
-                    <SheetTrigger asChild className="lg:hidden">
+                    <SheetTrigger asChild className="lg:hidden md:mr-4">
                         <Button size='icon' variant='outline'>
                             <MenuIcon />
                         </Button>

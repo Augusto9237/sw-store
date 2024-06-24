@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { CATEGORY_ICON } from "@/constants/category-icon";
-import { Plus, X, Trash2} from "lucide-react"
+import { Plus, X, Trash2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { createProduct } from "@/actions/products"
 import { AdminContext } from "@/providers/admin"
@@ -105,7 +105,9 @@ export default function ModalAddProduct() {
             <DialogTrigger asChild>
                 <Button className="uppercase font-bold flex items-center gap-2">
                     <Plus size={16} />
-                    Produto
+                    <span className="max-sm:hidden">
+                        Produto
+                    </span>
                 </Button>
             </DialogTrigger>
             <DialogContent>
