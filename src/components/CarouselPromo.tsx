@@ -41,8 +41,8 @@ export default function CarouselPromo() {
             </CarouselContent>
 
 
-            <CarouselPrevious className="left-4" />
-            <CarouselNext className="right-4" />
+            <CarouselPrevious className="left-4 opacity-20 hover:opacity-50" />
+            <CarouselNext className="right-4 opacity-20 hover:opacity-50" />
 
 
         </Carousel>
