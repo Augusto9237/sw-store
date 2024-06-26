@@ -27,10 +27,10 @@ export function CustomersTable() {
                     
                     return (
                         <TableRow key={customer.id} className='border-b-[1px] max-md:text-sm'>
-                            <TableCell className="flex text-nowrap truncate min-w-fit overflow-hidden">{customer?.name}</TableCell>
-                            <TableCell className="flex text-nowrap truncate min-w-fit overflow-hidden">{customer?.email}</TableCell>
-                            <TableCell className="flex text-nowrap truncate min-w-fit overflow-hidden">{format(new Date(ordersFiltered[0].createdAt), 'dd/MM/yyyy')}</TableCell>
-                            <TableCell className="flex text-nowrap truncate min-w-fit overflow-hidden">{formatReal(Number(total))}</TableCell>
+                            <TableCell>{customer?.name}</TableCell>
+                            <TableCell>{customer?.email}</TableCell>
+                            <TableCell>{format(new Date(ordersFiltered[0].createdAt), 'dd/MM/yyyy')}</TableCell>
+                            <TableCell>{formatReal(Number(total))}</TableCell>
                         </TableRow>
                     )
                 }
