@@ -54,6 +54,7 @@ export default function ModalEditUserTeam({ user }: ModalEditUserProps) {
         role: z.string().min(2, {
             message: "Por favor, preencha o campo cargo",
         }),
+        newPassword: z.optional(z.string().min(4, "Por favor, preencha o campo nova senha"))
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -68,7 +69,7 @@ export default function ModalEditUserTeam({ user }: ModalEditUserProps) {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            await updateUserTeam({ id: user.id, ...values });
+            await updateUserTeam({ id: user.id, ...values, newPassword: values.newPassword });
             const { userTeam } = await getUsersTeam()
             setUsersTeam(userTeam)
             form.reset();
@@ -167,7 +168,20 @@ export default function ModalEditUserTeam({ user }: ModalEditUserProps) {
                                     <FormItem>
                                         <FormLabel className="text-accent-foreground">Senha</FormLabel>
                                         <FormControl>
-                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite a senha' type="password" {...field} />
+                                            <Input disabled className="placeholder:text-accent-foreground/50" placeholder='Digite a senha' type="password" value={user.password} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={form.control}
+                                name="newPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-accent-foreground">Nova senha</FormLabel>
+                                        <FormControl>
+                                            <Input className="placeholder:text-accent-foreground/50 opacity-30 focus:opacity-100" placeholder='Digite a nova senha' type="password" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

@@ -8,7 +8,8 @@ interface UserTeamProps {
     name: string;
     email: string;
     password: string;
-    role: string
+    role: string;
+    newPassword?: string;
 }
 
 export async function getUsersTeam() {
@@ -33,8 +34,23 @@ export const createUserTeam = async (
 };
 
 export const updateUserTeam = async (
-    user: UserTeamProps
+    user: UserTeamProps,
 ) => {
+
+    if (user.newPassword) {
+        await prismaClient.userTeam.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                name: user.name,
+                email: user.email,
+                password: hashSync(user.newPassword),
+                role: user.role
+            },
+        });
+    }
+
     await prismaClient.userTeam.update({
         where: {
             id: user.id,
@@ -42,7 +58,6 @@ export const updateUserTeam = async (
         data: {
             name: user.name,
             email: user.email,
-            password: hashSync(user.password),
             role: user.role
         },
     });
