@@ -13,11 +13,11 @@ import { usePathname } from "next/navigation";
 import { Input } from "./input";
 import { getProducts } from "@/actions/products";
 import { AdminContext } from "@/providers/admin";
-import { getUsers } from "@/actions/users";
+import { getCustomers } from "@/actions/customers";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
-    const { setProducts, setUsers, search, setSearch } = useContext(AdminContext)
+    const { setProducts, setCustomers, search, setSearch } = useContext(AdminContext)
     const path = usePathname();
 
     async function resetData() {
@@ -31,8 +31,8 @@ export default function HeaderAdmin() {
         }
 
         if (path.slice(1) === 'users') {
-            const { users } = await getUsers()
-            setUsers(users)
+            const {customers} = await getCustomers()
+            setCustomers(customers)
         }
     }
 
@@ -55,8 +55,8 @@ export default function HeaderAdmin() {
         }
 
         if (path.slice(1) === 'users') {
-            const { users } = await getUsers(search)
-            setUsers(users)
+            const { customers } = await getCustomers(search)
+            setCustomers(customers)
         }
     }
 
@@ -119,7 +119,7 @@ export default function HeaderAdmin() {
                                     Produtos
                                 </ActiveLink>
 
-                                <ActiveLink href="/users">
+                                <ActiveLink href="/customers">
                                     <Users size={16} />
                                     Clientes
                                 </ActiveLink>
@@ -147,7 +147,7 @@ export default function HeaderAdmin() {
                                 <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
                                 <Input
                                     className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
-                                    placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'order' && 'pedidos' || path.slice(1) === 'users' && 'clientes' || path.slice(1) === 'team' && 'usuários'}`}
+                                    placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'order' && 'pedidos' || path.slice(1) === 'customers' && 'clientes' || path.slice(1) === 'team' && 'usuários'}`}
                                     type="search"
                                     onChange={(e) => setSearch(e.target.value)}
                                     value={search}

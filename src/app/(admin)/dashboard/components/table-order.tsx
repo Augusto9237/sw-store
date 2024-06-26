@@ -16,7 +16,7 @@ import { AdminContext } from "@/providers/admin";
 
 
 export default function TableOrder() {
-    const { users, orders } = useContext(AdminContext)
+    const { customers, orders } = useContext(AdminContext)
 
     const total = useMemo(() => {
         return orders.reduce((acc, order) => {
@@ -48,13 +48,13 @@ export default function TableOrder() {
                     </TableHeader>
                     <TableBody>
                         {orders.map(order => {
-                            const user = users?.find(user => user.id === order.userId);
+                            const customer = customers?.find(customer => customer.id === order.userId);
 
                             const date = format(new Date(order.createdAt), 'dd/MM/yyyy')
 
                             return (
                                 <TableRow key={order.id} className='border-b-[1px] max-md:text-sm'>
-                                    <TableCell>{user?.name}</TableCell>
+                                    <TableCell>{customer?.name}</TableCell>
                                     <TableCell>{date}</TableCell>
                                     <TableCell>Cartão de credito</TableCell>
                                     <TableCell>{order.orderProducts.length}</TableCell>

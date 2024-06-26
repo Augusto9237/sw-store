@@ -114,7 +114,7 @@ export default function ModalEditUserTeam({ user }: ModalEditUserProps) {
                                 name="role"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Categoria</FormLabel>
+                                        <FormLabel>Cargo</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={user.role}>
                                             <FormControl>
                                                 <SelectTrigger>

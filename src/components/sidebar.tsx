@@ -44,7 +44,7 @@ export default function Sidebar() {
                     Produtos
                 </ActiveLink>
 
-                <ActiveLink href="/users">
+                <ActiveLink href="/customers">
                     <Users size={16} />
                     Clientes
                 </ActiveLink>

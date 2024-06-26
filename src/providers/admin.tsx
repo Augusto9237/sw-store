@@ -1,9 +1,10 @@
 'use client'
 import { getCategories } from "@/actions/category";
+import { getCustomers } from "@/actions/customers";
 import { getOrders } from "@/actions/order";
 import { getProducts } from "@/actions/products";
 import { getUsersTeam } from "@/actions/team";
-import { getUsers } from "@/actions/users";
+
 import { Category, Prisma, Product, User, UserTeam } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import { Dispatch, ReactNode, SetStateAction, createContext, use, useEffect, useState } from "react";
@@ -11,7 +12,7 @@ import { Dispatch, ReactNode, SetStateAction, createContext, use, useEffect, use
 interface ICartContext {
     products: Product[];
     categories: Category[];
-    users: User[];
+    customers: User[];
     usersTeam: UserTeam[];
     orders: Prisma.OrderGetPayload<{
         include: {
@@ -40,7 +41,7 @@ interface ICartContext {
         slug: string;
         imageUrl: string;
     }[]>>;
-    setUsers: Dispatch<SetStateAction<{
+    setCustomers: Dispatch<SetStateAction<{
         id: string;
         name: string | null;
         email: string;
@@ -64,9 +65,9 @@ export const AdminContext = createContext<ICartContext>({
     categories: [],
     setProducts: () => { },
     setCategories: () => { },
-    setUsers: () => { },
+    setCustomers: () => { },
     setUsersTeam: () => { },
-    users: [],
+    customers: [],
     usersTeam: [],
     orders: [],
     search: "",
@@ -77,7 +78,7 @@ export const AdminContext = createContext<ICartContext>({
 const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([])
     const [categories, setCategories] = useState<Category[]>([])
-    const [users, setUsers] = useState<User[]>([]);
+    const [customers, setCustomers] = useState<User[]>([]);
     const [usersTeam, setUsersTeam] = useState<UserTeam[]>([]);
     const [orders, setOrders] = useState<ICartContext['orders']>([]);
     const [search, setSearch] = useState("");
@@ -86,13 +87,13 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     async function loadMoreData() {
         const { products } = await getProducts('', 18);
         const { categories } = await getCategories()
-        const { users } = await getUsers()
+        const { customers } = await getCustomers()
         const { orders } = await getOrders()
         const { userTeam } = await getUsersTeam()
 
         setProducts(products)
         setCategories(categories)
-        setUsers(users)
+        setCustomers(customers)
         setOrders(orders)
         setUsersTeam(userTeam)
     }
@@ -104,7 +105,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, users, usersTeam, orders, search, setSearch, setUsers, setUsersTeam, setProducts, setCategories, loading }}>
+        <AdminContext.Provider value={{ products, categories, customers, usersTeam, orders, search, setSearch, setCustomers, setUsersTeam, setProducts, setCategories, loading }}>
             {children}
         </AdminContext.Provider>
     )
