@@ -38,6 +38,7 @@ import { Category } from "@prisma/client"
 import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "@/providers/admin"
 import { get } from "http"
+import ModalAddImage from "./modal-add-image"
 
 interface Product {
     id: string;

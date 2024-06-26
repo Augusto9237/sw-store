@@ -37,6 +37,7 @@ import { toast } from "@/components/ui/use-toast"
 import { createProduct } from "@/actions/products"
 import { AdminContext } from "@/providers/admin"
 import { useContext } from "react"
+import ModalAddImage from "./modal-add-image"
 
 export default function ModalAddProduct() {
     const { categories } = useContext(AdminContext)
@@ -234,6 +235,7 @@ export default function ModalAddProduct() {
 
                                 return (
                                     <div key={field.id} className="flex items-center justify-between w-full gap-2">
+                                        <ModalAddImage/>
                                         <Input
                                             type='url'
                                             className="placeholder:text-accent-foreground/50"

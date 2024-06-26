@@ -24,12 +24,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Plus } from "lucide-react"
+import { ImagePlus, Plus } from "lucide-react"
 import { createCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { useState } from "react"
 
-export default function ModalAddCategory() {
+export default function ModalAddImage() {
     const [isOpen, setIsOpen] = useState(false);
     const formSchema = z.object({
         name: z.string().min(2, {
@@ -59,7 +59,7 @@ export default function ModalAddCategory() {
             form.reset();
 
             setIsOpen(false);
-            
+
             toast({
                 variant: 'success',
                 title: "✅  Categoria criada com sucesso!",
@@ -76,54 +76,30 @@ export default function ModalAddCategory() {
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-                <Button className="uppercase font-bold flex items-center gap-2">
-                    <Plus size={16} />
-                    Categoria
+                <Button type='button' size='icon' variant='outline'>
+                    <ImagePlus size={16} />
                 </Button>
             </DialogTrigger>
 
             {isOpen && (
-                <DialogContent>
+                <DialogContent className="max-w-[360px] w-full">
                     <DialogHeader>
-                        <DialogTitle className="text-center">Adicionar Categoria</DialogTitle>
+                        <DialogTitle className="text-center">Adicionar Imagem</DialogTitle>
                     </DialogHeader>
 
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="text-accent-foreground">Nome</FormLabel>
-                                        <FormControl>
-                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome da categoria' {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="slug"
-                                render={({ field }) => (
-                                    <FormItem >
-                                        <FormLabel className="text-accent-foreground">Slug</FormLabel>
-                                        <FormControl>
-                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o slug da categoria' {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            <div className="w-full h-[260px]">
+                                <img src="https://cdn.pixabay.com/photo/2012/04/11/11/32/box-27581_640.png" alt="" className="w-full h-full" />
+                            </div>
                             <FormField
                                 control={form.control}
                                 name="imageUrl"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="text-accent-foreground">Imagem da categoria</FormLabel>
+                                        <FormLabel className="text-accent-foreground">Anexar imagem do produto</FormLabel>
                                         <FormControl>
-                                            <Input type='url' className="placeholder:text-accent-foreground/50" placeholder='Digite ou cole a url da imagem da categoria' {...field} />
+                                            <Input type="file" className="placeholder:text-accent-foreground/50" placeholder='Digite ou cole a url da imagem da categoria' {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
