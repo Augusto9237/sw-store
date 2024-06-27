@@ -59,7 +59,7 @@ export default function ModalAddCategory() {
             form.reset();
 
             setIsOpen(false);
-            
+
             toast({
                 variant: 'success',
                 title: "✅  Categoria criada com sucesso!",
@@ -78,7 +78,9 @@ export default function ModalAddCategory() {
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
                 <Button className="uppercase font-bold flex items-center gap-2">
                     <Plus size={16} />
-                    Categoria
+                    <span className="max-md:hidden">
+                        Categoria
+                    </span>
                 </Button>
             </DialogTrigger>
 

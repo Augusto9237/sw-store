@@ -57,7 +57,7 @@ export default function TableOrder() {
                     <TableHead>Status</TableHead>
                     <TableHead>Itens</TableHead>
                     <TableHead className="text-center">Total</TableHead>
-                    <TableHead className="text-end">Ações</TableHead>
+                    <TableHead className="text-center">Ações</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -77,8 +77,11 @@ export default function TableOrder() {
                                 <TableCell className="flex justify-end gap-4 items-center">
                                     <ModalOrder order={order} />
                                     <ModalEditOrder order={order} />
-                                    <Button variant='outline' size='icon' className="h-9 w-9" onClick={() => handleDeleteOrder(order.id)}>
+                                    <Button variant='outline' className='gap-2' onClick={() => handleDeleteOrder(order.id)}>
                                         <Trash2 size={16} />
+                                        <span className="max-lg:hidden">
+                                            Excluir
+                                        </span>
                                     </Button>
                                 </TableCell>
                             </TableRow>
