@@ -28,6 +28,7 @@ import { ImagePlus, Plus } from "lucide-react"
 import { createCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { useState } from "react"
+import { Progress } from "@/components/ui/progress"
 
 export default function ModalAddImage() {
     const [isOpen, setIsOpen] = useState(false);
@@ -91,6 +92,7 @@ export default function ModalAddImage() {
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                             <div className="w-full h-[260px]">
                                 <img src="https://cdn.pixabay.com/photo/2012/04/11/11/32/box-27581_640.png" alt="" className="w-full h-full" />
+                                <Progress value={33} />
                             </div>
                             <FormField
                                 control={form.control}
