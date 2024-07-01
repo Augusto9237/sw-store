@@ -11,8 +11,8 @@ export default async function DashboardPage() {
   const { products } = await getProducts('', 8);
 
   return (
-    <div className='flex  w-full h-full flex-col gap-8 max-lg:gap-6'>
-      <div className='grid grid-cols-3 gap-8 max-lg:gap-4 max-md:gap-2 w-full'>
+    <div className='flex  w-full h-full flex-col'>
+      <div className='grid grid-cols-3 gap-8 max-lg:gap-4 max-md:gap-2 w-full mb-8 max-sm:mb-4'>
         <CardTotalOrders />
         <CardInvoicingTotal />
         <CardTotalUsers />
