@@ -14,6 +14,7 @@ import { Input } from "./input";
 import { getProducts } from "@/actions/products";
 import { AdminContext } from "@/providers/admin";
 import { getCustomers } from "@/actions/customers";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
@@ -31,7 +32,7 @@ export default function HeaderAdmin() {
         }
 
         if (path.slice(1) === 'users') {
-            const {customers} = await getCustomers()
+            const { customers } = await getCustomers()
             setCustomers(customers)
         }
     }
@@ -161,14 +162,33 @@ export default function HeaderAdmin() {
                     <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
                 )}
 
-                <div className="flex items-center gap-2">
-                    <UserCog />
+                <Popover>
                     {status === "authenticated" && data?.user && (
-                        <span className="max-sm:hidden">
-                            {data.user.name}
-                        </span>
+                        <PopoverTrigger asChild className="max-md:hidden">
+                            <div className="flex gap-2">
+                                <UserCog />
+                                {data.user.name}
+                            </div>
+                        </PopoverTrigger>
                     )}
-                </div>
+
+                    {status === "authenticated" && data?.user && (
+                        <PopoverContent className="max-md:hidden">
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center gap-2">
+                                    Minha conta
+                                </div>
+
+                                <Separator />
+
+                                <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
+                                    <LogOutIcon size={16} />
+                                    Fazer Logout
+                                </Button>
+                            </div>
+                        </PopoverContent>
+                    )}
+                </Popover>
             </div>
         </Card>
     )

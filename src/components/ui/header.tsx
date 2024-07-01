@@ -230,7 +230,6 @@ export default function Header() {
                         )}
                     </Popover>
 
-
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button size='icon' variant='outline' className="relative">
