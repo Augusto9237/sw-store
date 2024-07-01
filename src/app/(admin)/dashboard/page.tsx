@@ -10,7 +10,6 @@ export default async function DashboardPage() {
 
   const { products } = await getProducts('', 8);
 
-
   return (
     <div className='flex  w-full h-full flex-col gap-8 max-lg:gap-6'>
       <div className='grid grid-cols-3 gap-8 max-lg:gap-4 max-md:gap-2 w-full'>
@@ -22,12 +21,11 @@ export default async function DashboardPage() {
       <div className='flex max-lg:flex-col h-full gap-8 max-lg:gap-4 w-full'>
         <Card className='p-5 w-full lg:max-w-[380px]  h-full min-h-fit'>
           <h2 className='text-lg font-bold'>Top Produtos</h2>
-          <div className='w-full  gap-4 grid max-sm:gap-2 max-sm:grid-cols-1max-lg:grid-cols-2  mt-8 overflow-y-auto'>
+          <div className='w-full  gap-4 grid max-sm:gap-2 max-sm:grid-cols-1max-lg:grid-cols-2 mt-8 max-sm:mt-4 overflow-y-auto'>
             {products.map(product => (
               <TopProductItem key={product.id} product={product} />
             ))}
           </div>
-
         </Card>
 
         <div className='flex w-full max-sm:mb-4 flex-col p-5 bg-background rounded-lg'>
