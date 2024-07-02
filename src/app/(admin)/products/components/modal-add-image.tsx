@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { ImagePlus, Plus } from "lucide-react"
+import { ImageOff, ImagePlus, Plus } from "lucide-react"
 import { createCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import React, { FormEvent, useState } from "react"
@@ -70,14 +70,22 @@ export default function ModalAddImage() {
                                 <Input name="image" type="file" className="placeholder:text-accent-foreground/50" placeholder='Digite ou cole a url da imagem da categoria' />
                             </div>
                             <div className="grid items-center gap-4">
-                                <Image
-                                    id="image-preview"
-                                    src={imgKey ? `https://sw-store-images.s3.sa-east-1.amazonaws.com/${imgKey}` : '/placeholder-image.webp'}
-                                    alt="Image Preview"
-                                    className="aspect-square w-full rounded-md object-cover"
-                                    width={300}
-                                    height={300}
-                                />
+                                {imgKey !== "" ?
+                                    <>
+                                        <Image
+                                            id="image-preview"
+                                            src={imgKey ? `https://sw-store-images.s3.sa-east-1.amazonaws.com/${imgKey}` : '/placeholder-image.webp'}
+                                            alt="Image Preview"
+                                            className="w-full rounded-md object-cover"
+                                            width={200}
+                                            height={200}
+                                        />
+                                    </>
+                                    :
+                                    <>
+                                        <ImageOff  size={200} className="mx-auto"/>
+                                    </>
+                                }
                             </div>
                         </div>
                         <div className="flex w-full justify-center gap-5 ">
