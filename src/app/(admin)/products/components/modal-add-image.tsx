@@ -72,7 +72,7 @@ export default function ModalAddImage() {
                             <div className="grid items-center gap-4">
                                 <Image
                                     id="image-preview"
-                                    src={imgKey ? `https://sw-store-images.s3.sa-east-1.amazonaws.com/${imgKey}` : '/images/placeholder.png'}
+                                    src={imgKey ? `https://sw-store-images.s3.sa-east-1.amazonaws.com/${imgKey}` : '/placeholder-image.webp'}
                                     alt="Image Preview"
                                     className="aspect-square w-full rounded-md object-cover"
                                     width={300}
