@@ -35,29 +35,20 @@ import React, { FormEvent, useState } from "react"
 import { Progress } from "@/components/ui/progress"
 import { uploadImage } from "@/actions/images"
 import Image from "next/image"
+import { set } from "date-fns"
 
 export default function ModalAddImage() {
     const [isOpen, setIsOpen] = useState(false);
+    const [imgKey, setImgKey] = useState('');
 
-    // const formSchema = z.object({
-    //     image: z.custom<File>((file) => file instanceof File)
-    // })
-
-    // const form = useForm<z.infer<typeof formSchema>>({
-    //     resolver: zodResolver(formSchema),
-    //     defaultValues: {
-    //         image: undefined,
-    //     },
-    // })
-
-    async function onSubmitImage(event: React.FormEvent<HTMLFormElement>){
+    async function onSubmitImage(event: React.FormEvent<HTMLFormElement>) {
         // Evitar o envio padrão do formulário
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
 
-        await uploadImage(formData)
-
+        const { key } = await uploadImage(formData);
+        setImgKey(key);
     }
 
     return (
@@ -79,14 +70,14 @@ export default function ModalAddImage() {
                                 <Input name="image" type="file" className="placeholder:text-accent-foreground/50" placeholder='Digite ou cole a url da imagem da categoria' />
                             </div>
                             <div className="grid items-center gap-4">
-                                {/* <Image
-                                        id="image-preview"
-                                        src={form.getValues().image}
-                                        alt="Image Preview"
-                                        className="aspect-square w-full rounded-md object-cover"
-                                        width={300}
-                                        height={300}
-                                    /> */}
+                                <Image
+                                    id="image-preview"
+                                    src={imgKey ? `https://sw-store-images.s3.sa-east-1.amazonaws.com/${imgKey}` : '/images/placeholder.png'}
+                                    alt="Image Preview"
+                                    className="aspect-square w-full rounded-md object-cover"
+                                    width={300}
+                                    height={300}
+                                />
                             </div>
                         </div>
                         <div className="flex w-full justify-center gap-5 ">

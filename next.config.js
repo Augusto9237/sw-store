@@ -5,6 +5,11 @@ const nextConfig = {
       "fsw-store.s3.sa-east-1.amazonaws.com",
       "bktdbogoranfqtptzqgs.supabase.co",
     ],
+    remotePatterns: [
+      {
+        hostname: "sw-store-images.s3.sa-east-1.amazonaws.com",
+      },
+    ],
   },
 };
 
