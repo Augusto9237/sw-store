@@ -56,7 +56,7 @@ export default function ModalAddProduct() {
             message: "Por favor, preencha o campo descrição",
         }),
         basePrice: z.coerce.number().min(1).max(100),
-        discountPercentage: z.coerce.number().min(1).max(100),
+        discountPercentage: z.coerce.number().min(0).max(100),
         imageUrls: z.array(z.object({
             url: z.string().min(2, {
                 message: "Por favor, preencha o campo URL",
