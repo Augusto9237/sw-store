@@ -1,6 +1,6 @@
 'use client'
 import { FormEvent, useContext, useEffect } from "react";
-import { LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, SearchIcon, ShoppingCartIcon, UserCog, Users } from "lucide-react";
+import { LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, SearchIcon, ShoppingCartIcon, User, UserCog, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
@@ -15,6 +15,7 @@ import { getProducts } from "@/actions/products";
 import { AdminContext } from "@/providers/admin";
 import { getCustomers } from "@/actions/customers";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import ModalMyAccount from "../my-account";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
@@ -161,34 +162,36 @@ export default function HeaderAdmin() {
                 {path.slice(1) === 'dashboard' && (
                     <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
                 )}
+            
+                    <Popover>
+                        {status === "authenticated" && data?.user && (
+                            <PopoverTrigger asChild >
+                                <div className="flex gap-2">
+                                    <User />
 
-                <Popover>
-                    {status === "authenticated" && data?.user && (
-                        <PopoverTrigger asChild className="max-md:hidden">
-                            <div className="flex gap-2">
-                                <UserCog />
-                                {data.user.name}
-                            </div>
-                        </PopoverTrigger>
-                    )}
-
-                    {status === "authenticated" && data?.user && (
-                        <PopoverContent className="max-md:hidden">
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center gap-2">
-                                    Minha conta
+                                    <span className="max-md:hidden">
+                                        Olá,
+                                        {data.user.name}
+                                    </span>
                                 </div>
+                            </PopoverTrigger>
+                        )}
 
-                                <Separator />
+                        {status === "authenticated" && data?.user && (
+                            <PopoverContent className="max-md:max-w-[184px]">
+                                <div className="flex flex-col gap-4">
+                                    <ModalMyAccount />
 
-                                <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
-                                    <LogOutIcon size={16} />
-                                    Fazer Logout
-                                </Button>
-                            </div>
-                        </PopoverContent>
-                    )}
-                </Popover>
+                                    <Separator />
+
+                                    <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
+                                        <LogOutIcon size={16} />
+                                        Fazer Logout
+                                    </Button>
+                                </div>
+                            </PopoverContent>
+                        )}
+                    </Popover>
             </div>
         </Card>
     )

@@ -24,14 +24,42 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Plus } from "lucide-react"
+import { Pencil, User, UserCog } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
-import { useState } from "react"
+import { use, useContext, useEffect, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { createUserTeam } from "@/actions/team"
+import { getUsersTeam, updateUserTeam } from "@/actions/team"
+import { AdminContext } from "@/providers/admin"
+import { useSession } from "next-auth/react"
+import { UserTeam } from "@prisma/client"
 
-export default function ModalAddUserTeam() {
+const defaultValues = {
+    id: "",
+    name: '',
+    email: '',
+    password: '',
+    role: '',
+}
+
+export default function ModalMyAccount() {
+    const { setUsersTeam, usersTeam } = useContext(AdminContext);
+    const { status, data } = useSession();
+    const [myUser, setMyuser] = useState<UserTeam>(defaultValues)
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        if (data?.user) {
+            const user = usersTeam.filter(item => item.email === data.user.email)
+            setMyuser({
+                id: user[0].id,
+                name: user[0].name,
+                email: user[0].email,
+                password: user[0].password,
+                role: user[0].role
+            })
+        }
+    }, [isOpen])
+
     const formSchema = z.object({
         name: z.string().min(2, {
             message: "Por favor, preencha o campo nome",
@@ -45,53 +73,55 @@ export default function ModalAddUserTeam() {
         role: z.string().min(2, {
             message: "Por favor, preencha o campo cargo",
         }),
+        newPassword: z.optional(z.string().min(4, "Por favor, preencha o campo nova senha"))
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            email: "",
-            password: "",
-            role: "",
+            name: myUser.name,
+            email: myUser.email,
+            password: myUser.password,
+            role: myUser.role,
         },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            await createUserTeam(values);
-            form.reset();
+        console.log(values)
+        // try {
+        //     await updateUserTeam({ id: myUser.id, ...values, newPassword: values.newPassword });
+        //     const { userTeam } = await getUsersTeam()
+        //     setUsersTeam(userTeam)
+        //     form.reset();
 
-            setIsOpen(false);
+        //     setIsOpen(false);
 
-            toast({
-                variant: 'success',
-                title: "✅  Usuário criado com sucesso!",
-            })
-        } catch (error) {
-            toast({
-                variant: 'cancel',
-                title: "⛔  Algo deu errado, tente novamente!",
-            })
-        }
+        //     toast({
+        //         variant: 'success',
+        //         title: "✅  Usuário editado com sucesso!",
+        //     })
+        // } catch (error) {
+        //     toast({
+        //         variant: 'cancel',
+        //         title: "⛔  Algo deu errado, tente novamente!",
+        //     })
+        // }
 
     }
 
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-                <Button className="uppercase font-bold flex items-center gap-2">
-                    <Plus size={16} />
-                    <span className="max-sm:hidden">
-                        Usuário
-                    </span>
+                <Button variant='outline' className="w-full justify-start gap-2">
+                    <UserCog size={16} />
+                    Minha conta
                 </Button>
             </DialogTrigger>
 
             {isOpen && (
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle className="text-center">Adicionar Categoria</DialogTitle>
+                        <DialogTitle className="text-center">Editar Minha Conta</DialogTitle>
                     </DialogHeader>
 
                     <Form {...form}>
@@ -104,7 +134,7 @@ export default function ModalAddUserTeam() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Cargo</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <Select onValueChange={field.onChange} defaultValue={myUser.role}>
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="Selecione o cargo do usuário" />
@@ -130,7 +160,7 @@ export default function ModalAddUserTeam() {
                                     <FormItem>
                                         <FormLabel className="text-accent-foreground">Nome</FormLabel>
                                         <FormControl>
-                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome do usuário' type="text" {...field} />
+                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome do usuário' type="text" defaultValue={myUser.name} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -143,7 +173,7 @@ export default function ModalAddUserTeam() {
                                     <FormItem >
                                         <FormLabel className="text-accent-foreground">E-mail</FormLabel>
                                         <FormControl>
-                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o e-mail do usuário' type="email" {...field} />
+                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o e-mail do usuário' type="email" defaultValue={myUser.email} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -156,7 +186,20 @@ export default function ModalAddUserTeam() {
                                     <FormItem>
                                         <FormLabel className="text-accent-foreground">Senha</FormLabel>
                                         <FormControl>
-                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite a senha' type="password" {...field} />
+                                            <Input disabled className="placeholder:text-accent-foreground/50" placeholder='Digite a senha' type="password" value={myUser.password} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="newPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-accent-foreground">Nova senha</FormLabel>
+                                        <FormControl>
+                                            <Input className="placeholder:text-accent-foreground/50 opacity-30 focus:opacity-100" placeholder='Digite a nova senha' type="password" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -175,6 +218,5 @@ export default function ModalAddUserTeam() {
                 </DialogContent>
             )}
         </Dialog>
-
     )
 }
