@@ -55,11 +55,15 @@ export default function ModalAddProduct() {
         description: z.string().min(2, {
             message: "Por favor, preencha o campo descrição",
         }),
-        basePrice: z.coerce.number().min(1).max(100),
-        discountPercentage: z.coerce.number().min(0).max(100),
+        basePrice: z.coerce.number().min(1, {
+            message: "Por favor, preencha o campo preço base corretamente",
+        }),
+        discountPercentage: z.coerce.number().min(0, {
+            message: "Por favor, preencha o campo desconto corretamente",
+        }),
         imageUrls: z.array(z.object({
             url: z.string().min(2, {
-                message: "Por favor, preencha o campo URL",
+                message: "Por favor, adicione uma imagem para carregar a URL",
             })
         })).min(2, {
             message: "Por favor, insira pelo menos uma URL",
@@ -235,11 +239,12 @@ export default function ModalAddProduct() {
 
                                 return (
                                     <div key={field.id} className="flex items-center justify-between w-full gap-2">
-                                        <ModalAddImage/>
+                                        <ModalAddImage index={index} form={form} />
                                         <Input
                                             type='url'
+                                            disabled
                                             className="placeholder:text-accent-foreground/50"
-                                            placeholder='Digite ou cole a url da imagem do produto'
+                                            placeholder='Adicione uma imagem do produto para carregar a URL'
                                             {...form.register(`imageUrls.${index}.url`)}
                                             {...field}
                                         />

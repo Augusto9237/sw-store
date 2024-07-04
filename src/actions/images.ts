@@ -15,5 +15,5 @@ export async function uploadImage(formData: FormData) {
     })
 
     await s3Client.send(putObjectParams)
-    return { key: image.name }
+    return { url: `${process.env.AWS_URL}/${image.name}` }
 }

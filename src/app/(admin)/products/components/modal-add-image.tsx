@@ -1,6 +1,6 @@
 'use client'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { UseFormReturn, useForm } from "react-hook-form"
 import * as z from "zod"
 
 const initialState = {
@@ -17,38 +17,58 @@ import {
     DialogClose,
 } from "@/components/ui/dialog"
 
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-
-import { ImageOff, ImagePlus, Plus } from "lucide-react"
-import { createCategory } from "@/actions/category"
-import { toast } from "@/components/ui/use-toast"
-import React, { FormEvent, useState } from "react"
-import { Progress } from "@/components/ui/progress"
+import { ImageOff, ImagePlus, Plus, Upload } from "lucide-react"
+import React, { useState } from "react"
 import { uploadImage } from "@/actions/images"
 import Image from "next/image"
-import { set } from "date-fns"
+import Spinner from "@/components/spinner"
 
-export default function ModalAddImage() {
+interface ModalAddImageProps {
+    form: UseFormReturn<{
+        categoryId: string;
+        name: string;
+        slug: string;
+        description: string;
+        basePrice: number;
+        discountPercentage: number;
+        imageUrls: {
+            url: string;
+        }[];
+    }, any, undefined>;
+    index: number;
+}
+
+export default function ModalAddImage({ form, index }: ModalAddImageProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [imgKey, setImgKey] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+
+    function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+        }
+    };
 
     async function onSubmitImage(event: React.FormEvent<HTMLFormElement>) {
-        // Evitar o envio padrão do formulário
         event.preventDefault();
+        try {
+            const formData = new FormData(event.target as HTMLFormElement);
+            setIsLoading(true)
+            const { url } = await uploadImage(formData);
+            const currentValues = form.getValues('imageUrls');
+            const updatedValues = [...currentValues];
+            updatedValues[index] = { url: url };
 
-        const formData = new FormData(event.target as HTMLFormElement);
+            form.setValue('imageUrls', updatedValues);
 
-        const { key } = await uploadImage(formData);
-        setImgKey(key);
+            setPreviewUrl(null);
+            setIsOpen(false);
+        } catch (error) {
+
+        }
     }
 
     return (
@@ -60,35 +80,47 @@ export default function ModalAddImage() {
             </DialogTrigger>
 
             {isOpen && (
-                <DialogContent className="max-w-[360px] w-full">
+                <DialogContent className="max-w-[360px] w-full overflow-hidden">
                     <DialogHeader>
                         <DialogTitle className="text-center">Adicionar Imagem</DialogTitle>
                     </DialogHeader>
                     <form onSubmit={onSubmitImage}>
-                        <div className="grid gap-4 py-4">
-                            <div className="grid items-center gap-4">
-                                <Input name="image" type="file" className="placeholder:text-accent-foreground/50" placeholder='Digite ou cole a url da imagem da categoria' />
+                        {isLoading && (
+                            <div className="absolute flex justify-center items-center top-0 bottom-0 left-0 right-0 bg-white/20 z-50">
+                                <Spinner />
                             </div>
-                            <div className="grid items-center gap-4">
-                                {imgKey !== "" ?
-                                    <>
-                                        <Image
-                                            id="image-preview"
-                                            src={imgKey ? `https://sw-store-images.s3.sa-east-1.amazonaws.com/${imgKey}` : '/placeholder-image.webp'}
-                                            alt="Image Preview"
-                                            className="w-full rounded-md object-cover"
-                                            width={200}
-                                            height={200}
-                                        />
-                                    </>
-                                    :
-                                    <>
-                                        <ImageOff  size={200} className="mx-auto"/>
-                                    </>
-                                }
-                            </div>
+                        )}
+                        <div className="flex flex-col min-h-[280px] max-h-[280px] overflow-hidden mb-4">
+                            {previewUrl !== "" && previewUrl ?
+                                <>
+                                    <Image
+                                        id="image-preview"
+                                        src={previewUrl}
+                                        alt="Image Preview"
+                                        sizes="100vw"
+                                        className="h-[240px] max-h-[100%] w-auto max-w-full object-cover"
+                                        width={0}
+                                        height={0}
+                                    />
+                                </>
+                                :
+                                <>
+                                    <ImageOff size={200} className="mx-auto" />
+                                </>
+                            }
+                            <Button variant="outline" className="relative flex gap-2 items-center">
+                                <input
+                                    required
+                                    type="file"
+                                    name="image"
+                                    className="absolute top-0 cursor-pointer opacity-0"
+                                    onChange={handleImageChange}
+                                />
+                                <Upload size={16} />
+                                Selecionar imagem
+                            </Button>
                         </div>
-                        <div className="flex w-full justify-center gap-5 ">
+                        <div className="flex w-full justify-center gap-4">
                             <Button variant='save' className="uppercase font-semibold">Salvar</Button>
 
                             <DialogClose asChild>
