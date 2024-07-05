@@ -1,6 +1,6 @@
 'use client'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { UseFormReturn, useForm } from "react-hook-form"
+import { UseFormReturn, UseFormSetValue, useForm } from "react-hook-form"
 import * as z from "zod"
 
 const initialState = {
@@ -24,21 +24,29 @@ import Image from "next/image"
 import Spinner from "@/components/spinner"
 
 interface ModalAddImageProps {
-    form: UseFormReturn<{
-        categoryId: string;
+    index?: number;
+    updatedValues?: {
+        url: string;
+    }[];
+    setValueImageProducts?: UseFormSetValue<{
         name: string;
         slug: string;
+        categoryId: string;
         description: string;
         basePrice: number;
         discountPercentage: number;
         imageUrls: {
             url: string;
         }[];
-    }, any, undefined>;
-    index: number;
+    }>;
+    setValueImageCategories?: UseFormSetValue<{
+        name: string;
+        slug: string;
+        imageUrl: string;
+    }>
 }
 
-export default function ModalAddImage({ form, index }: ModalAddImageProps) {
+export default function ModalAddImage({ index, updatedValues, setValueImageProducts, setValueImageCategories }: ModalAddImageProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -58,11 +66,17 @@ export default function ModalAddImage({ form, index }: ModalAddImageProps) {
             const formData = new FormData(event.target as HTMLFormElement);
             setIsLoading(true)
             const { url } = await uploadImage(formData);
-            const currentValues = form.getValues('imageUrls');
-            const updatedValues = [...currentValues];
-            updatedValues[index] = { url: url };
+            if (!url) return;
 
-            form.setValue('imageUrls', updatedValues);
+            if (updatedValues?.length && index && setValueImageProducts) {
+                updatedValues[index] = { url: url };
+
+                setValueImageProducts('imageUrls', updatedValues);
+            }
+
+            if(setValueImageCategories) {
+                setValueImageCategories('imageUrl', url);
+            }
 
             setPreviewUrl(null);
             setIsOpen(false);

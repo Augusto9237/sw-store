@@ -103,7 +103,7 @@ export default function ModalEditUserTeam({ user }: ModalEditUserProps) {
             {isOpen && (
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle className="text-center">Editar Usuário</DialogTitle>
+                        <DialogTitle className="text-center">Editar usuário</DialogTitle>
                     </DialogHeader>
 
                     <Form {...form}>

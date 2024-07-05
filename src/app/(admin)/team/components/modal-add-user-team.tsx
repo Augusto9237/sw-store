@@ -91,7 +91,7 @@ export default function ModalAddUserTeam() {
             {isOpen && (
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle className="text-center">Adicionar Categoria</DialogTitle>
+                        <DialogTitle className="text-center">Adicionar usuário</DialogTitle>
                     </DialogHeader>
 
                     <Form {...form}>

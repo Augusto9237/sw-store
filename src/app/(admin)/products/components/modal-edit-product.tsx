@@ -39,6 +39,7 @@ import { useContext, useEffect, useState } from "react"
 import { AdminContext } from "@/providers/admin"
 import { get } from "http"
 import ModalAddImage from "./modal-add-image"
+import { Textarea } from "@/components/ui/textarea"
 
 interface Product {
     id: string;
@@ -152,7 +153,7 @@ export default function ModalEditProduct({ product, setTotalLoading }: ModalProd
             {isOpen && (
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle className="text-center">Editar Produto</DialogTitle>
+                        <DialogTitle className="text-center">Editar produto</DialogTitle>
                     </DialogHeader>
 
                     <Form {...form}>
@@ -220,7 +221,7 @@ export default function ModalEditProduct({ product, setTotalLoading }: ModalProd
                                     <FormItem>
                                         <FormLabel className="text-accent-foreground">Descrição</FormLabel>
                                         <FormControl>
-                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite a descrição do produto' {...field} />
+                                            <Textarea className="placeholder:text-accent-foreground/50" placeholder='Digite a descrição do produto' {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -269,9 +270,12 @@ export default function ModalEditProduct({ product, setTotalLoading }: ModalProd
                                 </div>
 
                                 {fields.map((field, index) => {
+                                    const currentValues = form.getValues('imageUrls');
+                                    const updatedValues = [...currentValues];
 
                                     return (
                                         <div key={field.id} className="flex items-center justify-between w-full gap-2">
+                                            <ModalAddImage index={index} updatedValues={updatedValues} setValueImageProducts={form.setValue} />
                                             <Input
                                                 type='url'
                                                 className="placeholder:text-accent-foreground/50"

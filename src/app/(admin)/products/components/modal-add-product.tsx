@@ -38,6 +38,7 @@ import { createProduct } from "@/actions/products"
 import { AdminContext } from "@/providers/admin"
 import { useContext } from "react"
 import ModalAddImage from "./modal-add-image"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function ModalAddProduct() {
     const { categories } = useContext(AdminContext)
@@ -185,7 +186,7 @@ export default function ModalAddProduct() {
                                 <FormItem>
                                     <FormLabel className="text-accent-foreground">Descrição</FormLabel>
                                     <FormControl>
-                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite a descrição do produto' {...field} />
+                                        <Textarea className="placeholder:text-accent-foreground/50" placeholder='Digite a descrição do produto' {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -236,10 +237,12 @@ export default function ModalAddProduct() {
                             </div>
 
                             {fields.map((field, index) => {
+                                const currentValues = form.getValues('imageUrls');
+                                const updatedValues = [...currentValues];
 
                                 return (
                                     <div key={field.id} className="flex items-center justify-between w-full gap-2">
-                                        <ModalAddImage index={index} form={form} />
+                                        <ModalAddImage index={index} updatedValues={updatedValues} setValueImageProducts={form.setValue} />
                                         <Input
                                             type='url'
                                             disabled

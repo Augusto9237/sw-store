@@ -1,13 +1,12 @@
 'use client'
 import { Card, CardContent } from "@/components/ui/card";
 import { CATEGORY_ICON } from "@/constants/category-icon";
-import ModalEditCategory from "./modal-edit-category";
 import ButtonDeleteCategory from "./button-delete-category";
 import { useContext } from "react";
 import { AdminContext } from "@/providers/admin";
 import Link from "next/link";
 import Spinner from "@/components/spinner";
-import ModalAddCategory from "./modal-add-category";
+import ModalFormCategory from "./modal-form-category";
 
 export default function CategoriesList() {
     const { categories} = useContext(AdminContext)
@@ -16,7 +15,7 @@ export default function CategoriesList() {
         <Card className='p-5 w-full h-full max-sm:min-h-fit max-lg:min-h-[400px] overflow-hidden'>
             <div className="flex w-full justify-between items-center">
                 <h2 className='text-lg font-bold leading-none'>Categorias</h2>
-                <ModalAddCategory />
+                <ModalFormCategory />
             </div>
 
             {categories.length < 1 && (
@@ -36,7 +35,7 @@ export default function CategoriesList() {
                                 </span>
                             </Link>
                             <div className="flex items-center gap-2">
-                                <ModalEditCategory category={category} />
+                                <ModalFormCategory category={category} />
                                 <ButtonDeleteCategory id={category.id} />
                             </div>
                         </div>
