@@ -74,7 +74,7 @@ export default function ModalAddImage({ index, updatedValues, setValueImageProdu
                 setValueImageProducts('imageUrls', updatedValues);
             }
 
-            if(setValueImageCategories) {
+            if (setValueImageCategories) {
                 setValueImageCategories('imageUrl', url);
             }
 
@@ -104,24 +104,17 @@ export default function ModalAddImage({ index, updatedValues, setValueImageProdu
                                 <Spinner />
                             </div>
                         )}
-                        <div className="flex flex-col min-h-[280px] max-h-[280px] overflow-hidden mb-4">
-                            {previewUrl !== "" && previewUrl ?
-                                <>
-                                    <Image
-                                        id="image-preview"
-                                        src={previewUrl}
-                                        alt="Image Preview"
-                                        sizes="100vw"
-                                        className="h-[240px] max-h-[100%] w-auto max-w-full object-cover"
-                                        width={0}
-                                        height={0}
-                                    />
-                                </>
-                                :
-                                <>
-                                    <ImageOff size={200} className="mx-auto" />
-                                </>
-                            }
+                        <div className="flex flex-col min-h-[280px] max-h-[280px] overflow-hidden mb-4 rounded-lg">
+                            <Image
+                                id="image-preview"
+                                src={previewUrl && previewUrl !== '' ? previewUrl : "/placeholder-image.avif"}
+                                alt="Image Preview"
+                                sizes="100vw"
+                                className="h-[240px] max-h-[100%] w-auto max-w-full object-cover"
+                                width={0}
+                                height={0}
+                            />
+
                             <Button variant="outline" className="relative flex gap-2 items-center">
                                 <input
                                     required
