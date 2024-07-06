@@ -1,3 +1,4 @@
+
 import CategoryInfo from "./components/category-info";
 import CategoriesList from "./components/category-list";
 
