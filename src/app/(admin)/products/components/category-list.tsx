@@ -7,6 +7,8 @@ import { AdminContext } from "@/providers/admin";
 import Link from "next/link";
 import Spinner from "@/components/spinner";
 import ModalFormCategory from "./modal-form-category";
+import { Button } from "@/components/ui/button";
+import { List } from "lucide-react";
 
 export default function CategoriesList() {
     const { categories} = useContext(AdminContext)

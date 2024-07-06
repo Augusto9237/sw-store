@@ -7,8 +7,34 @@ import Link from "next/link";
 import Spinner from "@/components/spinner";
 import ModalFormCategory from "../../products/components/modal-form-category";
 import ButtonDeleteCategory from "../../products/components/button-delete-category";
+import { Button } from "@/components/ui/button";
+import { List, Trash2 } from "lucide-react";
+import { Category } from "@prisma/client";
+import { deleteCategory } from "@/actions/category";
+import { toast } from "@/components/ui/use-toast";
+
 export default function CategoriesList() {
-    const { categories } = useContext(AdminContext)
+    const { categories, setCategorySelected } = useContext(AdminContext)
+
+    function handleSelectCategory(category: Category){
+        setCategorySelected(category)
+    }
+
+    async function handleDelete(id: string) {
+
+        try {
+            await deleteCategory(id)
+            toast({
+                variant: "cancel",
+                title: "🗑️ Categoria deletada",
+            })
+        } catch (error) {
+            toast({
+                variant: 'cancel',
+                title: "⛔  Algo deu errado, tente novamente!",
+            })
+        }
+    }
 
     return (
         <Card className='p-5 w-full h-full max-sm:min-h-fit max-lg:min-h-[400px] overflow-hidden'>
@@ -34,8 +60,15 @@ export default function CategoriesList() {
                                 </span>
                             </Link>
                             <div className="flex items-center gap-2">
+                                <Button onClick={() => handleSelectCategory(category)} variant='outline' size='icon' className="h-9 w-9">
+                                    <List size={16} />
+                                </Button>
+
                                 <ModalFormCategory category={category} />
-                                <ButtonDeleteCategory id={category.id} />
+                                
+                                <Button variant='outline' size='icon' className="h-9 w-9" onClick={() => handleDelete(category.id)}>
+                                    <Trash2 size={16} />
+                                </Button>
                             </div>
                         </div>
                     ))}

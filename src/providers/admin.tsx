@@ -14,6 +14,7 @@ interface ICartContext {
     categories: Category[];
     customers: User[];
     usersTeam: UserTeam[];
+    categorySelected: Category | null;
     orders: Prisma.OrderGetPayload<{
         include: {
             orderProducts: {
@@ -41,6 +42,12 @@ interface ICartContext {
         slug: string;
         imageUrl: string;
     }[]>>;
+    setCategorySelected: Dispatch<SetStateAction<{
+        id: string;
+        name: string;
+        slug: string;
+        imageUrl: string;
+    } | null>>
     setCustomers: Dispatch<SetStateAction<{
         id: string;
         name: string | null;
@@ -63,6 +70,8 @@ interface ICartContext {
 export const AdminContext = createContext<ICartContext>({
     products: [],
     categories: [],
+    categorySelected: null,
+    setCategorySelected: () => { },
     setProducts: () => { },
     setCategories: () => { },
     setCustomers: () => { },
@@ -78,6 +87,7 @@ export const AdminContext = createContext<ICartContext>({
 const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([])
     const [categories, setCategories] = useState<Category[]>([])
+    const [categorySelected, setCategorySelected] = useState<Category | null>(null)
     const [customers, setCustomers] = useState<User[]>([]);
     const [usersTeam, setUsersTeam] = useState<UserTeam[]>([]);
     const [orders, setOrders] = useState<ICartContext['orders']>([]);
@@ -105,7 +115,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, customers, usersTeam, orders, search, setSearch, setCustomers, setUsersTeam, setProducts, setCategories, loading }}>
+        <AdminContext.Provider value={{ products, categories, categorySelected,customers, usersTeam, orders, search, setSearch,setCategorySelected, setCustomers, setUsersTeam, setProducts, setCategories, loading }}>
             {children}
         </AdminContext.Provider>
     )
