@@ -1,6 +1,6 @@
 'use client'
 import { FormEvent, useContext, useEffect } from "react";
-import { LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, SearchIcon, ShoppingCartIcon, User, UserCog, Users } from "lucide-react";
+import { Boxes, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, SearchIcon, ShoppingCartIcon, User, UserCog, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
@@ -116,6 +116,11 @@ export default function HeaderAdmin() {
                                     Pedidos
                                 </ActiveLink>
 
+                                <ActiveLink href="/categories">
+                                    <Boxes size={16} />
+                                    Categorias
+                                </ActiveLink>
+
                                 <ActiveLink href="/products">
                                     <PackageSearchIcon size={16} />
                                     Produtos
@@ -162,36 +167,36 @@ export default function HeaderAdmin() {
                 {path.slice(1) === 'dashboard' && (
                     <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
                 )}
-            
-                    <Popover>
-                        {status === "authenticated" && data?.user && (
-                            <PopoverTrigger asChild >
-                                <div className="flex gap-2">
-                                    <User />
 
-                                    <span className="max-md:hidden">
-                                        Olá,
-                                        {data.user.name}
-                                    </span>
-                                </div>
-                            </PopoverTrigger>
-                        )}
+                <Popover>
+                    {status === "authenticated" && data?.user && (
+                        <PopoverTrigger asChild >
+                            <div className="flex gap-2">
+                                <User />
 
-                        {status === "authenticated" && data?.user && (
-                            <PopoverContent className="max-md:max-w-[184px]">
-                                <div className="flex flex-col gap-4">
-                                    <ModalMyAccount />
+                                <span className="max-md:hidden">
+                                    Olá,
+                                    {data.user.name}
+                                </span>
+                            </div>
+                        </PopoverTrigger>
+                    )}
 
-                                    <Separator />
+                    {status === "authenticated" && data?.user && (
+                        <PopoverContent className="max-md:max-w-[184px]">
+                            <div className="flex flex-col gap-4">
+                                <ModalMyAccount />
 
-                                    <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
-                                        <LogOutIcon size={16} />
-                                        Fazer Logout
-                                    </Button>
-                                </div>
-                            </PopoverContent>
-                        )}
-                    </Popover>
+                                <Separator />
+
+                                <Button onClick={handleLogoutClick} variant='outline' className="w-full justify-start gap-2">
+                                    <LogOutIcon size={16} />
+                                    Fazer Logout
+                                </Button>
+                            </div>
+                        </PopoverContent>
+                    )}
+                </Popover>
             </div>
         </Card>
     )

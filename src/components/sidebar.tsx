@@ -1,5 +1,5 @@
 'use client'
-import { Boxes, LogOutIcon, LucideLayoutDashboard, ShoppingCartIcon, Users } from "lucide-react";
+import { Boxes, LogOutIcon, LucideLayoutDashboard, ShapesIcon, ShoppingCartIcon, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -12,7 +12,7 @@ export default function Sidebar() {
     async function handleLogoutClick() {
         await SignOutAdmin()
     }
-    
+
     return (
         <Card className="w-64 rounded-none px-0 max-lg:hidden">
             <CardHeader className="pl-10 max-xl:pl-8">
@@ -32,12 +32,10 @@ export default function Sidebar() {
                     Pedidos
                 </ActiveLink>
 
-                <div className="lg:hidden">
-                    <ActiveLink href="/catgories">
-                        <Boxes size={16} />
-                        Categorias
-                    </ActiveLink>
-                </div>
+                <ActiveLink href="/categories">
+                    <ShapesIcon size={16} />
+                    Categorias
+                </ActiveLink>
 
                 <ActiveLink href="/products">
                     <Boxes size={16} />

@@ -27,7 +27,7 @@ import { Pencil, Plus } from "lucide-react"
 import { createCategory, getCategories, updateCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { useContext, useState } from "react"
-import ModalAddImage from "./modal-add-image"
+import ModalAddImage from "../../products/components/modal-add-image"
 import { Category } from "@prisma/client"
 import { AdminContext } from "@/providers/admin"
 
@@ -101,8 +101,11 @@ export default function ModalFormCategory({ category }: ModalEditCategoryProps) 
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
                 {category ?
                     (
-                        <Button variant='save' size='icon' className="h-8 w-8" onClick={() => setIsOpen(true)}>
+                        <Button variant='save' className="flex gap-2 w-full" onClick={() => setIsOpen(true)}>
                             <Pencil size={16} />
+                            <span >
+                                Editar
+                            </span>
                         </Button>
                     )
                     :

@@ -9,9 +9,10 @@ import { AdminContext } from '@/providers/admin'
 import ModalAddProduct from './modal-add-product'
 import { getProducts } from '@/actions/products'
 import Spinner from '@/components/spinner'
-import { ChevronDown, PackageX } from 'lucide-react'
+import { Boxes, ChevronDown, PackageX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
+import { Badge } from '@/components/ui/badge'
 
 export default function ProductList() {
     const { products, setProducts, search, loading } = useContext(AdminContext)
@@ -37,9 +38,15 @@ export default function ProductList() {
     }
 
     return (
-        <div className='flex flex-col w-full h-full py-5 pl-5 bg-background rounded-lg relative'>
-            <div className="flex w-full justify-between items-center pr-5">
-                <h2 className='text-lg font-bold leading-none'>Produtos</h2>
+        <div className='flex flex-col w-full h-full p-5 bg-background rounded-lg relative'>
+            <div className="flex justify-between">
+                <Badge
+                    className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+                    variant='outline'
+                >
+                    <Boxes size={16} />
+                    Produtos
+                </Badge>
                 <ModalAddProduct />
             </div>
 
@@ -59,7 +66,7 @@ export default function ProductList() {
                             </div>
                             :
                             <>
-                                <div className="relative grid grid-cols-6 max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 gap-2 pr-5 items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
+                                <div className="relative grid grid-cols-6 max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 gap-2  items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
                                     {products.map(product => (
                                         <div key={product.id} className="relative p-2">
                                             <div className="absolute flex flex-col gap-4 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
