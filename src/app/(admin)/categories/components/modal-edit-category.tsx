@@ -23,17 +23,23 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { Plus } from "lucide-react"
-import { createCategory, getCategories} from "@/actions/category"
+import { Pencil } from "lucide-react"
+import { getCategories, updateCategory } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
-import { useContext, useState } from "react"
-import ModalAddImage from "../../products/components/modal-add-image"
+import { useContext, useEffect, useState } from "react"
+import { Category } from "@prisma/client"
 import { AdminContext } from "@/providers/admin"
+import ModalAddImage from "./modal-add-image"
+
+interface ModalEditProps{
+    category: Category
+}
 
 
-export default function ModalFormCategory() {
+export default function ModalFormEditCategory({category}: ModalEditProps) {
     const { setCategories } = useContext(AdminContext)
     const [isOpen, setIsOpen] = useState(false);
+
     const formSchema = z.object({
         name: z.string().min(2, {
             message: "Por favor, preencha o campo nome",
@@ -50,25 +56,35 @@ export default function ModalFormCategory() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            slug: "",
-            imageUrl: "",
+            name: category?.name!,
+            slug: category?.slug!,
+            imageUrl: category?.imageUrl!
         },
     })
 
+    useEffect(() => {
+        if (category) {
+            form.setValue("name", category.name)
+            form.setValue("slug", category.slug)
+            form.setValue("imageUrl", category.imageUrl)
+        }
+    }, [category, isOpen])
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            await createCategory(values);
-            const { categories } = await getCategories()
+            if (values.name !== category?.name || values.slug !== category.slug || values.imageUrl !== category.imageUrl) {
+                await updateCategory({ id: category?.id, ...values });
+                const { categories } = await getCategories()
 
-            form.reset();
-            setCategories(categories)
-            setIsOpen(false)
+                form.reset();
+                setCategories(categories)
+                setIsOpen(false)
 
-            toast({
-                variant: 'success',
-                title: "✅  Categoria criada com sucesso!",
-            })
+                toast({
+                    variant: 'success',
+                    title: "✅  Categoria atualizada com sucesso!",
+                })
+            }
         } catch (error) {
             toast({
                 variant: 'cancel',
@@ -81,10 +97,10 @@ export default function ModalFormCategory() {
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-                <Button className="uppercase font-bold flex items-center gap-2">
-                    <Plus size={16} />
-                    <span className="max-md:hidden">
-                        Categoria
+                <Button variant='save' className="flex gap-2 w-full" onClick={() => setIsOpen(true)}>
+                    <Pencil size={16} />
+                    <span >
+                        Editar
                     </span>
                 </Button>
             </DialogTrigger>
@@ -93,7 +109,7 @@ export default function ModalFormCategory() {
                 isOpen && (
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle className="text-center">Adicionar categoria</DialogTitle>
+                            <DialogTitle className="text-center">Editar categoria</DialogTitle>
                         </DialogHeader>
 
                         <Form {...form}>

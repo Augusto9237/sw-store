@@ -15,7 +15,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { Badge } from '@/components/ui/badge'
 
 export default function ProductList() {
-    const { products, setProducts, search, loading } = useContext(AdminContext)
+    const { products, setProducts, setProductSelected, search, loading } = useContext(AdminContext)
     const [ref, inView] = useInView();
     const [totaLoading, setTotalLoading] = useState(false);
     const { toast } = useToast()
@@ -70,6 +70,9 @@ export default function ProductList() {
                                     {products.map(product => (
                                         <div key={product.id} className="relative p-2">
                                             <div className="absolute flex flex-col gap-4 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
+                                                <Button variant='default' onClick={() => setProductSelected(product)}>
+                                                    Select
+                                                </Button>
                                                 <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} />
                                                 <ButtonDelete idProduct={product.id} />
                                             </div>

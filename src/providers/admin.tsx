@@ -11,10 +11,11 @@ import { Dispatch, ReactNode, SetStateAction, createContext, use, useEffect, use
 
 interface ICartContext {
     products: Product[];
+    productSelected: Product | null;
     categories: Category[];
+    categorySelected: Category | null;
     customers: User[];
     usersTeam: UserTeam[];
-    categorySelected: Category | null;
     orders: Prisma.OrderGetPayload<{
         include: {
             orderProducts: {
@@ -42,6 +43,16 @@ interface ICartContext {
         slug: string;
         imageUrl: string;
     }[]>>;
+    setProductSelected: Dispatch<SetStateAction<{
+        id: string;
+        name: string;
+        slug: string;
+        description: string;
+        basePrice: Prisma.Decimal;
+        imageUrls: string[];
+        categoryId: string;
+        discountPercentage: number;
+    } | null>>;
     setCategorySelected: Dispatch<SetStateAction<{
         id: string;
         name: string;
@@ -69,10 +80,12 @@ interface ICartContext {
 
 export const AdminContext = createContext<ICartContext>({
     products: [],
+    productSelected: null,
     categories: [],
     categorySelected: null,
     setCategorySelected: () => { },
     setProducts: () => { },
+    setProductSelected: () => { },
     setCategories: () => { },
     setCustomers: () => { },
     setUsersTeam: () => { },
@@ -88,6 +101,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([])
     const [categories, setCategories] = useState<Category[]>([])
     const [categorySelected, setCategorySelected] = useState<Category | null>(null)
+    const [productSelected, setProductSelected] = useState<Product | null>(null)
     const [customers, setCustomers] = useState<User[]>([]);
     const [usersTeam, setUsersTeam] = useState<UserTeam[]>([]);
     const [orders, setOrders] = useState<ICartContext['orders']>([]);
@@ -115,7 +129,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, categories, categorySelected,customers, usersTeam, orders, search, setSearch,setCategorySelected, setCustomers, setUsersTeam, setProducts, setCategories, loading }}>
+        <AdminContext.Provider value={{ products, productSelected, categories, categorySelected, customers, usersTeam, orders, search, setSearch, setCategorySelected, setProductSelected, setCustomers, setUsersTeam, setProducts, setCategories, loading }}>
             {children}
         </AdminContext.Provider>
     )

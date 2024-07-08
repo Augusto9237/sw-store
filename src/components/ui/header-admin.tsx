@@ -67,10 +67,6 @@ export default function HeaderAdmin() {
         dashboard: "Dashboard",
     }
 
-    async function handleLoginClick() {
-        await signIn();
-    }
-
     async function handleLogoutClick() {
         await signOut();
     }
@@ -154,7 +150,7 @@ export default function HeaderAdmin() {
                                 <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
                                 <Input
                                     className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
-                                    placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'order' && 'pedidos' || path.slice(1) === 'customers' && 'clientes' || path.slice(1) === 'team' && 'usuários'}`}
+                                    placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'categories' && 'categorias' || path.slice(1) === 'order' && 'pedidos' || path.slice(1) === 'customers' && 'clientes' || path.slice(1) === 'team' && 'usuários'}`}
                                     type="search"
                                     onChange={(e) => setSearch(e.target.value)}
                                     value={search}

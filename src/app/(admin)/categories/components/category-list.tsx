@@ -5,13 +5,13 @@ import { useContext } from "react";
 import { AdminContext } from "@/providers/admin";
 import Link from "next/link";
 import Spinner from "@/components/spinner";
-import ModalFormCategory from "./modal-form-category";
 import { Button } from "@/components/ui/button";
 import { List, ShapesIcon, Trash2 } from "lucide-react";
 import { Category } from "@prisma/client";
 import { deleteCategory } from "@/actions/category";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
+import ModalFormCategory from "./modal-form-category";
 
 export default function CategoriesList() {
     const { categories, setCategorySelected } = useContext(AdminContext)
@@ -46,7 +46,7 @@ export default function CategoriesList() {
                     <ShapesIcon size={16} />
                     Categorias
                 </Badge>
-                <ModalFormCategory />
+                <ModalFormCategory/>
             </div>
 
             {categories.length < 1 && (
