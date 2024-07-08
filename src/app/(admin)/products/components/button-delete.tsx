@@ -27,7 +27,7 @@ export default function ButtonDelete({ idProduct }: ButtonDeleteProps) {
         }
     }
     return (
-        <Button variant='outline' className='gap-2' onClick={() => handleDelete(idProduct)}>
+        <Button variant='outline' className='gap-2 w-full' onClick={() => handleDelete(idProduct)}>
             <Trash2 size={16} />
             Excluir
         </Button>

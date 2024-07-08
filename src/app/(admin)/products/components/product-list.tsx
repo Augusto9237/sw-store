@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ModalEditProduct from './modal-edit-product'
 import ButtonDelete from './button-delete'
 import ProductItem from '@/components/ui/product-item'
@@ -9,7 +9,7 @@ import { AdminContext } from '@/providers/admin'
 import ModalAddProduct from './modal-add-product'
 import { getProducts } from '@/actions/products'
 import Spinner from '@/components/spinner'
-import { Boxes, ChevronDown, PackageX } from 'lucide-react'
+import { Boxes, ChevronDown, List, PackageX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { Badge } from '@/components/ui/badge'
@@ -69,9 +69,10 @@ export default function ProductList() {
                                 <div className="relative grid grid-cols-6 max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 gap-2  items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
                                     {products.map(product => (
                                         <div key={product.id} className="relative p-2">
-                                            <div className="absolute flex flex-col gap-4 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
-                                                <Button variant='default' onClick={() => setProductSelected(product)}>
-                                                    Select
+                                            <div className="absolute flex flex-col gap-4 px-10 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
+                                                <Button variant="outline" className='gap-2' onClick={() => setProductSelected(product)}>
+                                                    <List size={16} />
+                                                    Selecionar
                                                 </Button>
                                                 <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} />
                                                 <ButtonDelete idProduct={product.id} />

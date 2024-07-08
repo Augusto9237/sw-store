@@ -1,21 +1,27 @@
 'use client'
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import ProductList from "@/components/ui/product-list";
 import { AdminContext } from "@/providers/admin";
-import Image from "next/image";
 import { useContext, useState } from "react";
 import { deleteCategory } from "@/actions/category";
 import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import ModalEditProduct from "./modal-edit-product";
-import ProductImages from "@/app/(public)/product/[slug]/components/product-images";
+import ProductImages from "./product-images";
+import { formatReal } from "@/helpers/formatReal";
+import { computeProductTotalPrice } from "@/helpers/product";
+import ButtonDelete from "./button-delete";
+
+interface ProductImagesProps {
+    name: string;
+    imagesUrls: string[]
+}
 
 export default function ProductInfo() {
     const { productSelected, products } = useContext(AdminContext)
-
+    const [totaLoading, setTotalLoading] = useState(false);
     const product = products.find(product => product.id === productSelected?.id);
-
+    const total = product && computeProductTotalPrice(product)
     async function handleDelete(id: string) {
 
         try {
@@ -41,31 +47,33 @@ export default function ProductInfo() {
                     </CardHeader>
 
                     <CardContent className="flex gap-8 max-sm:flex-col max-md:flex-row lg:flex-col justify-between ">
-                       
-                            <ProductImages imagesUrls={product?.imageUrls!} name={product?.name!} />
-                  
-                        {/* <div className="flex flex-col w-full">
-                            <h2 className="font-semibold">Informações da categoria</h2>
-                            <p className="text-sm">Nome: {category?.name}</p>
-                            <p className="text-sm">Slug: {category?.slug}</p>
-                        </div> */}
+
+                        <ProductImages imagesUrls={product?.imageUrls!} name={product?.name!} />
+
+                        <div className="flex flex-col w-full">
+                            <h2 className="font-semibold">Informações do produto</h2>
+                            <div className="text-sm overflow-hidden truncate">
+                                <span className="font-semibold">Nome:</span> {product.name}
+                            </div>
+                            <div className="text-sm">
+                                <span className="font-semibold">Slug:</span> {product.slug}
+                            </div>
+                            <div className="text-sm min-h-[200px] h-full max-h-[200px] overflow-hidden flex-1 text-justify">
+                                <span className="font-semibold">Descrição:</span> {product.description}</div>
+                            <div className="text-sm">
+                                <span className="font-semibold">Preço base:</span> {formatReal(Number(product.basePrice))}
+                            </div>
+                            <div className="text-sm">
+                                <span className="font-semibold">Desconto:</span> {product.discountPercentage} %</div>
+                            <div className="text-sm">
+                                <span className="font-semibold">Preço final:</span> {formatReal(Number(total?.totalPrice))}
+                            </div>
+                        </div>
                     </CardContent>
 
-                    <div className="flex flex-col gap-2 mb-8 flex-1">
-                        <h2 className="font-semibold pl-5">Produtos relacionados</h2>
-                        <div className="lg:pl-5">
-                       
-                        </div>
-                    </div>
-
                     <CardFooter className="gap-4">
-                        {/* <ModalEditProduct/> */}
-                        {/* <Button variant='outline' className="w-full flex gap-2" onClick={() => handleDelete(categorySelected.id)}>
-                            <Trash2 size={16} />
-                            <span>
-                                Excluir
-                            </span>
-                        </Button> */}
+                        <ModalEditProduct product={{ ...product, basePrice: Number(product.basePrice) }} setTotalLoading={setTotalLoading} />
+                        <ButtonDelete idProduct={product.id} />
                     </CardFooter>
                 </>
                 :

@@ -144,7 +144,7 @@ export default function ModalEditProduct({ product, setTotalLoading }: ModalProd
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-                <Button variant='save' className='gap-2' >
+                <Button variant='save' className='gap-2 w-full' >
                     <Pencil size={16} />
                     Editar
                 </Button>
