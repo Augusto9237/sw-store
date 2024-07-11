@@ -11,6 +11,7 @@ import {
     DialogTitle,
     DialogTrigger,
     DialogClose,
+    DialogOverlay,
 } from "@/components/ui/dialog";
 
 import {
@@ -56,7 +57,10 @@ export default function ModalAddProduct() {
         description: z.string().min(2, {
             message: "Por favor, preencha o campo descrição",
         }),
-        basePrice: z.coerce.number().min(1, {
+        stock: z.coerce.number().min(0, {
+            message: "Por favor, preencha o campo estoque corretamente",
+        }),
+        basePrice: z.coerce.number().min(0, {
             message: "Por favor, preencha o campo preço base corretamente",
         }),
         discountPercentage: z.coerce.number().min(0, {
@@ -79,6 +83,7 @@ export default function ModalAddProduct() {
             name: "",
             slug: "",
             description: "",
+            stock: 0,
             basePrice: 0,
             discountPercentage: 0,
             imageUrls: [],
@@ -116,92 +121,50 @@ export default function ModalAddProduct() {
                     </span>
                 </Button>
             </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle className="text-center">Adicionar Produto</DialogTitle>
-                </DialogHeader>
+            <DialogOverlay className="overflow-y-auto w-screen h-screen py-8">
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle className="text-center">Adicionar Produto</DialogTitle>
+                    </DialogHeader>
 
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        <FormField
-                            control={form.control}
-                            name="categoryId"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Categoria</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Selecione uma categoria para o produto" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {categories.map(category => (
-                                                <SelectItem key={category.id} value={category.id}>
-                                                    <div className="flex items-center gap-2">
-                                                        {CATEGORY_ICON[category.slug as keyof typeof CATEGORY_ICON]}
-                                                        {category.name}
-                                                    </div>
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-accent-foreground">Nome</FormLabel>
-                                    <FormControl>
-                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome do produto' {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="slug"
-                            render={({ field }) => (
-                                <FormItem >
-                                    <FormLabel className="text-accent-foreground">Slug</FormLabel>
-                                    <FormControl>
-                                        <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o slug do produto' {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-accent-foreground">Descrição</FormLabel>
-                                    <FormControl>
-                                        <Textarea className="placeholder:text-accent-foreground/50" placeholder='Digite a descrição do produto' {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <div className="flex w-full gap-4">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                             <FormField
                                 control={form.control}
-                                name="basePrice"
+                                name="categoryId"
                                 render={({ field }) => (
-                                    <FormItem className="w-full">
-                                        <FormLabel className="text-accent-foreground">Preço base</FormLabel>
+                                    <FormItem>
+                                        <FormLabel>Categoria</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Selecione uma categoria para o produto" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {categories.map(category => (
+                                                    <SelectItem key={category.id} value={category.id}>
+                                                        <div className="flex items-center gap-2">
+                                                            {CATEGORY_ICON[category.slug as keyof typeof CATEGORY_ICON]}
+                                                            {category.name}
+                                                        </div>
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-accent-foreground">Nome</FormLabel>
                                         <FormControl>
-                                            <Input type="number" className="placeholder:text-accent-foreground/50" placeholder='Digite o preço do produto' {...field} />
+                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o nome do produto' {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -210,67 +173,126 @@ export default function ModalAddProduct() {
 
                             <FormField
                                 control={form.control}
-                                name="discountPercentage"
+                                name="slug"
                                 render={({ field }) => (
-                                    <FormItem className="w-full">
-                                        <FormLabel className="text-accent-foreground">Desconto %</FormLabel>
+                                    <FormItem >
+                                        <FormLabel className="text-accent-foreground">Slug</FormLabel>
                                         <FormControl>
-                                            <Input type="number" className="placeholder:text-accent-foreground/50" placeholder='Digite o preço do produto' {...field} />
+                                            <Input className="placeholder:text-accent-foreground/50" placeholder='Digite o slug do produto' {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                        </div>
 
-                        <FormItem >
-                            <div className="w-full flex items-center justify-between">
+                            <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-accent-foreground">Descrição</FormLabel>
+                                        <FormControl>
+                                            <Textarea className="placeholder:text-accent-foreground/50" placeholder='Digite a descrição do produto' {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="stock"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <FormLabel className="text-accent-foreground">Estoque</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" className="placeholder:text-accent-foreground/50" placeholder='Digite a quantidade em estoque do produto' {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <div className="flex w-full gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="basePrice"
+                                    render={({ field }) => (
+                                        <FormItem className="w-full">
+                                            <FormLabel className="text-accent-foreground">Preço base</FormLabel>
+                                            <FormControl>
+                                                <Input type="number" className="placeholder:text-accent-foreground/50" placeholder='Digite o preço do produto' {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name="discountPercentage"
+                                    render={({ field }) => (
+                                        <FormItem className="w-full">
+                                            <FormLabel className="text-accent-foreground">Desconto %</FormLabel>
+                                            <FormControl>
+                                                <Input type="number" className="placeholder:text-accent-foreground/50" placeholder='Digite o preço do produto' {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+                            <FormItem >
                                 <FormLabel className="text-accent-foreground w-full">
                                     Imagem do produto
                                 </FormLabel>
 
-                                {fields.length < 4 && (
-                                    <Button type='button' size='icon' variant='outline' onClick={() => append({ url: '' })}>
-                                        <Plus size={14} />
-                                    </Button>
-                                )}
-                            </div>
 
-                            {fields.map((field, index) => {
-                                const currentValues = form.getValues('imageUrls');
-                                const updatedValues = [...currentValues];
+                                <div className="grid grid-cols-2 gap-4">
+                                    {fields.map((field, index) => {
+                                        const currentValues = form.getValues('imageUrls');
+                                        const updatedValues = [...currentValues];
 
-                                return (
-                                    <div key={field.id} className="flex items-center justify-between w-full gap-2">
-                                        <ModalAddImage index={index} updatedValues={updatedValues} setValueImageProducts={form.setValue} />
-                                        <Input
-                                            type='url'
-                                            disabled
-                                            className="placeholder:text-accent-foreground/50"
-                                            placeholder='Adicione uma imagem do produto para carregar a URL'
-                                            {...form.register(`imageUrls.${index}.url`)}
-                                            {...field}
-                                        />
-                                        <Button type="button" size='icon' variant='outline' onClick={() => remove(index)}>
-                                            <Trash2 size={16} />
+                                        return (
+                                            <div key={field.id} className="flex items-center justify-between w-full gap-1">
+                                                <ModalAddImage index={index} updatedValues={updatedValues} setValueImageProducts={form.setValue} />
+                                                <Input
+                                                    type='url'
+                                                    disabled
+                                                    className="placeholder:text-accent-foreground/50"
+                                                    placeholder='Adicione uma imagem do produto para carregar a URL'
+                                                    {...form.register(`imageUrls.${index}.url`)}
+                                                    {...field}
+                                                />
+                                                <Button type="button" size='icon' variant='outline' className="w-12" onClick={() => remove(index)}>
+                                                    <Trash2 size={16} />
+                                                </Button>
+                                            </div>
+                                        )
+                                    })}
+                                    {fields.length < 4 && (
+                                        <Button type='button' variant='outline' className="flex items-center gap-2" onClick={() => append({ url: '' })}>
+                                            <Plus size={14} />
+                                            Imagem {fields.length + 1}
                                         </Button>
-                                    </div>
-                                )
-                            })}
-                        </FormItem>
+                                    )}
+                                </div>
+                            </FormItem>
 
-                        <div className="flex w-full justify-center gap-5 ">
-                            <Button variant='save' className="uppercase font-semibold" type="submit">Salvar</Button>
+                            <div className="flex w-full justify-center gap-5 ">
+                                <Button variant='save' className="uppercase font-semibold" type="submit">Salvar</Button>
 
 
-                            <DialogClose asChild>
-                                <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
-                            </DialogClose>
-                        </div>
-                    </form>
-                </Form>
+                                <DialogClose asChild>
+                                    <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
+                                </DialogClose>
+                            </div>
+                        </form>
+                    </Form>
 
-            </DialogContent>
+                </DialogContent>
+            </DialogOverlay>
         </Dialog>
 
     )

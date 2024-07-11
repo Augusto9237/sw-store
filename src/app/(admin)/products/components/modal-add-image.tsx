@@ -33,6 +33,7 @@ interface ModalAddImageProps {
         slug: string;
         categoryId: string;
         description: string;
+        stock: number;
         basePrice: number;
         discountPercentage: number;
         imageUrls: {
@@ -76,7 +77,7 @@ export default function ModalAddImage({ index, updatedValues, setValueImageProdu
     return (
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-                <Button type='button' size='icon' variant='outline'>
+                <Button type='button' size='icon' variant='outline' className="w-12">
                     <ImagePlus size={16} />
                 </Button>
             </DialogTrigger>

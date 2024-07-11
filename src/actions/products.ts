@@ -9,6 +9,7 @@ interface ProductProps {
     description: string;
     categoryId: string;
     imageUrls: string[];
+    stock: number;
     basePrice: number;
     discountPercentage?: number;
 }
@@ -38,6 +39,7 @@ export const createProduct = async (product: ProductProps) => {
             imageUrls: product.imageUrls,
             basePrice: product.basePrice,
             discountPercentage: product.discountPercentage,
+            stock: product.stock,
         },
     });
 
@@ -57,6 +59,7 @@ export const updateProduct = async (product: ProductProps) => {
             imageUrls: product.imageUrls,
             basePrice: product.basePrice,
             discountPercentage: product.discountPercentage,
+            stock: product.stock,
         },
     });
 
