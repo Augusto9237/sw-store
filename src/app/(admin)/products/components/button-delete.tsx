@@ -1,15 +1,17 @@
 'use client'
-import { deleteProduct } from '@/actions/products'
+import { deleteProduct, getProducts } from '@/actions/products'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
+import { AdminContext } from '@/providers/admin'
 import { Trash2 } from 'lucide-react'
-import React from 'react'
+import React, { useContext } from 'react'
 
 interface ButtonDeleteProps {
     idProduct: string
 }
 
 export default function ButtonDelete({ idProduct }: ButtonDeleteProps) {
+    const { products, setProducts } = useContext(AdminContext)
 
     async function handleDelete(id: string) {
 
@@ -19,6 +21,8 @@ export default function ButtonDelete({ idProduct }: ButtonDeleteProps) {
                 variant: "cancel",
                 title: "🗑️ Produto deletado",
             })
+            const { products: newProducts } = await getProducts('', products.length + 18);
+            setProducts(newProducts)
         } catch (error) {
             toast({
                 variant: 'cancel',
@@ -26,6 +30,7 @@ export default function ButtonDelete({ idProduct }: ButtonDeleteProps) {
             })
         }
     }
+
     return (
         <Button variant='outline' className='gap-2 w-full' onClick={() => handleDelete(idProduct)}>
             <Trash2 size={16} />

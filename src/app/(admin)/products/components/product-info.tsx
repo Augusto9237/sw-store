@@ -22,21 +22,6 @@ export default function ProductInfo() {
     const [totaLoading, setTotalLoading] = useState(false);
     const product = products.find(product => product.id === productSelected?.id);
     const total = product && computeProductTotalPrice(product)
-    async function handleDelete(id: string) {
-
-        try {
-            await deleteCategory(id)
-            toast({
-                variant: "cancel",
-                title: "🗑️ Categoria deletada",
-            })
-        } catch (error) {
-            toast({
-                variant: 'cancel',
-                title: "⛔  Algo deu errado, tente novamente!",
-            })
-        }
-    }
 
     return (
         <Card className="w-full h-full overflow-hidden max-sm:min-h-[420px]">
@@ -80,7 +65,7 @@ export default function ProductInfo() {
                 <>
                     <CardContent className="flex items-center justify-center flex-1 h-full">
                         <h1>
-                            Nenhuma categoria selecionada
+                            Nenhum produto selecionado
                         </h1>
                     </CardContent>
                 </>}

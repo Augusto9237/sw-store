@@ -1,18 +1,18 @@
 'use client'
 import React, { useContext, useState } from 'react'
 import ModalEditProduct from './modal-edit-product'
-import ButtonDelete from './button-delete'
 import ProductItem from '@/components/ui/product-item'
 import { computeProductTotalPrice } from '@/helpers/product';
 import { useInView } from 'react-intersection-observer'
 import { AdminContext } from '@/providers/admin'
 import ModalAddProduct from './modal-add-product'
-import { getProducts } from '@/actions/products'
+import { deleteProduct, getProducts } from '@/actions/products'
 import Spinner from '@/components/spinner'
-import { Boxes, ChevronDown, List, PackageX } from 'lucide-react'
+import { Boxes, ChevronDown, List, PackageX, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { Badge } from '@/components/ui/badge'
+import ButtonDelete from './button-delete';
 
 export default function ProductList() {
     const { products, setProducts, setProductSelected, search, loading } = useContext(AdminContext)
@@ -41,7 +41,7 @@ export default function ProductList() {
         <div className='flex flex-col w-full h-full p-5 bg-background rounded-lg relative'>
             <div className="flex justify-between">
                 <Badge
-                    className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+                    className="w-fit gap-2 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
                     variant='outline'
                 >
                     <Boxes size={16} />
@@ -74,7 +74,9 @@ export default function ProductList() {
                                                     <List size={16} />
                                                     Selecionar
                                                 </Button>
+
                                                 <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} />
+
                                                 <ButtonDelete idProduct={product.id} />
                                             </div>
                                             <ProductItem product={computeProductTotalPrice(product)} />

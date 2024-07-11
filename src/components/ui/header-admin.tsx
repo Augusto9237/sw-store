@@ -1,6 +1,6 @@
 'use client'
 import { FormEvent, useContext, useEffect } from "react";
-import { Boxes, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, SearchIcon, ShoppingCartIcon, User, UserCog, Users } from "lucide-react";
+import { Boxes, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PieChart, SearchIcon, ShapesIcon, ShoppingCartIcon, User, UserCog, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
@@ -103,7 +103,7 @@ export default function HeaderAdmin() {
                         <div className="mt-4 flex flex-col gap-2">
                             <CardContent className="w-full flex-1 px-0 flex flex-col gap-8 ">
                                 <ActiveLink href="/dashboard">
-                                    <LucideLayoutDashboard size={16} />
+                                    <PieChart size={16}/>
                                     Dashboard
                                 </ActiveLink>
 
@@ -113,12 +113,12 @@ export default function HeaderAdmin() {
                                 </ActiveLink>
 
                                 <ActiveLink href="/categories">
-                                    <Boxes size={16} />
+                                    <ShapesIcon size={16} />
                                     Categorias
                                 </ActiveLink>
 
                                 <ActiveLink href="/products">
-                                    <PackageSearchIcon size={16} />
+                                    <Boxes size={16} />
                                     Produtos
                                 </ActiveLink>
 

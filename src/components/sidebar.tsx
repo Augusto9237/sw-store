@@ -1,5 +1,5 @@
 'use client'
-import { Boxes, LogOutIcon, LucideLayoutDashboard, ShapesIcon, ShoppingCartIcon, Users } from "lucide-react";
+import { Boxes, LogOutIcon, LucideLayoutDashboard, PieChart, ShapesIcon, ShoppingCartIcon, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export default function Sidebar() {
 
             <CardContent className="w-full flex-1 px-0 pt-6 flex flex-col gap-6 ">
                 <ActiveLink href="/dashboard">
-                    <LucideLayoutDashboard size={16} />
+                   <PieChart size={16} />
                     Dashboard
                 </ActiveLink>
 

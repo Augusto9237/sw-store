@@ -24,12 +24,12 @@ export function CustomersTable() {
                 {customers.map((customer) => {
                     const ordersFiltered = orders.filter((order) => order.userId === customer.id);
                     const total = TotalSumOrders(ordersFiltered)
-                    
+
                     return (
                         <TableRow key={customer.id} className='border-b-[1px] max-md:text-sm'>
                             <TableCell>{customer?.name}</TableCell>
                             <TableCell>{customer?.email}</TableCell>
-                            <TableCell>{format(new Date(ordersFiltered[0].createdAt), 'dd/MM/yyyy')}</TableCell>
+                            <TableCell>{ordersFiltered.length > 0 ? format(new Date(ordersFiltered[0].createdAt), 'dd/MM/yyyy') : null}</TableCell>
                             <TableCell>{formatReal(Number(total))}</TableCell>
                         </TableRow>
                     )

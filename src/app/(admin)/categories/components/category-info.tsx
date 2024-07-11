@@ -4,17 +4,18 @@ import ProductList from "@/components/ui/product-list";
 import { AdminContext } from "@/providers/admin";
 import Image from "next/image";
 import { useContext } from "react";
-import { deleteCategory } from "@/actions/category";
+import { deleteCategory, getCategories } from "@/actions/category";
 import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import ModalFormEditCategory from "./modal-edit-category";
 
 export default function CategoryInfo() {
-    const { products, categorySelected, categories } = useContext(AdminContext)
+    const { products, categorySelected, categories, setCategories } = useContext(AdminContext)
 
     const relatedProducts = categorySelected ? products.filter(product => product.categoryId === categorySelected?.id) : [];
     const category = categories.find(category => category.id === categorySelected?.id);
+
 
     async function handleDelete(id: string) {
 
@@ -24,6 +25,8 @@ export default function CategoryInfo() {
                 variant: "cancel",
                 title: "🗑️ Categoria deletada",
             })
+            const { categories: newCategories } = await getCategories()
+            setCategories(newCategories)
         } catch (error) {
             toast({
                 variant: 'cancel',
@@ -34,7 +37,7 @@ export default function CategoryInfo() {
 
     return (
         <Card className="w-full h-full overflow-hidden max-sm:min-h-[420px]">
-            {categorySelected ?
+            {category ?
                 <>
                     <CardHeader>
                         <h2 className='text-lg font-bold leading-none text-center'>Categoria</h2>
@@ -70,7 +73,7 @@ export default function CategoryInfo() {
 
                     <CardFooter className="gap-4">
                         <ModalFormEditCategory category={category!} />
-                        <Button variant='outline' className="w-full flex gap-2" onClick={() => handleDelete(categorySelected.id)}>
+                        <Button variant='outline' className="w-full flex gap-2" onClick={() => handleDelete(category.id)}>
                             <Trash2 size={16} />
                             <span>
                                 Excluir

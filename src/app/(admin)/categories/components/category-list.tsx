@@ -8,45 +8,27 @@ import Spinner from "@/components/spinner";
 import { Button } from "@/components/ui/button";
 import { List, ShapesIcon, Trash2 } from "lucide-react";
 import { Category } from "@prisma/client";
-import { deleteCategory } from "@/actions/category";
-import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 import ModalFormCategory from "./modal-form-category";
 
 export default function CategoriesList() {
-    const { categories, setCategorySelected } = useContext(AdminContext)
+    const { categories, setCategories, setCategorySelected } = useContext(AdminContext)
 
     function handleSelectCategory(category: Category) {
         setCategorySelected(category)
-    }
-
-    async function handleDelete(id: string) {
-
-        try {
-            await deleteCategory(id)
-            toast({
-                variant: "cancel",
-                title: "🗑️ Categoria deletada",
-            })
-        } catch (error) {
-            toast({
-                variant: 'cancel',
-                title: "⛔  Algo deu errado, tente novamente!",
-            })
-        }
     }
 
     return (
         <Card className='p-5 w-full h-full overflow-hidden min-h-full'>
             <div className="flex justify-between">
                 <Badge
-                    className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+                    className="w-fit gap-2 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
                     variant='outline'
                 >
                     <ShapesIcon size={16} />
                     Categorias
                 </Badge>
-                <ModalFormCategory/>
+                <ModalFormCategory />
             </div>
 
             {categories.length < 1 && (

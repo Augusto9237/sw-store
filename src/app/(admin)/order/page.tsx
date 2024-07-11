@@ -1,12 +1,19 @@
+
+import { Badge } from "@/components/ui/badge";
 import TableOrder from "./components/table-order";
+import { ShoppingCartIcon } from "lucide-react";
 
 export default async function OrdersPage() {
 
     return (
             <div className='flex flex-col w-full h-full p-5 gap-8 bg-background rounded-lg'>
-                <div className="flex w-full justify-between items-center pr-5">
-                    <h2 className='text-lg font-bold leading-none'>Pedidos</h2>
-                </div>
+            <Badge
+                className="w-fit gap-2 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+                variant='outline'
+            >
+                <ShoppingCartIcon size={16} />
+                Pedidos
+            </Badge>
                 <TableOrder/>
             </div>
     )
