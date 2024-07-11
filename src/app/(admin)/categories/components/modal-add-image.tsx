@@ -24,29 +24,14 @@ import Image from "next/image"
 import Spinner from "@/components/spinner"
 
 interface ModalAddImageProps {
-    index?: number;
-    updatedValues?: {
-        url: string;
-    }[];
-    setValueImageProducts?: UseFormSetValue<{
-        name: string;
-        slug: string;
-        categoryId: string;
-        description: string;
-        basePrice: number;
-        discountPercentage: number;
-        imageUrls: {
-            url: string;
-        }[];
-    }>;
-    setValueImageCategories?: UseFormSetValue<{
+    setValueImageCategories: UseFormSetValue<{
         name: string;
         slug: string;
         imageUrl: string;
     }>
 }
 
-export default function ModalAddImage({ index, updatedValues, setValueImageProducts, setValueImageCategories }: ModalAddImageProps) {
+export default function ModalAddImage({ setValueImageCategories }: ModalAddImageProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -68,15 +53,8 @@ export default function ModalAddImage({ index, updatedValues, setValueImageProdu
             const { url } = await uploadImage(formData);
             if (!url) return;
 
-            if (updatedValues?.length && index && setValueImageProducts) {
-                updatedValues[index] = { url: url };
+            setValueImageCategories('imageUrl', url);
 
-                setValueImageProducts('imageUrls', updatedValues);
-            }
-
-            if (setValueImageCategories) {
-                setValueImageCategories('imageUrl', url);
-            }
 
             setPreviewUrl(null);
             setIsOpen(false);

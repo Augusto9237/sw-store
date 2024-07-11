@@ -27,8 +27,8 @@ import { Plus } from "lucide-react"
 import { createCategory, getCategories} from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { useContext, useState } from "react"
-import ModalAddImage from "../../products/components/modal-add-image"
 import { AdminContext } from "@/providers/admin"
+import ModalAddImage from "./modal-add-image"
 
 
 export default function ModalFormCategory() {
