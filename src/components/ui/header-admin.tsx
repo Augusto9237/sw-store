@@ -16,6 +16,7 @@ import { AdminContext } from "@/providers/admin";
 import { getCustomers } from "@/actions/customers";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import ModalMyAccount from "../my-account";
+import Link from "next/link";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
@@ -88,6 +89,9 @@ export default function HeaderAdmin() {
                     <SheetContent side='left' className="w-full max-md:max-w-[240px] max-lg:max-w-[340px] px-0">
                         {status === "authenticated" && data?.user && (
                             <div className="flex-col">
+                                <Link href="/dashboard" className="font-semibold text-2xl max-lg:text-lg flex flex-nowrap w-full pl-8">
+                                    <span className="text-primary">Auto</span> Tech
+                                </Link>
                                 <div className="flex items-center gap-2 py-4 px-6">
                                     <Avatar>
                                         <AvatarFallback>
@@ -108,7 +112,7 @@ export default function HeaderAdmin() {
                         <div className="mt-4 flex flex-col gap-2">
                             <CardContent className="w-full flex-1 px-0 flex flex-col gap-8 ">
                                 <ActiveLink href="/dashboard">
-                                    <PieChart size={16}/>
+                                    <PieChart size={16} />
                                     Dashboard
                                 </ActiveLink>
 
@@ -148,8 +152,8 @@ export default function HeaderAdmin() {
 
                 </Sheet>
 
-                    <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
-           
+                <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
+
 
                 <Popover>
                     {status === "authenticated" && data?.user && (

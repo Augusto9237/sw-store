@@ -37,12 +37,13 @@ import { Plus, X, Trash2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { createProduct, getProducts } from "@/actions/products"
 import { AdminContext } from "@/providers/admin"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import ModalAddImage from "./modal-add-image"
 import { Textarea } from "@/components/ui/textarea"
 
 export default function ModalAddProduct() {
-    const { categories, setProducts, products } = useContext(AdminContext)
+    const { categories, setProducts, products } = useContext(AdminContext);
+    const [isOpen, setIsOpen] = useState(false);
 
     const formSchema = z.object({
         categoryId: z.string().min(2, {
@@ -102,6 +103,7 @@ export default function ModalAddProduct() {
                 variant: 'success',
                 title: "✅  Produto criado com sucesso!",
             })
+            setIsOpen(false);
             const { products: newProducts } = await getProducts('', products.length + 18);
             setProducts(newProducts)
         } catch (error) {
@@ -114,8 +116,8 @@ export default function ModalAddProduct() {
     }
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>
+        <Dialog modal={isOpen}>
+            <DialogTrigger asChild onClick={() => setIsOpen(true)}>
                 <Button className="uppercase font-bold flex items-center gap-2">
                     <Plus size={16} />
                     <span className="max-sm:hidden">
@@ -123,7 +125,6 @@ export default function ModalAddProduct() {
                     </span>
                 </Button>
             </DialogTrigger>
-            <DialogOverlay className="overflow-y-auto w-screen h-screen py-8">
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-center">Adicionar Produto</DialogTitle>
@@ -294,7 +295,6 @@ export default function ModalAddProduct() {
                     </Form>
 
                 </DialogContent>
-            </DialogOverlay>
         </Dialog>
 
     )

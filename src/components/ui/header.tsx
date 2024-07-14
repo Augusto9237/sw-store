@@ -157,7 +157,7 @@ export default function Header() {
                 <div className="w-full flex-1 max-sm:hidden">
                     <form onSubmit={handleSearchSubmit} >
                         <div className="relative">
-                            <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                            <SearchIcon className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
                             <Input
                                 className="w-full bg-accent shadow-none appearance-none pl-8"
                                 placeholder="Pesquisar"
@@ -249,7 +249,7 @@ export default function Header() {
             </div>
 
             <form onSubmit={handleSearchSubmit} className="relative w-full hidden max-sm:flex mt-2" >
-                <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                <SearchIcon className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
                 <Input
                     className="w-full bg-accent shadow-none appearance-none pl-8"
                     placeholder="Pesquisar"
