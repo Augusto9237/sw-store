@@ -20,7 +20,7 @@ export default function ProductImages({ imagesUrls, name }: ProductImagesProps) 
 
     return (
         <div className="flex flex-col flex-1 relative">
-            <div className="bg-accent  h-full min-h-[200px] w-full items-center flex justify-center rounded-[10px]">
+            <div className="bg-accent  h-full min-h-[200px] max-h-[200px] w-full items-center flex justify-center rounded-[10px]">
                 <Image
                     src={currentImage}
                     alt={name}

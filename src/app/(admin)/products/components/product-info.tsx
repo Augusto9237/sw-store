@@ -35,7 +35,7 @@ export default function ProductInfo() {
                             <div className="text-sm">
                                 <span className="font-semibold">Slug:</span> {product.slug}
                             </div>
-                            <div className="text-sm min-h-[100px] h-full max-h-[180px] overflow-hidden flex-1 text-justify">
+                            <div className="text-sm min-h-[180px] h-full max-h-[180px] overflow-hidden text-justify">
                                 <span className="font-semibold">Descrição:</span> {product.description}
                             </div>
 
