@@ -125,6 +125,7 @@ export default function ModalAddProduct() {
                     </span>
                 </Button>
             </DialogTrigger>
+            {isOpen && (
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-center">Adicionar Produto</DialogTitle>
@@ -295,6 +296,7 @@ export default function ModalAddProduct() {
                     </Form>
 
                 </DialogContent>
+            )}
         </Dialog>
 
     )

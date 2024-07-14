@@ -41,7 +41,7 @@ export default function Header() {
     }
 
     return (
-        <Card className="px-[1.875rem] py-2 sm:p-[1.875rem]" >
+        <Card className="px-[1.875rem] py-2 sm:p-[1.875rem] max-sm:px-5" >
             <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-4 lg:gap-8">
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">
