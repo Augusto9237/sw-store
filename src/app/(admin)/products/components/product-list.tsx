@@ -41,7 +41,7 @@ export default function ProductList() {
         <div className='flex flex-col w-full h-full p-5 bg-background rounded-lg relative'>
             <div className="flex justify-between">
                 <Badge
-                    className="w-fit gap-2 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
+                    className="w-fit gap-2 border-2 border-primary px-3 py-[0.375rem] text-base max-sm:text-xs uppercase"
                     variant='outline'
                 >
                     <Boxes size={16} />
@@ -69,15 +69,17 @@ export default function ProductList() {
                                 <div className="relative grid grid-cols-6 max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 gap-2  items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
                                     {products.map(product => (
                                         <div key={product.id} className="relative p-2">
-                                            <div className="absolute flex flex-col gap-4 px-10 items-center justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
+                                            <div className="absolute flex flex-col gap-4 px-10 justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
                                                 <Button variant="outline" className='gap-2' onClick={() => setProductSelected(product)}>
                                                     <List size={16} />
-                                                    Selecionar
+                                                    <span className='max-sm:hidden'>
+                                                        Selecionar
+                                                    </span>
                                                 </Button>
 
-                                                <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} />
+                                                <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} sm={true} />
 
-                                                <ButtonDelete idProduct={product.id} />
+                                                <ButtonDelete idProduct={product.id} sm={true} />
                                             </div>
                                             <ProductItem product={computeProductTotalPrice(product)} />
                                         </div>

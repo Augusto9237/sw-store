@@ -7,10 +7,11 @@ import { Trash2 } from 'lucide-react'
 import React, { useContext } from 'react'
 
 interface ButtonDeleteProps {
-    idProduct: string
+    idProduct: string;
+    sm?:boolean
 }
 
-export default function ButtonDelete({ idProduct }: ButtonDeleteProps) {
+export default function ButtonDelete({ idProduct, sm }: ButtonDeleteProps) {
     const { products, setProducts } = useContext(AdminContext)
 
     async function handleDelete(id: string) {
@@ -34,7 +35,9 @@ export default function ButtonDelete({ idProduct }: ButtonDeleteProps) {
     return (
         <Button variant='outline' className='gap-2 w-full' onClick={() => handleDelete(idProduct)}>
             <Trash2 size={16} />
-            Excluir
+            <span className={`${sm === true ? "max-sm:hidden" : null}`}>
+                Excluir
+            </span>
         </Button>
     )
 }

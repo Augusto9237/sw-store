@@ -53,7 +53,8 @@ interface Product {
 
 interface ModalProductProps {
     product: Product;
-    setTotalLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setTotalLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    sm?: boolean;
 }
 
 const defaultValues = {
@@ -68,7 +69,7 @@ const defaultValues = {
     imageUrls: [],
 }
 
-export default function ModalEditProduct({ product, setTotalLoading }: ModalProductProps) {
+export default function ModalEditProduct({ product, setTotalLoading, sm }: ModalProductProps) {
     const { categories, setProducts, } = useContext(AdminContext)
     const [formData, setFormData] = useState<Product>(defaultValues)
     const [isOpen, setIsOpen] = useState(false);
@@ -147,10 +148,12 @@ export default function ModalEditProduct({ product, setTotalLoading }: ModalProd
 
     return (
         <Dialog modal={isOpen}>
-            <DialogTrigger asChild onClick={() => setIsOpen(true)}>
+            <DialogTrigger asChild onClick={() => setIsOpen(true)} className="w-full">
                 <Button variant='save' className='gap-2 w-full' >
                     <Pencil size={16} />
-                    Editar
+                    <span className={`${sm === true ? "max-sm:hidden" : null}`}>
+                        Editar
+                    </span>
                 </Button>
             </DialogTrigger>
 
