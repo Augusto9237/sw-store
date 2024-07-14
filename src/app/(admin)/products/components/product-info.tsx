@@ -2,20 +2,12 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { AdminContext } from "@/providers/admin";
 import { useContext, useState } from "react";
-import { deleteCategory } from "@/actions/category";
-import { toast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
 import ModalEditProduct from "./modal-edit-product";
 import ProductImages from "./product-images";
 import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import ButtonDelete from "./button-delete";
 
-interface ProductImagesProps {
-    name: string;
-    imagesUrls: string[]
-}
 
 export default function ProductInfo() {
     const { productSelected, products } = useContext(AdminContext)
@@ -43,8 +35,13 @@ export default function ProductInfo() {
                             <div className="text-sm">
                                 <span className="font-semibold">Slug:</span> {product.slug}
                             </div>
-                            <div className="text-sm min-h-[200px] h-full max-h-[200px] overflow-hidden flex-1 text-justify">
-                                <span className="font-semibold">Descrição:</span> {product.description}</div>
+                            <div className="text-sm min-h-[100px] h-full max-h-[180px] overflow-hidden flex-1 text-justify">
+                                <span className="font-semibold">Descrição:</span> {product.description}
+                            </div>
+
+                            <div className="text-sm">
+                                <span className="font-semibold">Estoque:</span> {product.stock}
+                            </div>
                             <div className="text-sm">
                                 <span className="font-semibold">Preço base:</span> {formatReal(Number(product.basePrice))}
                             </div>

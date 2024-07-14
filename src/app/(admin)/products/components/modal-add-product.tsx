@@ -35,14 +35,14 @@ import { Input } from "@/components/ui/input"
 import { CATEGORY_ICON } from "@/constants/category-icon";
 import { Plus, X, Trash2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
-import { createProduct } from "@/actions/products"
+import { createProduct, getProducts } from "@/actions/products"
 import { AdminContext } from "@/providers/admin"
 import { useContext } from "react"
 import ModalAddImage from "./modal-add-image"
 import { Textarea } from "@/components/ui/textarea"
 
 export default function ModalAddProduct() {
-    const { categories } = useContext(AdminContext)
+    const { categories, setProducts, products } = useContext(AdminContext)
 
     const formSchema = z.object({
         categoryId: z.string().min(2, {
@@ -102,6 +102,8 @@ export default function ModalAddProduct() {
                 variant: 'success',
                 title: "✅  Produto criado com sucesso!",
             })
+            const { products: newProducts } = await getProducts('', products.length + 18);
+            setProducts(newProducts)
         } catch (error) {
             toast({
                 variant: 'cancel',

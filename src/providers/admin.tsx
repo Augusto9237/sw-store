@@ -32,11 +32,12 @@ interface ICartContext {
         name: string;
         slug: string;
         description: string;
-        basePrice: Decimal;
+        basePrice: Prisma.Decimal;
         imageUrls: string[];
+        stock: number;
         categoryId: string;
         discountPercentage: number;
-    }[]>>,
+    }[]>>
     setCategories: Dispatch<SetStateAction<{
         id: string;
         name: string;
@@ -50,6 +51,7 @@ interface ICartContext {
         description: string;
         basePrice: Prisma.Decimal;
         imageUrls: string[];
+        stock: number;
         categoryId: string;
         discountPercentage: number;
     } | null>>;
