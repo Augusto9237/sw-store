@@ -1,5 +1,5 @@
 'use client'
-import { Boxes, LogOutIcon, LucideLayoutDashboard, PieChart, ShapesIcon, ShoppingCartIcon, Users } from "lucide-react";
+import { Boxes, LogOutIcon, GalleryHorizontal, PieChart, ShapesIcon, ShoppingCartIcon, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -32,6 +32,16 @@ export default function Sidebar() {
                     Pedidos
                 </ActiveLink>
 
+                <ActiveLink href="/customers">
+                    <Users size={16} />
+                    Clientes
+                </ActiveLink>
+
+                <ActiveLink href="/banners">
+                    <GalleryHorizontal size={16} />
+                    Banners
+                </ActiveLink>
+
                 <ActiveLink href="/categories">
                     <ShapesIcon size={16} />
                     Categorias
@@ -40,11 +50,6 @@ export default function Sidebar() {
                 <ActiveLink href="/products">
                     <Boxes size={16} />
                     Produtos
-                </ActiveLink>
-
-                <ActiveLink href="/customers">
-                    <Users size={16} />
-                    Clientes
                 </ActiveLink>
 
                 <ActiveLink href="/team">

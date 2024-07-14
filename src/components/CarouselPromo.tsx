@@ -4,15 +4,17 @@ import { Card, CardContent } from "./ui/card"
 import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel"
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay"
-
-
-import banner1 from "../../public/Banner-home-01.png"
-import banner2 from "../../public/Banner-home-02.png"
-import banner3 from "../../public/Banner-home-03.png"
 import PromoBanner from "@/app/(public)/(home)/components/promo-banner";
+import { Banner } from "@prisma/client";
+import Link from "next/link";
 
-export default function CarouselPromo() {
-    const [promos, setPromos] = useState([banner1, banner2, banner3])
+
+interface CarouselProps {
+    banner: Banner[]
+}
+
+export default function CarouselPromo({ banner }: CarouselProps) {
+    const [promos, setPromos] = useState<CarouselProps['banner']>(banner)
     const plugin = useRef(
         Autoplay({ delay: 2000, stopOnInteraction: true })
     )
@@ -32,10 +34,12 @@ export default function CarouselPromo() {
             <CarouselContent>
                 {promos.map((promo, index) => (
                     <CarouselItem key={index}>
-                        <PromoBanner
-                            src={promo}
-                            alt="promo"
-                        />
+                        <Link href={promo.link}>
+                            <PromoBanner
+                                src={promo.image}
+                                alt="promo"
+                            />
+                        </Link>
                     </CarouselItem>
                 ))}
             </CarouselContent>

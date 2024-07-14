@@ -70,7 +70,8 @@ export default function HeaderAdmin() {
         categories: "Categorias",
         products: "Produtos",
         customers: "Clientes",
-        team: "Usuários"
+        team: "Usuários",
+        banners: "Banners"
     }
 
     async function handleLogoutClick() {

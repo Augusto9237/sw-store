@@ -20,17 +20,14 @@ export default function ProductImages({ imagesUrls, name }: ProductImagesProps) 
 
     return (
         <div className="flex flex-col flex-1 relative">
-            <div className="bg-accent  h-full min-h-[200px] max-h-[200px] w-full items-center flex justify-center rounded-[10px]">
+            <div className="bg-accent  h-full min-h-[200px] max-h-[200px] w-full items-center flex justify-center rounded-[10px] overflow-hidden">
                 <Image
                     src={currentImage}
                     alt={name}
                     height={0}
                     width={0}
-                    sizes="100vh"
-                    className="h-auto max-h-[70%] w-auto max-w-[90%]"
-                    style={{
-                        objectFit: 'contain',
-                    }}
+                    sizes="80vh"
+                    className="h-auto max-h-[70%] w-auto max-w-[90%] object-contain"
                 />
             </div>
 
