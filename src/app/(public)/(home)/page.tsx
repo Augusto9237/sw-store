@@ -4,6 +4,7 @@ import PromoBanner from "./components/promo-banner";
 import SectionTitle from "@/components/ui/section-title";
 import ProductList from "@/components/ui/product-list";
 import CarouselPromo from "@/components/CarouselPromo";
+import { getBanners } from "@/actions/banner";
 
 export default async function Home() {
   const deals = await prismaClient.product.findMany({
@@ -30,11 +31,13 @@ export default async function Home() {
     }
   })
 
+  const {banners} = await getBanners()
+
   return (
     <div className="flex flex-col gap-8 md:gap-10 pb-8">
   
        <section className="flex flex-1 w-full h-full justify-center">
-        <CarouselPromo />
+        <CarouselPromo banner={banners} />
        </section>
       
 
