@@ -65,6 +65,11 @@ export default function HeaderAdmin() {
 
     const ROUTE_NAME = {
         dashboard: "Dashboard",
+        order: "Pedidos",
+        categories: "Categorias",
+        products: "Produtos",
+        customers: "Clientes",
+        team: "Usuários"
     }
 
     async function handleLogoutClick() {
@@ -143,26 +148,8 @@ export default function HeaderAdmin() {
 
                 </Sheet>
 
-                {path.slice(1) !== 'dashboard' && (
-                    <div className="w-full flex-1">
-                        <form onSubmit={handleSearchSubmit}>
-                            <div className="relative">
-                                <SearchIcon className="absolute left-2.5 top-3 max-sm:top-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                                <Input
-                                    className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
-                                    placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produtos' || path.slice(1) === 'categories' && 'categorias' || path.slice(1) === 'order' && 'pedidos' || path.slice(1) === 'customers' && 'clientes' || path.slice(1) === 'team' && 'usuários'}`}
-                                    type="search"
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    value={search}
-                                />
-                            </div>
-                        </form>
-                    </div>
-                )}
-
-                {path.slice(1) === 'dashboard' && (
                     <span className="font-bold text-xl">{ROUTE_NAME[path.slice(1) as keyof typeof ROUTE_NAME]}</span>
-                )}
+           
 
                 <Popover>
                     {status === "authenticated" && data?.user && (

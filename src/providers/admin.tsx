@@ -26,6 +26,15 @@ interface ICartContext {
         }
     }>[];
     search: string;
+    setOrders: Dispatch<SetStateAction<Prisma.OrderGetPayload<{
+        include: {
+            orderProducts: {
+                include: {
+                    product: true;
+                }
+            }
+        }
+    }>[]>>
     setSearch: Dispatch<SetStateAction<string>>;
     setProducts: Dispatch<SetStateAction<{
         id: string;
@@ -87,6 +96,7 @@ export const AdminContext = createContext<ICartContext>({
     categorySelected: null,
     setCategorySelected: () => { },
     setProducts: () => { },
+    setOrders: () => { },
     setProductSelected: () => { },
     setCategories: () => { },
     setCustomers: () => { },
@@ -131,7 +141,7 @@ const AdminProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <AdminContext.Provider value={{ products, productSelected, categories, categorySelected, customers, usersTeam, orders, search, setSearch, setCategorySelected, setProductSelected, setCustomers, setUsersTeam, setProducts, setCategories, loading }}>
+        <AdminContext.Provider value={{ products, productSelected, categories, categorySelected, customers, usersTeam, orders, search, setSearch, setCategorySelected, setProductSelected, setOrders, setCustomers, setUsersTeam, setProducts, setCategories, loading }}>
             {children}
         </AdminContext.Provider>
     )

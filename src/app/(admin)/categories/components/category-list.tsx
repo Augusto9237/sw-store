@@ -1,15 +1,15 @@
 'use client'
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent} from "@/components/ui/card";
 import { CATEGORY_ICON } from "@/constants/category-icon";
 import { useContext } from "react";
 import { AdminContext } from "@/providers/admin";
 import Link from "next/link";
 import Spinner from "@/components/spinner";
 import { Button } from "@/components/ui/button";
-import { List, ShapesIcon, Trash2 } from "lucide-react";
+import { List} from "lucide-react";
 import { Category } from "@prisma/client";
-import { Badge } from "@/components/ui/badge";
 import ModalFormCategory from "./modal-form-category";
+import SearchInput from "@/components/search-input";
 
 export default function CategoriesList() {
     const { categories, setCategories, setCategorySelected } = useContext(AdminContext)
@@ -20,14 +20,8 @@ export default function CategoriesList() {
 
     return (
         <Card className='p-5 w-full h-full overflow-hidden min-h-full'>
-            <div className="flex justify-between">
-                <Badge
-                    className="w-fit gap-2 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
-                    variant='outline'
-                >
-                    <ShapesIcon size={16} />
-                    Categorias
-                </Badge>
+            <div className="flex justify-between gap-4">
+               <SearchInput/>
                 <ModalFormCategory />
             </div>
 

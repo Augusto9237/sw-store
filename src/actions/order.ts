@@ -4,8 +4,16 @@ import { CartProduct } from "@/providers/cart";
 import { revalidatePath } from "next/cache";
 
 
-export const getOrders = async () => {
+export const getOrders = async (name?: string) => {
     const orders = await prismaClient.order.findMany({
+        where: {
+            user: {
+                name: {
+                    contains: name,
+                    mode: 'insensitive'
+                }
+            }
+        },
         include: {
             orderProducts: {
                 include: {
