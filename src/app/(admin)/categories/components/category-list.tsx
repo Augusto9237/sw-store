@@ -12,7 +12,7 @@ import ModalFormCategory from "./modal-form-category";
 import SearchInput from "@/components/search-input";
 
 export default function CategoriesList() {
-    const { categories, setCategories, setCategorySelected } = useContext(AdminContext)
+    const { categories, setCategorySelected } = useContext(AdminContext)
 
     function handleSelectCategory(category: Category) {
         setCategorySelected(category)

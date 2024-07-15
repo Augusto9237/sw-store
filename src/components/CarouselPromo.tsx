@@ -8,7 +8,6 @@ import PromoBanner from "@/app/(public)/(home)/components/promo-banner";
 import { Banner } from "@prisma/client";
 import Link from "next/link";
 
-
 interface CarouselProps {
     banner: Banner[]
 }
@@ -43,12 +42,8 @@ export default function CarouselPromo({ banner }: CarouselProps) {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-
-
             <CarouselPrevious className="left-4 opacity-20 hover:opacity-50" />
             <CarouselNext className="right-4 opacity-20 hover:opacity-50" />
-
-
         </Carousel>
     )
 }

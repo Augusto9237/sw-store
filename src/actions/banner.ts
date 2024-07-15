@@ -11,7 +11,6 @@ interface Banner {
 
 export async function getBanners() {
     const banners = await prismaClient.banner.findMany()
-
     return { banners }
 }
 
@@ -21,6 +20,31 @@ export async function createBanner(banner: Banner) {
             title: banner.title,
             image: banner.image,
             link: banner.link
+        },
+    });
+
+    return revalidatePath('/banners');
+}
+
+export async function updateBanner(banner: Banner) {
+    await prismaClient.banner.update({
+        where: {
+            id: banner.id,
+        },
+        data: {
+            title: banner.title,
+            image: banner.image,
+            link: banner.link
+        },
+    });
+
+    return revalidatePath('/banners');
+}
+
+export async function deleteBanner(id: string) {
+    await prismaClient.banner.delete({
+        where: {
+            id,
         },
     });
 

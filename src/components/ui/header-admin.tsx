@@ -1,16 +1,14 @@
 'use client'
 import { FormEvent, useContext, useEffect } from "react";
-import { Boxes, LogOutIcon, LucideLayoutDashboard, MenuIcon, PackageSearchIcon, PieChart, SearchIcon, ShapesIcon, ShoppingCartIcon, User, UserCog, Users } from "lucide-react";
+import { Boxes, GalleryHorizontal, LogOutIcon, MenuIcon, PieChart, ShapesIcon, ShoppingCartIcon, User, UserCog, Users } from "lucide-react";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
-import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./sheet";
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from "./sheet";
 
-import { signIn, signOut, useSession } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { signOut, useSession } from "next-auth/react";
 import { Separator } from "./separator";
 import { ActiveLink } from "./active-link";
 import { usePathname } from "next/navigation";
-import { Input } from "./input";
 import { getProducts } from "@/actions/products";
 import { AdminContext } from "@/providers/admin";
 import { getCustomers } from "@/actions/customers";
@@ -88,30 +86,22 @@ export default function HeaderAdmin() {
                     </SheetTrigger>
 
                     <SheetContent side='left' className="w-full max-md:max-w-[240px] max-lg:max-w-[340px] px-0">
-                        {status === "authenticated" && data?.user && (
-                            <div className="flex-col">
-                                <Link href="/dashboard" className="font-semibold text-2xl max-lg:text-lg flex flex-nowrap w-full pl-8">
-                                    <span className="text-primary">Auto</span> Tech
-                                </Link>
-                                <div className="flex items-center gap-2 py-4 px-6">
-                                    <Avatar>
-                                        <AvatarFallback>
-                                            {data.user.name?.[0].toUpperCase()}
-                                        </AvatarFallback>
-
-                                        {data.user.image && <AvatarImage src={data.user.image!} />}
-                                    </Avatar>
-                                    <div className="flex-col">
-                                        <p className="font-medium">{data.user.name}</p>
-                                        <p className="text-sm opacity-75">Administrador</p>
-                                    </div>
+                        <SheetHeader className="px-8 py-0 mb-4">
+                            <Link href="/dashboard" className="font-semibold text-2xl flex flex-nowrap w-full">
+                                <span className="text-primary">Auto</span> Tech
+                            </Link>
+                            {status === "authenticated" && data?.user && (
+                                <div className="flex gap-2 w-full text-start items-center">
+                                    <User size={18}/>
+                                    <p className="font-medium">{data.user.name}</p>
                                 </div>
-                                <Separator />
-                            </div>
-                        )}
+                            )}
+                        </SheetHeader>
+
+                        <Separator />
 
                         <div className="mt-4 flex flex-col gap-2">
-                            <CardContent className="w-full flex-1 px-0 flex flex-col gap-8 ">
+                            <CardContent className="w-full flex-1 px-0 flex flex-col gap-4 ">
                                 <ActiveLink href="/dashboard">
                                     <PieChart size={16} />
                                     Dashboard
@@ -122,6 +112,16 @@ export default function HeaderAdmin() {
                                     Pedidos
                                 </ActiveLink>
 
+                                <ActiveLink href="/customers">
+                                    <Users size={16} />
+                                    Clientes
+                                </ActiveLink>
+
+                                <ActiveLink href="/banners">
+                                    <GalleryHorizontal size={16} />
+                                    Banners
+                                </ActiveLink>
+
                                 <ActiveLink href="/categories">
                                     <ShapesIcon size={16} />
                                     Categorias
@@ -130,11 +130,6 @@ export default function HeaderAdmin() {
                                 <ActiveLink href="/products">
                                     <Boxes size={16} />
                                     Produtos
-                                </ActiveLink>
-
-                                <ActiveLink href="/customers">
-                                    <Users size={16} />
-                                    Clientes
                                 </ActiveLink>
 
                                 <ActiveLink href="/team">

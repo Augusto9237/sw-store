@@ -1,12 +1,24 @@
+'use client'
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Banner } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
+import ModalFormEditBanner from './modal-edit-banner';
+import { deleteBanner } from '@/actions/banner';
+import { Trash2 } from 'lucide-react';
 interface TableBannersProps {
     banner: Banner[]
 }
 export default function TableBanners({ banner }: TableBannersProps) {
+
+    async function handleDeleteBanner(id: string) {
+        try {
+            await deleteBanner(id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Table>
@@ -33,11 +45,13 @@ export default function TableBanners({ banner }: TableBannersProps) {
                             </Link>
                         </TableCell>
                         <TableCell className='justify-center text-center gap-4 flex p-1 pt-2'>
-                            <Button>
-                                Editar
-                            </Button>
-                            <Button>
-                                Excluir
+                            <ModalFormEditBanner banner={banner} />
+                            
+                            <Button variant='outline' className="flex gap-2" onClick={() => handleDeleteBanner(banner.id)}>
+                                <Trash2 size={16} />
+                                <span className="max-sm:hidden">
+                                    Excluir
+                                </span>
                             </Button>
                         </TableCell>
                     </TableRow>

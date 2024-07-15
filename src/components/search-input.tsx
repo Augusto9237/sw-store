@@ -62,7 +62,7 @@ export default function SearchInput() {
                     <SearchIcon className="absolute left-2.5 top-3  h-4 w-4 text-gray-500 dark:text-gray-400" />
                     <Input
                         className="w-full bg-accent shadow-none appearance-none pl-8 md:w-2/3 "
-                        placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produto' || path.slice(1) === 'categories' && 'categoria' || path.slice(1) === 'order' && 'pedido' || path.slice(1) === 'customers' && 'cliente' || path.slice(1) === 'team' && 'usuário'}`}
+                        placeholder={`Pesquisar ${path.slice(1) === 'products' && 'produto' || path.slice(1) === 'categories' && 'categoria' || path.slice(1) === 'order' && 'pedido' || path.slice(1) === 'customers' && 'cliente' || path.slice(1) === 'team' && 'usuário' || path.slice(1) === 'banners' && 'banner'}`}
                         type="search"
                         onChange={(e) => setSearch(e.target.value)}
                         value={search}
