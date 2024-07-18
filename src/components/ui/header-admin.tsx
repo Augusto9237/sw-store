@@ -16,6 +16,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import ModalMyAccount from "../my-account";
 import Link from "next/link";
 
+import { AvatarImage, AvatarFallback, Avatar } from "./avatar";
+
 export default function HeaderAdmin() {
     const { status, data } = useSession();
     const { setProducts, setCustomers, search, setSearch } = useContext(AdminContext)
@@ -86,14 +88,23 @@ export default function HeaderAdmin() {
                     </SheetTrigger>
 
                     <SheetContent side='left' className="w-full max-md:max-w-[240px] max-lg:max-w-[340px] px-0">
-                        <SheetHeader className="px-8 py-0 mb-4">
-                            <Link href="/dashboard" className="font-semibold text-2xl flex flex-nowrap w-full">
+                        <SheetHeader className="mb-4">
+                            <Link href="/dashboard" className="font-semibold text-lg  md:text-2xl">
                                 <span className="text-primary">Auto</span> Tech
                             </Link>
                             {status === "authenticated" && data?.user && (
-                                <div className="flex gap-2 w-full text-start items-center">
-                                    <User size={18}/>
-                                    <p className="font-medium">{data.user.name}</p>
+                                <div className="flex items-center gap-2 pl-6">
+                                    <Avatar>
+                                        <AvatarFallback>
+                                            {data.user.name?.[0].toUpperCase()}
+                                        </AvatarFallback>
+
+                                        {data.user.image && <AvatarImage src={data.user.image!} />}
+                                    </Avatar>
+                                    <div className="flex-col">
+                                        <p className="font-medium">{data.user.name}</p>
+                                        <p className="text-sm opacity-75">Administrador</p>
+                                    </div>
                                 </div>
                             )}
                         </SheetHeader>
