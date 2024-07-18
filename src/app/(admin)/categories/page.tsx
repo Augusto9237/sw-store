@@ -8,7 +8,7 @@ export default function Categories() {
         <div className="flex w-full max-xl:flex-col h-full gap-8 max-sm:gap-4 max-sm:pb-8">
             <CategoriesList />
 
-            <div className="max-md:pb-4 xl:max-w-[340px] w-full">
+            <div className="max-md:pb-4 xl:max-w-sm w-full">
                 <CategoryInfo />
             </div>
         </div>

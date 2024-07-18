@@ -54,7 +54,7 @@ export default function ProductList() {
                 <>
                     {
                         products.length < 1 ?
-                            <div className="flex w-full justify-center gap-2">
+                            <div className="flex w-full h-full justify-center gap-2">
                                 <PackageX />
                                 <h1 className="font-semibold">Nenhum produto encontrado</h1>
                             </div>

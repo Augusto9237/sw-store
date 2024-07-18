@@ -14,9 +14,12 @@ import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Order, Prisma } from "@prisma/client";
 import { format } from "date-fns";
-import { GanttChartSquare, Pencil } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Pencil } from "lucide-react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import OrderProductItemEdit from "./order-product-item-edit";
+import { getOrders, updateOrder } from "@/actions/order";
+import { toast } from "@/components/ui/use-toast";
+import { AdminContext } from "@/providers/admin";
 
 export interface ModalOrderProps {
     order: Prisma.OrderGetPayload<{
@@ -31,6 +34,7 @@ export interface ModalOrderProps {
 }
 
 export default function ModalEditOrder({ order }: ModalOrderProps) {
+    const { setOrders } = useContext(AdminContext)
     const [isOpen, setIsOpen] = useState(false);
     const [orderSelected, setOrderSelected] = useState<ModalOrderProps['order']>(null!);
 
@@ -56,6 +60,26 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
     }, [orderSelected?.orderProducts]);
 
     const totalDiscounts = subtotal - total
+
+    async function handleUpdateOrder() {
+        try {
+            await updateOrder(order.id, orderSelected.orderProducts)
+            toast({
+                variant: 'success',
+                title: "✅ Pedido atualizado com sucesso",
+            })
+            const { orders: newOrders } = await getOrders()
+            setOrders(newOrders)
+            
+            setIsOpen(false);
+
+        } catch (error) {
+            toast({
+                variant: 'cancel',
+                title: "⛔  Algo deu errado, tente novamente!",
+            })
+        }
+    }
 
     return (
         <Dialog modal={isOpen}>
@@ -136,7 +160,7 @@ export default function ModalEditOrder({ order }: ModalOrderProps) {
 
                     </div>
                     <div className="flex w-full justify-center gap-5 ">
-                        <Button variant='save' className="uppercase font-semibold" type="button">Salvar</Button>
+                        <Button variant='save' onClick={handleUpdateOrder} className="uppercase font-semibold" type="button">Salvar</Button>
 
 
                         <DialogClose asChild>

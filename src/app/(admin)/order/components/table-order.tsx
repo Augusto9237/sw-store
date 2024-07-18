@@ -16,12 +16,12 @@ import ModalOrder from "./modal-order";
 import ModalEditOrder from "./modal-edit-order";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { deleteOrder } from "@/actions/order";
+import { deleteOrder, getOrders } from "@/actions/order";
 import { toast } from "@/components/ui/use-toast";
 import { AdminContext } from "@/providers/admin";
 
 export default function TableOrder() {
-    const { orders, customers } = useContext(AdminContext)
+    const { orders, customers, setOrders } = useContext(AdminContext)
 
     const total = useMemo(() => {
         return orders.reduce((acc, order) => {
@@ -39,6 +39,9 @@ export default function TableOrder() {
                 variant: "cancel",
                 title: "🗑️ Pedido excluído",
             })
+            const { orders: newOrders } = await getOrders()
+            setOrders(newOrders)
+
         } catch (error) {
             toast({
                 variant: 'cancel',

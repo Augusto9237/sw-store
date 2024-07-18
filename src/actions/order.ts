@@ -1,8 +1,20 @@
 "use server";
 import { prismaClient } from "@/lib/prisma";
 import { CartProduct } from "@/providers/cart";
+import { Prisma, Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+
+
+interface OrderItem {
+    id: string;
+    productId: string;
+    orderId: string;
+    basePrice: Prisma.Decimal;
+    discountPercentage: number;
+    quantity: number;
+    product: Product;
+}
 
 export const getOrders = async (name?: string) => {
     const orders = await prismaClient.order.findMany({
@@ -50,20 +62,29 @@ export const createOrder = async (
     return order;
 };
 
-export const updateOrder = async (cartProducts: CartProduct[],
-    id: string,) => {
-    await prismaClient.orderProduct.updateMany({
-        where: {
-            orderId: id
-        },
-        data:
-            cartProducts.map((product) => ({
-                basePrice: product.basePrice,
-                discountPercentage: product.discountPercentage,
-                productId: product.id,
-                quantity: product.quantity,
-            }))
-    })
+export async function updateOrder(id: string, orderProducts: OrderItem[]) {
+    for (const product of orderProducts) {
+        await prismaClient.order.update({
+            where: {
+                id: id
+            },
+            data: {
+                orderProducts: {
+                    updateMany: {
+                        where: {
+                            id: product.id
+                        },
+                        data: {
+                            basePrice: product.basePrice,
+                            discountPercentage: product.discountPercentage,
+                            productId: product.productId,
+                            quantity: product.quantity
+                        }
+                    }
+                }
+            }
+        });
+    }
 }
 
 export const deleteOrder = async (id: string) => {
