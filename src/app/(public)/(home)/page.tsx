@@ -15,21 +15,6 @@ export default async function Home() {
     }
   })
 
-  const keyboards = await prismaClient.product.findMany({
-    where: {
-      category: {
-        slug: "keyboards",
-      }
-    }
-  })
-
-  const mouses = await prismaClient.product.findMany({
-    where: {
-      category: {
-        slug: "mouses",
-      }
-    }
-  })
 
   const {banners} = await getBanners()
 
@@ -69,20 +54,7 @@ export default async function Home() {
         />
       </div>
 
-      <div className="max-w-[1248px] w-full mx-auto">
-        <SectionTitle>Teclados</SectionTitle>
-        <ProductList products={keyboards} />
-      </div>
-
-      <PromoBanner
-        src="/Banner-home-03.png"
-        alt="Desconto esse mês"
-      />
-
-      <div className="max-w-[1248px] w-full mx-auto">
-        <SectionTitle>Mouses</SectionTitle>
-        <ProductList products={mouses} />
-      </div>
+     
     </div>
   )
 }
