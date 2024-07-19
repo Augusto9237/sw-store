@@ -33,6 +33,7 @@ export default function Cart(){
         stripe?.redirectToCheckout({
             sessionId: checkout.id,
         });
+        localStorage.removeItem("@fsw-store/cart-products")
     };
 
     return (
