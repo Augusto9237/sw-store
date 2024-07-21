@@ -24,11 +24,12 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { Plus } from "lucide-react"
-import { createCategory, getCategories} from "@/actions/category"
+import { createCategory, getCategories } from "@/actions/category"
 import { toast } from "@/components/ui/use-toast"
 import { useContext, useState } from "react"
 import { AdminContext } from "@/providers/admin"
 import ModalAddImage from "./modal-add-image"
+import { deleteImage } from "@/actions/images"
 
 
 export default function ModalFormCategory() {
@@ -41,7 +42,7 @@ export default function ModalFormCategory() {
         slug: z.string().min(2, {
             message: "Por favor, preencha o campo slug",
         }),
-        imageUrl: z.string().min(2, {
+        imageUrl: z.string().min(0, {
             message: "Por favor, preencha o campo com a url da imagem",
         }),
 
@@ -76,6 +77,14 @@ export default function ModalFormCategory() {
             })
         }
 
+    }
+
+    async function handleCancel() {
+        const url = form.getValues('imageUrl');
+        
+        await deleteImage(url);
+
+        form.reset();
     }
 
     return (
@@ -134,7 +143,7 @@ export default function ModalFormCategory() {
                                                 <div className="flex gap-2">
                                                     <ModalAddImage setValueImageCategories={form.setValue} />
                                                     <Input
-                                                        type='url'
+                                                        type="text"
                                                         disabled={true}
                                                         className="placeholder:text-accent-foreground/50"
                                                         placeholder='Digite ou cole a url da imagem da categoria'
@@ -150,7 +159,7 @@ export default function ModalFormCategory() {
                                     <Button variant='save' className="uppercase font-semibold" type="submit">Salvar</Button>
 
                                     <DialogClose asChild>
-                                        <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
+                                        <Button variant="secondary" onClick={handleCancel} className="uppercase font-semibold" type="reset">Cancelar</Button>
                                     </DialogClose>
                                 </div>
                             </form>

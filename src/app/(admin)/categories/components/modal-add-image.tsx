@@ -59,7 +59,7 @@ export default function ModalAddImage({ setValueImageCategories }: ModalAddImage
             setPreviewUrl(null);
             setIsOpen(false);
         } catch (error) {
-
+            console.log(error);
         }
     }
 

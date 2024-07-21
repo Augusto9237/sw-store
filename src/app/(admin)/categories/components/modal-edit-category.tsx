@@ -30,13 +30,14 @@ import { useContext, useEffect, useState } from "react"
 import { Category } from "@prisma/client"
 import { AdminContext } from "@/providers/admin"
 import ModalAddImage from "./modal-add-image"
+import { deleteImage } from "@/actions/images"
 
-interface ModalEditProps{
+interface ModalEditProps {
     category: Category
 }
 
 
-export default function ModalFormEditCategory({category}: ModalEditProps) {
+export default function ModalFormEditCategory({ category }: ModalEditProps) {
     const { setCategories } = useContext(AdminContext)
     const [isOpen, setIsOpen] = useState(false);
 
@@ -92,6 +93,17 @@ export default function ModalFormEditCategory({category}: ModalEditProps) {
             })
         }
 
+    }
+
+
+    async function handleCancel() {
+        const url = form.getValues('imageUrl');
+
+        if (url !== category.imageUrl) {
+            await deleteImage(url);
+        }
+
+        form.reset();
     }
 
     return (
@@ -166,7 +178,7 @@ export default function ModalFormEditCategory({category}: ModalEditProps) {
                                     <Button variant='save' className="uppercase font-semibold" type="submit">Salvar</Button>
 
                                     <DialogClose asChild>
-                                        <Button variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
+                                        <Button onClick={handleCancel} variant="secondary" className="uppercase font-semibold" type="reset">Cancelar</Button>
                                     </DialogClose>
                                 </div>
                             </form>
