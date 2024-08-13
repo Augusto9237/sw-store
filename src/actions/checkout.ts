@@ -8,13 +8,13 @@ export const createCheckout = async (
     orderId: string,
 ) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-        apiVersion: '2023-10-16',
+        apiVersion: '2024-06-20',
     });
 
     const checkout = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
-        success_url: `${process.env.HOST_URL}/order/payment-success`,
+        success_url: `${process.env.HOST_URL}/api/order/payment-success`,
         cancel_url: process.env.HOST_URL,
         metadata: {
             orderId,
