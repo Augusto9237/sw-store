@@ -5,7 +5,6 @@ declare namespace NodeJS {
         GOOGLE_CLIENT_SECRET: string;
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: string;
         STRIPE_SECRET_KEY: string;
-        NEXT_PUBLIC_STRIPE_SECRET_KEY: string
         NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET_KEY: string;
         AWS_URL: string;
         AWS_ACCESS_KEY_ID: string;
