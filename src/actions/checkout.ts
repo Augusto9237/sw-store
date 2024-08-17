@@ -11,11 +11,13 @@ export const createCheckout = async (
         apiVersion: '2024-06-20',
     });
 
+
+
     const checkout = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
-        success_url: `${process.env.HOST_URL}/api/order/payment-success`,
-        cancel_url: process.env.HOST_URL,
+        success_url: `${process.env.HOST_URL}/?success=true`,
+        cancel_url: `${process.env.HOST_URL}/?canceled=true`,
         metadata: {
             orderId,
         },
@@ -26,7 +28,7 @@ export const createCheckout = async (
                     product_data: {
                         name: product.name,
                         description: product.description,
-                        images: product.imageUrls,
+                        images: product.imageUrls.slice(0,1),
                     },
                     unit_amount: product.totalPrice * 100,
                 },
