@@ -18,7 +18,7 @@ export default function Cart(){
 
     const { products, subtotal, total, totalDiscount } = useContext(CartContext);
 
-    const handleFinishPurchaseClick = async () => {
+    async function handleFinishPurchaseClick (){
         if (!data?.user) {
             return;
         }
