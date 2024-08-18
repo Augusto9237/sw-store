@@ -37,19 +37,23 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-    const [products, setProducts] = useState<CartProduct[]>(JSON.parse(localStorage.getItem("@fsw-store/cart-products") || "[]"));
-
-    // useEffect(() => {
-    //     setProducts(
-    //         JSON.parse(localStorage.getItem("@fsw-store/cart-products") || "[]"),
-    //     );
-    // }, []);
+    const [isLoading, setIsLoading] = useState(false)
+    const [products, setProducts] = useState<CartProduct[]>([]);
 
     useEffect(() => {
-    
-        localStorage.setItem("@fsw-store/cart-products", JSON.stringify(products));
-        
-    }, [products]);
+        const storedProducts = JSON.parse(localStorage.getItem("@fsw-store/cart-products") || '[]')
+        if (storedProducts) {
+            setProducts(storedProducts);
+            setIsLoading(true)
+        }
+    }, []);
+
+
+    useEffect(() => {
+        if (isLoading) {
+            localStorage.setItem("@fsw-store/cart-products", JSON.stringify(products));
+        }
+    }, [products, isLoading]);
 
     // Total sem descontos
     const subtotal = useMemo(() => {
@@ -87,11 +91,25 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
                 }),
             );
 
+            localStorage.setItem("@fsw-store/cart-products", JSON.stringify(
+                (prev: CartProduct[]) =>
+                    prev.map((cartProduct) => {
+                        if (cartProduct.id === product.id) {
+                            return {
+                                ...cartProduct,
+                                quantity: cartProduct.quantity + product.quantity,
+                            };
+                        }
+
+                        return cartProduct;
+                    }),
+            ));
             return;
         }
 
         // se não, adicione o produto à lista
         setProducts((prev) => [...prev, product]);
+        return;
     };
 
     const decreaseProductQuantity = (productId: string) => {
