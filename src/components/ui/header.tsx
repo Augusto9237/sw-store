@@ -10,7 +10,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
@@ -19,6 +19,7 @@ import { Badge } from "./badge";
 import { FormEvent, useContext, useState } from "react";
 import { CartContext } from "@/providers/cart";
 import { Input } from "./input";
+import { SignOutCustomer } from '@/actions/auth';
 
 export default function Header() {
     const { status, data } = useSession();
@@ -32,7 +33,8 @@ export default function Header() {
     }
 
     async function handleLogoutClick() {
-        await signOut();
+        await SignOutCustomer()
+        window.location.reload()
     }
 
     async function handleSearchSubmit(e: FormEvent) {
@@ -41,7 +43,7 @@ export default function Header() {
     }
 
     return (
-        <Card className="px-[1.875rem] py-2 sm:p-[1.875rem] max-sm:px-5" >
+        <Card className="px-[1.875rem] py-2 sm:p-[1.875rem] max-sm:px-5 fixed top-0 left-0 right-0 z-20 backdrop-blur-md bg-card/70 rounded-none" >
             <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-4 lg:gap-8">
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">

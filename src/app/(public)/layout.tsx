@@ -33,7 +33,7 @@ export default function RootLayout({
             <CartProvider>
               <Header />
               <Suspense fallback={<Loading />}>
-                <div className='flex-1'>
+                <div className='flex-1 pt-[6.46rem]'>
                 {children}
                 </div>
               </Suspense>
