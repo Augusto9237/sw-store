@@ -18,14 +18,6 @@ import { AdminContext } from "@/providers/admin";
 export default function TableOrder() {
     const { customers, orders } = useContext(AdminContext)
 
-    const total = useMemo(() => {
-        return orders.reduce((acc, order) => {
-            return acc + order.orderProducts.reduce((orderAcc, orderProduct) => {
-                const productWithTotalPrice = computeProductTotalPrice(orderProduct.product);
-                return orderAcc + productWithTotalPrice.totalPrice * orderProduct.quantity;
-            }, 0);
-        }, 0);
-    }, [orders]);
 
     return (
         <>
@@ -49,8 +41,11 @@ export default function TableOrder() {
                     <TableBody>
                         {orders.map(order => {
                             const customer = customers?.find(customer => customer.id === order.userId);
-
                             const date = format(new Date(order.createdAt), 'dd/MM/yyyy')
+                            const total = order.orderProducts.reduce((acc, orderProduct) => {
+                                const productWithTotalPrice = computeProductTotalPrice(orderProduct.product)
+                                return acc + productWithTotalPrice.totalPrice * orderProduct.quantity;
+                            }, 0)
 
                             return (
                                 <TableRow key={order.id} className='border-b-[1px] max-md:text-sm'>
