@@ -1,7 +1,7 @@
 "use client"
 import { Card } from '@/components/ui/card'
 import { formatReal } from '@/helpers/formatReal';
-import { TotalSumOrders } from '@/helpers/order';
+import { filterOrdersByToday, TotalSumOrders } from '@/helpers/order';
 import { AdminContext } from '@/providers/admin';
 import { CircleDollarSign } from 'lucide-react'
 import { useContext } from 'react';
@@ -9,15 +9,7 @@ import { useContext } from 'react';
 
 export default function CardTotalSalesDay() {
     const { orders } = useContext(AdminContext)
-
-    const filterOrdersByToday = () => {
-        const today = new Date().toISOString().slice(0, 10); // Formata a data atual como 'YYYY-MM-DD'
-
-        return orders.filter(order => new Date(order.createdAt).toISOString().slice(0, 10) === today);
-    }
-
-    const totalOrdersDay = filterOrdersByToday()
-
+    const totalOrdersDay = filterOrdersByToday(orders)
     const total = TotalSumOrders(totalOrdersDay)
 
 

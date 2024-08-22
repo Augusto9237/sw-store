@@ -13,11 +13,13 @@ import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { useContext, useMemo } from "react";
 import { AdminContext } from "@/providers/admin";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { filterOrdersByToday } from "@/helpers/order";
 
 
 export default function TableOrder() {
     const { customers, orders } = useContext(AdminContext)
-
+    const totalOrdersDay = filterOrdersByToday(orders)
 
     return (
         <>
@@ -39,7 +41,7 @@ export default function TableOrder() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {orders.map(order => {
+                        {totalOrdersDay.map(order => {
                             const customer = customers?.find(customer => customer.id === order.userId);
                             const date = format(new Date(order.createdAt), 'dd/MM/yyyy')
                             const total = order.orderProducts.reduce((acc, orderProduct) => {
@@ -49,7 +51,15 @@ export default function TableOrder() {
 
                             return (
                                 <TableRow key={order.id} className='border-b-[1px] max-md:text-sm'>
-                                    <TableCell>{customer?.name}</TableCell>
+                                    <TableCell className="flex items-center gap-4">
+                                        <Avatar>
+                                            <AvatarFallback>
+                                                {customer?.name!.toUpperCase()}
+                                            </AvatarFallback>
+
+                                            {customer?.image && <AvatarImage src={customer.image!} />}
+                                        </Avatar>
+                                        {customer?.name}</TableCell>
                                     <TableCell>{date}</TableCell>
                                     <TableCell>Cartão de credito</TableCell>
                                     <TableCell>{order.orderProducts.length}</TableCell>

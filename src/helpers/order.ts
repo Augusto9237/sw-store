@@ -24,3 +24,9 @@ export function TotalSumOrders(orders: CardTotalProps['orders']) {
     }
     return soma;
 }
+
+export function filterOrdersByToday (orders: CardTotalProps['orders']) {
+    const today = new Date().toISOString().slice(0, 10);
+
+    return orders.filter(order => new Date(order.createdAt).toISOString().slice(0, 10) === today);
+}
