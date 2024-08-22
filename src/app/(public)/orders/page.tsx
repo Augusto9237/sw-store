@@ -4,6 +4,7 @@ import { prismaClient } from "@/lib/prisma";
 import { PackageSearchIcon } from "lucide-react";
 
 import OrderItem from "./components/order-item";
+import { Session } from "next-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,7 @@ export default async function OrderPage() {
 
     const orders = await prismaClient.order.findMany({
         where: {
-            userId: (user as any).id,
+            userId: user.user.id,
         },
         include: {
             orderProducts: {
