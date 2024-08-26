@@ -59,7 +59,8 @@ export default function TableOrder() {
 
                                             {customer?.image && <AvatarImage src={customer.image!} />}
                                         </Avatar>
-                                        {customer?.name}</TableCell>
+                                        {customer?.name}
+                                    </TableCell>
                                     <TableCell>{date}</TableCell>
                                     <TableCell>Cartão de credito</TableCell>
                                     <TableCell>{order.orderProducts.length}</TableCell>
