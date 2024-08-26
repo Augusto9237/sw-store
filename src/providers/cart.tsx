@@ -1,5 +1,4 @@
 "use client";
-
 import { toast } from "@/components/ui/use-toast";
 import { ProductWithTotalPrice } from "@/helpers/product";
 import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
@@ -33,11 +32,11 @@ export const CartContext = createContext<ICartContext>({
     addProductToCart: () => { },
     decreaseProductQuantity: () => { },
     increaseProductQuantity: () => { },
-    removeProductFromCart: () => { },
+    removeProductFromCart: () => { }
 });
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState<CartProduct[]>([]);
 
     useEffect(() => {
@@ -90,20 +89,6 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
                     return cartProduct;
                 }),
             );
-
-            localStorage.setItem("@fsw-store/cart-products", JSON.stringify(
-                (prev: CartProduct[]) =>
-                    prev.map((cartProduct) => {
-                        if (cartProduct.id === product.id) {
-                            return {
-                                ...cartProduct,
-                                quantity: cartProduct.quantity + product.quantity,
-                            };
-                        }
-
-                        return cartProduct;
-                    }),
-            ));
             return;
         }
 

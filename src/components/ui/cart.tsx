@@ -1,6 +1,7 @@
+'use client'
 import { ShoppingCartIcon } from "lucide-react";
 import { Badge } from "./badge";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { CartContext } from "@/providers/cart";
 import CartItem from "./cart-item";
 import { computeProductTotalPrice } from "@/helpers/product";
@@ -12,29 +13,31 @@ import { loadStripe } from "@stripe/stripe-js";
 import { createOrder } from "@/actions/order";
 import { useSession } from "next-auth/react";
 import { formatReal } from "@/helpers/formatReal";
+import LoginCustomer from "../login-customer";
 
-export default function Cart(){
-    const { data } = useSession();
+interface CartProps {
+    setIsOpenSheet: Dispatch<SetStateAction<boolean>>
+}
 
-    const { products, subtotal, total, totalDiscount } = useContext(CartContext);
+export default function Cart({ setIsOpenSheet }: CartProps) {
+    const { data, status } = useSession();
+    const { products, subtotal, total, totalDiscount, setIsLoginOpen } = useContext(CartContext);
 
-    async function handleFinishPurchaseClick (){
-        if (!data?.user) {
-            return;
+    async function handleFinishPurchaseClick() {
+
+        if (data?.user) {
+            const order = await createOrder(products, data?.user.id!);
+
+            const checkout = await createCheckout(products, order.id);
+
+            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+
+            stripe?.redirectToCheckout({
+                sessionId: checkout.id,
+            });
+            localStorage.removeItem("@fsw-store/cart-products")
         }
-
-        console.log(products)
-        const order = await createOrder(products, (data?.user as any).id);
-
-        const checkout = await createCheckout(products, order.id);
-
-        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-
-
-        stripe?.redirectToCheckout({
-            sessionId: checkout.id,
-        });
-        localStorage.removeItem("@fsw-store/cart-products")
     };
 
     return (
@@ -95,13 +98,16 @@ export default function Cart(){
                         <p>Total</p>
                         <p>{formatReal(total)}</p>
                     </div>
-
-                    <Button
-                        className="mt-7 font-bold uppercase"
-                        onClick={handleFinishPurchaseClick}
-                    >
-                        Finalizar compra
-                    </Button>
+                    {status === 'unauthenticated' ?
+                        <LoginCustomer justify="justify-center text-center"  />
+                        :
+                        <Button
+                            className="mt-7 font-bold uppercase"
+                            onClick={handleFinishPurchaseClick}
+                        >
+                            Finalizar compra
+                        </Button>
+                    }
                 </div>
             )}
         </div>

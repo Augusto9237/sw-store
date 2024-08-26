@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2 } from "lucide-react";
+import { HomeIcon, ListOrderedIcon,LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2 } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
@@ -10,7 +10,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { signIn, useSession, signOut } from "next-auth/react";
+import { signIn, useSession} from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
@@ -20,11 +20,13 @@ import { FormEvent, useContext, useState } from "react";
 import { CartContext } from "@/providers/cart";
 import { Input } from "./input";
 import { SignOutCustomer } from '@/actions/auth';
+import LoginCustomer from '../login-customer';
 
 export default function Header() {
     const { status, data } = useSession();
     const [search, setSearch] = useState("")
     const { products } = useContext(CartContext);
+    const [isOpenSheet, setIsOpenSheet] = useState(false);
 
     const router = useRouter()
 
@@ -43,7 +45,7 @@ export default function Header() {
     }
 
     return (
-        <Card className="px-[1.875rem] py-2 sm:p-[1.875rem] max-sm:px-5 fixed top-0 left-0 right-0 z-20 backdrop-blur-md bg-card/70 rounded-none" >
+        <Card className="px-[1.875rem] py-2 sm:p-[1.875rem] max-sm:px-5 fixed top-0 left-0 right-0 z-20 backdrop-blur-md bg-card/70 rounded-none border-none" >
             <div className="flex justify-between  items-center max-w-[1248px] w-full mx-auto gap-4 lg:gap-8">
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">
@@ -78,10 +80,7 @@ export default function Header() {
 
                         <div className="mt-4 flex flex-col gap-2">
                             {status === "unauthenticated" && (
-                                <Button onClick={handleLoginClick} variant='outline' className="w-full justify-start gap-2">
-                                    <LogInIcon size={16} />
-                                    Fazer Login
-                                </Button>
+                                <LoginCustomer/>
                             )}
 
                             {status === "authenticated" && (
@@ -224,16 +223,13 @@ export default function Header() {
                         )}
                         {status === "unauthenticated" && (
                             <PopoverContent className="max-md:hidden">
-                                <Button onClick={handleLoginClick} variant='outline' className="w-full justify-start gap-2">
-                                    <LogInIcon size={16} />
-                                    Fazer Login
-                                </Button>
+                                <LoginCustomer />
                             </PopoverContent>
                         )}
                     </Popover>
 
-                    <Sheet>
-                        <SheetTrigger asChild>
+                    <Sheet modal={isOpenSheet}>
+                        <SheetTrigger asChild onClick={() => setIsOpenSheet(true)}>
                             <Button size='icon' variant='outline' className="relative">
                                 {products.length > 0 && (
                                     <Badge className="absolute top-0 -right-2 px-1.5">
@@ -243,9 +239,11 @@ export default function Header() {
                                 <ShoppingCartIcon />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent className="w-full max-w-[350px] md:max-w-[440px]">
-                            <Cart />
-                        </SheetContent>
+                        {isOpenSheet && (
+                            <SheetContent className="w-full max-w-[350px] md:max-w-[440px]">
+                                <Cart setIsOpenSheet={setIsOpenSheet} />
+                            </SheetContent>
+                        )}
                     </Sheet>
                 </div>
             </div>
