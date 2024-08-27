@@ -15,13 +15,9 @@ import { useSession } from "next-auth/react";
 import { formatReal } from "@/helpers/formatReal";
 import LoginCustomer from "../login-customer";
 
-interface CartProps {
-    setIsOpenSheet: Dispatch<SetStateAction<boolean>>
-}
-
-export default function Cart({ setIsOpenSheet }: CartProps) {
+export default function Cart() {
     const { data, status } = useSession();
-    const { products, subtotal, total, totalDiscount, setIsLoginOpen } = useContext(CartContext);
+    const { products, subtotal, total, totalDiscount} = useContext(CartContext);
 
     async function handleFinishPurchaseClick() {
 

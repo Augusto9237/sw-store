@@ -26,7 +26,6 @@ export default function Header() {
     const { status, data } = useSession();
     const [search, setSearch] = useState("")
     const { products } = useContext(CartContext);
-    const [isOpenSheet, setIsOpenSheet] = useState(false);
 
     const router = useRouter()
 
@@ -228,8 +227,8 @@ export default function Header() {
                         )}
                     </Popover>
 
-                    <Sheet modal={isOpenSheet}>
-                        <SheetTrigger asChild onClick={() => setIsOpenSheet(true)}>
+                    <Sheet>
+                        <SheetTrigger asChild>
                             <Button size='icon' variant='outline' className="relative">
                                 {products.length > 0 && (
                                     <Badge className="absolute top-0 -right-2 px-1.5">
@@ -239,11 +238,9 @@ export default function Header() {
                                 <ShoppingCartIcon />
                             </Button>
                         </SheetTrigger>
-                        {isOpenSheet && (
                             <SheetContent className="w-full max-w-[350px] md:max-w-[440px]">
-                                <Cart setIsOpenSheet={setIsOpenSheet} />
+                                <Cart />
                             </SheetContent>
-                        )}
                     </Sheet>
                 </div>
             </div>
