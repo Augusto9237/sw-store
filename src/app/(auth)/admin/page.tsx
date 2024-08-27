@@ -14,40 +14,6 @@ export default function Admin() {
                 <h1 className="font-bold">Acesso restrito</h1>
 
                 <FormLogin/>
-                {/* <form
-                    action={AuthAdmin}
-                >
-                    <div className="flex-col text-start w-full">
-                        <label className="text-left justify-start">
-                            E-mail
-                        </label>
-
-                        <Input
-                            className="w-full bg-accent shadow-none appearance-none"
-                            name="email"
-                            type='email'
-                        />
-
-                        <label className="text-left justify-start">
-                            Senha
-                        </label>
-
-                        <Input
-                            className="w-full bg-accent shadow-none appearance-none"
-                            name="password"
-                            type='password'
-                        />
-                    </div>
-
-                    <div className="flex items-center gap-4 justify-center w-full pt-4">
-                        <Button variant='secondary' className="uppercase font-semibold">
-                            Entrar
-                        </Button>
-                        <Button variant="secondary" className="uppercase font-semibold" type="button"  >
-                            Cancelar
-                        </Button>
-                    </div>
-                </form> */}
             </Card >
         </div>
     )

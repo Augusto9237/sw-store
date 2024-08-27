@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge"
 import ProductItem from "@/components/ui/product-item"
-import { CATEGORY_ICON } from "@/constants/category-icon"
 import { computeProductTotalPrice } from "@/helpers/product"
 import { prismaClient } from "@/lib/prisma"
 
@@ -13,7 +12,7 @@ export default async function CategoryProducts({ params }: any) {
         }
     })
 
-    if(!category){
+    if (!category) {
         return null
     }
 
@@ -23,7 +22,6 @@ export default async function CategoryProducts({ params }: any) {
                 className="w-fit gap-1 border-2 border-primary px-3 py-[0.375rem] text-base uppercase"
                 variant='outline'
             >
-                {CATEGORY_ICON[params.slug as keyof typeof CATEGORY_ICON]}
                 {category?.name}
             </Badge>
             <div className="grid grid-cols-2 md:grid-cols-6  gap-8 overflow-hidden">
