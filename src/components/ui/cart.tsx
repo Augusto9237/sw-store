@@ -14,7 +14,6 @@ import { createOrder } from "@/actions/order";
 import { useSession } from "next-auth/react";
 import { formatReal } from "@/helpers/formatReal";
 import LoginCustomer from "../login-customer";
-import { PaymentMp } from "@/actions/payment";
 
 
 export default function Cart() {
