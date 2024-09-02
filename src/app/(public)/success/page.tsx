@@ -5,11 +5,11 @@ export default async function Page() {
     console.log(posts)
     return (
         <ul>
-            {posts && (
+        
                 <p>
                     pagamento recebido
                 </p>
-            )}
+            
         </ul>
     )
 }
