@@ -14,25 +14,31 @@ import { createOrder } from "@/actions/order";
 import { useSession } from "next-auth/react";
 import { formatReal } from "@/helpers/formatReal";
 import LoginCustomer from "../login-customer";
+import { PaymentMp } from "@/actions/payment";
+
 
 export default function Cart() {
     const { data, status } = useSession();
-    const { products, subtotal, total, totalDiscount} = useContext(CartContext);
+    const { products, subtotal, total, totalDiscount } = useContext(CartContext);
 
     async function handleFinishPurchaseClick() {
 
         if (data?.user) {
-            const order = await createOrder(products, data?.user.id!);
+            // const order = await createOrder(products, data?.user.id!);
+            const res = await fetch('/api/order/payment-success', { method: 'POST', body: JSON.stringify({ products, userId: data?.user.id }) })
+            const { received } = await res.json()
+            alert(received)
+            // const checkout = await createCheckout(products, order.id);
 
-            const checkout = await createCheckout(products, order.id);
-
-            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+            // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 
-            stripe?.redirectToCheckout({
-                sessionId: checkout.id,
-            });
-            localStorage.removeItem("@fsw-store/cart-products")
+            // stripe?.redirectToCheckout({
+            //     sessionId: checkout.id,
+            // });
+
+            // await PaymentMp()
+            // localStorage.removeItem("@fsw-store/cart-products")
         }
     };
 
@@ -95,7 +101,7 @@ export default function Cart() {
                         <p>{formatReal(total)}</p>
                     </div>
                     {status === 'unauthenticated' ?
-                        <LoginCustomer justify="justify-center text-center"  />
+                        <LoginCustomer justify="justify-center text-center" />
                         :
                         <Button
                             className="mt-7 font-bold uppercase"
