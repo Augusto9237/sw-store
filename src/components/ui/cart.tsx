@@ -24,21 +24,17 @@ export default function Cart() {
     async function handleFinishPurchaseClick() {
 
         if (data?.user) {
-            // const order = await createOrder(products, data?.user.id!);
-            const res = await fetch('/api/order/payment-success', { method: 'POST', body: JSON.stringify({ products, userId: data?.user.id }) })
-            const { received } = await res.json()
-            alert(received)
-            // const checkout = await createCheckout(products, order.id);
+            const order = await createOrder(products, data?.user.id!);
+            const checkout = await createCheckout(products, order.id);
 
-            // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 
-            // stripe?.redirectToCheckout({
-            //     sessionId: checkout.id,
-            // });
+            stripe?.redirectToCheckout({
+                sessionId: checkout.id,
+            });
 
-            // await PaymentMp()
-            // localStorage.removeItem("@fsw-store/cart-products")
+            localStorage.removeItem("@fsw-store/cart-products")
         }
     };
 

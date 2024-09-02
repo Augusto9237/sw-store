@@ -16,7 +16,7 @@ export const createCheckout = async (
     const checkout = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
-        success_url: `${process.env.HOST_URL}/api/order/payment-success`,
+        success_url: "/success",
         cancel_url: `${process.env.HOST_URL}/?canceled=true`,
         metadata: {
             orderId,
@@ -28,7 +28,7 @@ export const createCheckout = async (
                     product_data: {
                         name: product.name,
                         description: product.description,
-                        images: product.imageUrls.slice(0,1),
+                        images: product.imageUrls.slice(0, 1),
                     },
                     unit_amount: product.totalPrice * 100,
                 },
