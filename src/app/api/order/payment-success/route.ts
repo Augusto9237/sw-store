@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 
 export async function POST(req: NextRequest) {
-    const signature = req.headers.get("stripe-signature");
+    const signature = req.headers.get("Stripe-Signature");
     if (!signature) {
         return NextResponse.json({ error: 'Assinatura Stripe ausente' }, { status: 400 });
     }
