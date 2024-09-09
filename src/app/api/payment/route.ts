@@ -30,9 +30,9 @@ export async function POST(req: NextRequest) {
             items: items,
             external_reference: data.id,
             back_urls: {
-                success: "http://localhost:3000/api/payment-success/?success=true",
-                failure: "http://localhost:3000/?canceled=true",
-                pending: "http://localhost:3000/?pending=true"
+                success: `${process.env.HOST_URL}/api/payment-success/?success=true`,
+                failure: `${process.env.HOST_URL}/?canceled=true`,
+                pending: `${process.env.HOST_URL}/?pending=true`
             },
             auto_return: "approved"
         }
