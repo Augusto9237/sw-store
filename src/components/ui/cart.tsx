@@ -8,31 +8,29 @@ import { computeProductTotalPrice } from "@/helpers/product";
 import { Separator } from "./separator";
 import { ScrollArea } from "./scroll-area";
 import { Button } from "./button";
-import { createCheckout } from "@/actions/checkout";
-import { loadStripe } from "@stripe/stripe-js";
 import { createOrder } from "@/actions/order";
 import { useSession } from "next-auth/react";
 import { formatReal } from "@/helpers/formatReal";
 import LoginCustomer from "../login-customer";
+import { Payment } from "@/actions/payment";
+import { redirect, useRouter } from "next/navigation";
+import { Product } from "@prisma/client";
 
 
 export default function Cart() {
     const { data, status } = useSession();
     const { products, subtotal, total, totalDiscount } = useContext(CartContext);
+    const router = useRouter();
 
     async function handleFinishPurchaseClick() {
+        
+        
 
         if (data?.user) {
             const order = await createOrder(products, data?.user.id!);
-            const checkout = await createCheckout(products, order.id);
+            const dataresponse = await Payment(products, order.id);
 
-            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-
-
-            stripe?.redirectToCheckout({
-                sessionId: checkout.id,
-            });
-
+            router.push(dataresponse.init_point)
             localStorage.removeItem("@fsw-store/cart-products")
         }
     };
@@ -54,7 +52,7 @@ export default function Cart() {
                             products.map((product) => (
                                 <CartItem
                                     key={product.id}
-                                    product={computeProductTotalPrice(product as any) as any}
+                                    product={computeProductTotalPrice(product as Product) as any}
                                 />
                             ))
                         ) : (
