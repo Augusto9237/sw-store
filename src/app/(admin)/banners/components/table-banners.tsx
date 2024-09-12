@@ -33,9 +33,9 @@ export default function TableBanners({ banner }: TableBannersProps) {
             </TableHeader>
             <TableBody>
                 {banner.map((banner, index) => (
-                    <TableRow key={banner.id} className='border-b-[1px] max-md:text-sm items-center'>
-                        <TableCell>{index + 1}</TableCell>
-                        <TableCell className='p-1'>
+                    <TableRow key={banner.id} className='border-b-[1px] border-input max-md:text-sm items-center'>
+                        <TableCell className='w-20'>{index + 1}</TableCell>
+                        <TableCell >
                             <Image src={banner.image} alt={banner.title} height={0} width={150} className='h-12' />
                         </TableCell>
                         <TableCell>{banner.title}</TableCell>
@@ -44,15 +44,17 @@ export default function TableBanners({ banner }: TableBannersProps) {
                                 {banner.link}
                             </Link>
                         </TableCell>
-                        <TableCell className='justify-center text-center gap-4 flex p-1 pt-2'>
-                            <ModalFormEditBanner banner={banner} />
-                            
-                            <Button variant='outline' className="flex gap-2" onClick={() => handleDeleteBanner(banner.id)}>
-                                <Trash2 size={16} />
-                                <span className="max-sm:hidden">
-                                    Excluir
-                                </span>
-                            </Button>
+                        <TableCell>
+                            <div className='justify-center text-center gap-4 flex'>
+                                <ModalFormEditBanner banner={banner} />
+
+                                <Button variant='outline' className="flex gap-2" onClick={() => handleDeleteBanner(banner.id)}>
+                                    <Trash2 size={16} />
+                                    <span className="max-sm:hidden">
+                                        Excluir
+                                    </span>
+                                </Button>
+                            </div>
                         </TableCell>
                     </TableRow>
                 ))}

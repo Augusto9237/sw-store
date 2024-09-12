@@ -111,7 +111,7 @@ export default function ModalFormEditCategory({ category }: ModalEditProps) {
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
                 <Button variant='save' className="flex gap-2 w-full" onClick={() => setIsOpen(true)}>
                     <Pencil size={15} />
-                    <span >
+                    <span className="max-lg:hidden" >
                         Editar
                     </span>
                 </Button>

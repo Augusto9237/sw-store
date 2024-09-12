@@ -37,12 +37,12 @@ export function TableUsersTeam() {
                     <TableHead>Nome</TableHead>
                     <TableHead>E-mail</TableHead>
                     <TableHead>Cargo</TableHead>
-                    <TableHead className="text-center">Ações</TableHead>
+                    <TableHead className="text-center">•••</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 {usersTeam.map((user) => (
-                    <TableRow key={user.id} className='border-b-[1px] max-md:text-sm'>
+                    <TableRow key={user.id} className='border-b-[1px] border-input max-md:text-sm'>
                         <TableCell>{user?.name}</TableCell>
                         <TableCell>{user?.email}</TableCell>
                         <TableCell>{

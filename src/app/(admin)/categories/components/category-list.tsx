@@ -77,12 +77,12 @@ export default function CategoriesList() {
                                             <Image src={category.imageUrl} alt={category.name} width={0} height={0} className="w-10 h-9" sizes="100vw" />
                                         </TableCell>
                                         <TableCell>{category.name}</TableCell>
-                                        <TableCell className="max-w-[50px]">{category.slug}</TableCell>
+                                        <TableCell className="md:max-w-[50px]">{category.slug}</TableCell>
                                         <TableCell className="max-w-[140px]">
-                                            <div className="flex gap-1">
+                                            <div className="flex gap-1 items-center">
                                                 {productsFiltered.map(product => (
                                                     <>
-                                                        <p key={product.id} className="truncate leading-none">
+                                                        <p key={product.id} className="truncate">
                                                             {product.name}
                                                         </p>,
                                                     </>
@@ -90,18 +90,18 @@ export default function CategoriesList() {
 
                                             </div>
                                         </TableCell>
-                                        <TableCell className="max-w-[160px] overflow-hidden">
+                                        <TableCell className="md:max-w-[160px] overflow-hidden">
                                             <div className="flex gap-4 w-full">
                                                 <Button variant="outline" onClick={() => handleSelectCategory(category)} className="w-full flex gap-2">
                                                     <ExternalLink size={16} />
-                                                    <span>
+                                                    <span className="max-lg:hidden">
                                                         Detalhes
                                                     </span>
                                                 </Button>
                                                 <ModalFormEditCategory category={category} />
                                                 <Button variant='outline' className="w-full flex gap-2" onClick={() => handleDelete(category.id)}>
                                                     <Trash2 size={16} />
-                                                    <span>
+                                                    <span className="max-lg:hidden">
                                                         Excluir
                                                     </span>
                                                 </Button>

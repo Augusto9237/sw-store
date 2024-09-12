@@ -8,11 +8,15 @@ import { AdminContext } from '@/providers/admin'
 import ModalAddProduct from './modal-add-product'
 import { getProducts } from '@/actions/products'
 import Spinner from '@/components/spinner'
-import { ChevronDown, List, PackageX } from 'lucide-react'
+import { ChevronDown, ExternalLink, List, PackageX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import ButtonDelete from './button-delete';
 import SearchInput from '@/components/search-input';
+
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Image from 'next/image';
+import { formatReal } from '@/helpers/formatReal';
 
 export default function ProductList() {
     const { products, setProducts, setProductSelected, search, loading } = useContext(AdminContext)
@@ -40,7 +44,7 @@ export default function ProductList() {
     return (
         <div className='flex flex-col w-full h-full p-5 bg-background rounded-lg relative'>
             <div className="flex justify-between gap-4">
-                <SearchInput/>
+                <SearchInput />
                 <ModalAddProduct />
             </div>
 
@@ -60,28 +64,52 @@ export default function ProductList() {
                             </div>
                             :
                             <>
-                                <div className="relative grid grid-cols-6 max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 gap-2  items-center w-full mt-8 overflow-y-scroll [&::-webkit-scrollbar]:bg-background [&::-webkit-scrollbar]:w-[3px] [&::-webkit-scrollbar-thumb]:hover:bg-accent/70">
-                                    {products.map(product => (
-                                        <div key={product.id} className="relative p-2">
-                                            <div className="absolute flex flex-col gap-4 px-10 justify-center rounded-lg opacity-0 hover:opacity-100 bg-accent-foreground/20 top-0 left-0 right-0 bottom-0  z-50">
-                                                <Button variant="outline" className='gap-2' onClick={() => setProductSelected(product)}>
-                                                    <List size={16} />
-                                                    <span className='max-sm:hidden'>
-                                                        Selecionar
-                                                    </span>
-                                                </Button>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow className='text-base text-foreground/70 max-md:text-sm border-b-2 hover:bg-transparent'>
+                                            <TableHead className="w-28">Imagem</TableHead>
+                                            <TableHead>Nome</TableHead>
+                                            <TableHead className="max-w-[50px]">slug</TableHead>
+                                            <TableHead>Estoque</TableHead>
+                                            <TableHead>Preço base</TableHead>
+                                            <TableHead>Desconto</TableHead>
+                                            <TableHead>Preço final</TableHead>
+                                            <TableHead className="text-center">•••</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {products.map(product => {
 
-                                                <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} sm={true} />
+                                            return (
+                                                <TableRow key={product.id} className='border-b-[1px] border-input' >
+                                                    <TableCell className="flex items-center  w-28 overflow-hidden">
+                                                        <Image src={product.imageUrls[0]} alt={product.name} width={0} height={0} className="w-full h-10 object-contain" sizes="100vw" />
 
-                                                <ButtonDelete idProduct={product.id} sm={true} />
-                                            </div>
-                                            <ProductItem product={computeProductTotalPrice(product)} />
-                                        </div>
-                                    )
-                                    )}
+                                                    </TableCell>
+                                                    <TableCell className="truncate max-w-[140px]">{product.name}</TableCell>
+                                                    <TableCell>{product.slug}</TableCell>
+                                                    <TableCell>{product.stock}</TableCell>
+                                                    <TableCell>{formatReal(Number(product.basePrice))}</TableCell>
+                                                    <TableCell>{product.discountPercentage}%</TableCell>
+                                                    <TableCell >{formatReal(Number(product.basePrice) - Number(product.discountPercentage / 100) * Number(product.basePrice))}</TableCell>
+                                                    <TableCell >
+                                                        <div className="flex justify-center gap-2">
+                                                            <Button variant="outline" className='gap-2' onClick={() => setProductSelected(product)}>
+                                                                <ExternalLink size={18} />
+                                                                <span className='max-sm:hidden'>
+                                                                    Detalhes
+                                                                </span>
+                                                            </Button>
+                                                            <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} sm={true} />
 
-                                    <div ref={ref} />
-                                </div>
+                                                            <ButtonDelete idProduct={product.id} />
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        })}
+                                    </TableBody>
+                                </Table>
                                 {inView && search === '' && !totaLoading && (
                                     <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center">
                                         <Button variant='outline' size='icon' onClick={() => loadMoreData(products.length + 18)} className="animate-bounce w-6 h-6 z-30">

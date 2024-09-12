@@ -23,9 +23,6 @@ export default function Cart() {
     const router = useRouter();
 
     async function handleFinishPurchaseClick() {
-        
-        
-
         if (data?.user) {
             const order = await createOrder(products, data?.user.id!);
             const dataresponse = await Payment(products, order.id);

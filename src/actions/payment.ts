@@ -4,7 +4,7 @@ import { CartProduct } from "@/providers/cart";
 
 export async function Payment(products: CartProduct[], id: string) {
     try {
-        const response = await fetch(`${process.env.HOST_URL}/api/payment`, {
+        const response = await fetch(`${process.env.HOST_URL}/api/checkout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Especifica que o corpo da requisição está no formato JSON
