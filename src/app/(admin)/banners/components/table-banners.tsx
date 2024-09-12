@@ -35,8 +35,8 @@ export default function TableBanners({ banner }: TableBannersProps) {
                 {banner.map((banner, index) => (
                     <TableRow key={banner.id} className='border-b-[1px] border-input max-md:text-sm items-center'>
                         <TableCell className='w-20'>{index + 1}</TableCell>
-                        <TableCell >
-                            <Image src={banner.image} alt={banner.title} height={0} width={150} className='h-12' />
+                        <TableCell className='p-0.5'>
+                            <Image src={banner.image} alt={banner.title} height={0} width={150} className='h-auto' />
                         </TableCell>
                         <TableCell>{banner.title}</TableCell>
                         <TableCell>
@@ -45,7 +45,7 @@ export default function TableBanners({ banner }: TableBannersProps) {
                             </Link>
                         </TableCell>
                         <TableCell>
-                            <div className='justify-center text-center gap-4 flex'>
+                            <div className='justify-center text-center gap-4 flex items-center'>
                                 <ModalFormEditBanner banner={banner} />
 
                                 <Button variant='outline' className="flex gap-2" onClick={() => handleDeleteBanner(banner.id)}>
