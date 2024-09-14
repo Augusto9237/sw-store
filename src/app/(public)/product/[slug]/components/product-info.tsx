@@ -20,11 +20,16 @@ export default function ProductInfo({ product }: ProductInfoProps) {
     const { toast } = useToast()
 
     function handleDecreaseQuantityClick() {
-        setQuantity((prev) => prev === 1 ? prev : prev - 1)
+        if (quantity > 1) {
+            setQuantity((prev) => prev === 1 ? prev : prev - 1)
+        }
+
     }
 
     function handleIncreaseQuantityClick() {
-        setQuantity((prev) => prev + 1)
+        if (product.stock - 1 >= quantity) {
+            setQuantity((prev) => prev + 1)
+        }
     }
 
     function handleAddToCartClick() {
@@ -53,16 +58,19 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 </p>
             )}
 
-            <div className="mt-4 flex items-center gap-2">
-                <Button size="icon" variant='outline' onClick={handleDecreaseQuantityClick}>
-                    <ArrowLeftIcon size={16} />
-                </Button>
+            <div className="mt-4 flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                    <Button size="icon" variant='outline' onClick={handleDecreaseQuantityClick}>
+                        <ArrowLeftIcon size={16} />
+                    </Button>
 
-                <span>{quantity}</span>
+                    <span>{quantity}</span>
 
-                <Button size="icon" variant='outline' onClick={handleIncreaseQuantityClick}>
-                    <ArrowRightIcon size={16} />
-                </Button>
+                    <Button size="icon" variant='outline' disabled={product.stock < 1} onClick={handleIncreaseQuantityClick}>
+                        <ArrowRightIcon size={16} />
+                    </Button>
+                </div>
+                <p>{product.stock} Disponiveis</p>
             </div>
 
             <div className="mt-8 flex flex-col gap-3">
