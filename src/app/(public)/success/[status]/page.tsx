@@ -9,7 +9,7 @@ import { useContext } from "react"
 
 interface SucccessProps {
     params: {
-        status: string
+        status: "true" | "false"
     }
 }
 export default function Success({ params: { status } }: SucccessProps) {
@@ -22,7 +22,8 @@ export default function Success({ params: { status } }: SucccessProps) {
         router.push('/')
     }
 
-    if (status !== 'true') {
+
+    if (status === 'false') {
         return (
             <div className="flex-1 flex justify-center items-center absolute inset-0 backdrop-blur-md bg-card/70 z-50 h-full">
                 <Card className="max-w-sm p-5 text-red-600 items-center flex flex-col">
@@ -36,7 +37,8 @@ export default function Success({ params: { status } }: SucccessProps) {
                 </Card>
             </div>
         )
-    } else {
+    }
+    if (status === 'true') {
         return (
             <div className="flex-1 flex justify-center items-center absolute inset-0 backdrop-blur-md bg-card/70 z-50 h-full">
                 <Card className="max-w-sm p-5 text-green-600 items-center flex flex-col">
@@ -50,5 +52,7 @@ export default function Success({ params: { status } }: SucccessProps) {
                 </Card>
             </div>
         )
+    } else {
+        return <p>Erro</p>
     }
 }
