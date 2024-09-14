@@ -102,7 +102,7 @@ export default function ProductList() {
                                                             </Button>
                                                             <ModalEditProduct setTotalLoading={setTotalLoading} product={{ ...product, basePrice: Number(product.basePrice) }} sm={true} />
 
-                                                            <ButtonDelete idProduct={product.id} />
+                                                            <ButtonDelete idProduct={product.id} sm={true} />
                                                         </div>
                                                     </TableCell>
                                                 </TableRow>
