@@ -14,7 +14,7 @@ import { formatReal } from "@/helpers/formatReal";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Prisma } from "@prisma/client";
 import { format } from "date-fns";
-import { GanttChartSquare } from "lucide-react";
+import { ExternalLink} from "lucide-react";
 import { useMemo, useState } from "react";
 import OrderProductItemEdit from "./order-product-item-edit";
 
@@ -52,9 +52,9 @@ export default function ModalOrder({ order }: ModalOrderProps) {
         <Dialog modal={isOpen}>
             <DialogTrigger asChild onClick={() => setIsOpen(true)}>
                 <Button variant='outline' className='gap-2'>
-                    <GanttChartSquare size={16} />
-                    <span className="max-lg:hidden">
-                        Ver
+                    <ExternalLink size={18} />
+                    <span className='max-sm:hidden'>
+                        Detalhes
                     </span>
                 </Button>
             </DialogTrigger>

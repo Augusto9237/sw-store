@@ -28,7 +28,6 @@ export default function Cart() {
             const dataresponse = await Payment(products, order.id);
 
             router.push(dataresponse.init_point)
-            localStorage.removeItem("@fsw-store/cart-products")
         }
     };
 
