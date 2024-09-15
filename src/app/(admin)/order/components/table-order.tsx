@@ -44,7 +44,7 @@ export default function TableOrder() {
     }
 
     return (
-        <Table>
+        <Table className="mt-5">
             <TableHeader>
                 <TableRow className='text-base text-foreground/70 max-md:text-sm border-b-2 hover:bg-transparent'>
                     <TableHead>Cliente</TableHead>

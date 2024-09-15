@@ -11,7 +11,7 @@ export default function CategoryItem({ category }: CategoryItemProps) {
 
     return (
         <Link href={`/category/${category.slug}`} className="flex flex-col items-center" >
-            <div className="flex border border-input bg-gradient-to-tr from-indigo-700 to-indigo-950 hover:bg-gradient-to-tr hover:from-indigo-800 hover:to-indigo-950 hover:text-accent-foreground  justify-center items-center rounded-full w-16 sm:w-20 h-16 sm:h-20 p-1">
+            <div className="flex border border-input bg-gradient-to-tr  from-primary to-primary/20 hover:bg-gradient-to-tr hover:from-primary/80 hover:to-primary/10 hover:text-accent-foreground  justify-center items-center rounded-full w-16 sm:w-20 h-16 sm:h-20 p-1">
                 <Image
                     src={category.imageUrl}
                     width={0}

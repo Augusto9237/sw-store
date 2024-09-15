@@ -9,7 +9,7 @@ import { Category, Prisma, Product, User, UserTeam } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import { Dispatch, ReactNode, SetStateAction, createContext, use, useEffect, useState } from "react";
 
-interface ICartContext {
+export interface ICartContext {
     products: Product[];
     productSelected: Product | null;
     categories: Category[];

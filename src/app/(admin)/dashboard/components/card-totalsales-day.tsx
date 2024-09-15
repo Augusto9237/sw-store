@@ -9,7 +9,8 @@ import { useContext } from 'react';
 
 export default function CardTotalSalesDay() {
     const { orders } = useContext(AdminContext)
-    const totalOrdersDay = filterOrdersByToday(orders)
+    const today = new Date().toISOString().slice(0, 10);
+    const totalOrdersDay = filterOrdersByToday(orders, today);
     const total = TotalSumOrders(totalOrdersDay)
 
 

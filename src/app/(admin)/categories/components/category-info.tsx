@@ -44,7 +44,7 @@ export default function CategoryInfo() {
                     </CardHeader>
 
                     <CardContent className="flex gap-8 max-sm:flex-col max-md:flex-row lg:flex-col justify-between ">
-                        <div className="flex w-full h-[150px] md:min-h-[185px] items-center justify-center rounded-lg  bg-gradient-to-tr from-indigo-700 to-indigo-950">
+                        <div className="flex w-full h-[150px] md:min-h-[185px] items-center justify-center rounded-lg  bg-gradient-to-tr from-primary to-primary/20">
                             <Image
                                 src={category?.imageUrl!}
                                 alt=''

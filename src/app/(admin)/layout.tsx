@@ -31,7 +31,7 @@ export default function RootLayout({
             <AdminProvider>
               <div className="flex h-full w-full">
                 <Sidebar />
-                <div className='flex flex-col w-full h-full min-h-full bg-accent'>
+                <div className='flex flex-col w-full h-full min-h-full bg-accent/30'>
                   <HeaderAdmin />
                   <main className='flex h-full w-full items-center p-8 overflow-hidden overflow-y-auto max-md:p-4'>
                     {children}

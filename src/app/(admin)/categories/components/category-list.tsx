@@ -55,7 +55,7 @@ export default function CategoriesList() {
             )}
 
             {categories.length > 0 && (
-                <CardContent className='w-full mt-8'>
+                <CardContent className='w-full mt-5 p-0'>
                     <Table>
                         <TableHeader>
                             <TableRow className='text-base text-foreground/70 max-md:text-sm border-b-2 hover:bg-transparent'>

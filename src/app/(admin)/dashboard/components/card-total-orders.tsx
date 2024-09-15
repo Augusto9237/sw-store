@@ -1,4 +1,5 @@
 "use client"
+
 import { Card } from "@/components/ui/card";
 import { AdminContext } from "@/providers/admin";
 import { PackageSearch } from "lucide-react";

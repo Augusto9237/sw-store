@@ -17,6 +17,7 @@ import SearchInput from '@/components/search-input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Image from 'next/image';
 import { formatReal } from '@/helpers/formatReal';
+import { Card } from '@/components/ui/card';
 
 export default function ProductList() {
     const { products, setProducts, setProductSelected, search, loading } = useContext(AdminContext)
@@ -42,7 +43,7 @@ export default function ProductList() {
     }
 
     return (
-        <div className='flex flex-col w-full h-full p-5 bg-background rounded-lg relative'>
+        <Card className='p-5 w-full h-full overflow-hidden min-h-full'>
             <div className="flex justify-between gap-4">
                 <SearchInput />
                 <ModalAddProduct />
@@ -64,7 +65,7 @@ export default function ProductList() {
                             </div>
                             :
                             <>
-                                <Table>
+                                <Table className='mt-5'>
                                     <TableHeader>
                                         <TableRow className='text-base text-foreground/70 max-md:text-sm border-b-2 hover:bg-transparent'>
                                             <TableHead className="w-28">Imagem</TableHead>
@@ -121,6 +122,6 @@ export default function ProductList() {
                     }
                 </>
             )}
-        </div>
+        </Card>
     )
 }

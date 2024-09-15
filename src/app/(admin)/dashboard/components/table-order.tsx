@@ -19,7 +19,8 @@ import { filterOrdersByToday } from "@/helpers/order";
 
 export default function TableOrder() {
     const { customers, orders } = useContext(AdminContext)
-    const totalOrdersDay = filterOrdersByToday(orders)
+    const today = new Date().toISOString().slice(0, 10);
+    const totalOrdersDay = filterOrdersByToday(orders, today);
 
     return (
         <>
@@ -29,7 +30,7 @@ export default function TableOrder() {
                 </div>
             )}
             {orders.length > 0 && (
-                <Table className="max-sm:overflow-x-auto">
+                <Table className="max-sm:overflow-x-auto mt-5">
                     <TableHeader>
                         <TableRow className='text-base text-foreground/70 max-md:text-sm border-b-2 hover:bg-transparent'>
                             <TableHead>Cliente</TableHead>
@@ -50,7 +51,7 @@ export default function TableOrder() {
                             }, 0)
 
                             return (
-                                <TableRow key={order.id} className='border-b-[1px] max-md:text-sm'>
+                                <TableRow key={order.id} className='border-b-[1px] border-input max-md:text-sm'>
                                     <TableCell className="flex items-center gap-4">
                                         <Avatar>
                                             <AvatarFallback>

@@ -11,14 +11,14 @@ export default async function Banners() {
 
   return (
     <div className="flex flex-1 max-sm:flex-col h-full w-full gap-8 max-sm:gap-4">
-      <div className='flex flex-col w-full h-full p-5 gap-8 bg-background rounded-lg'>
+      <Card className='p-5 w-full h-full overflow-hidden min-h-full'>
         <div className="flex w-full justify-between gap-4">
           <SearchInput />
 
           <ModalFormBanner />
         </div>
         <TableBanners banner={banners} />
-      </div>
+      </Card>
 
       <Card className="w-full max-w-sm bg-background rounded-lg  h-full max-h-[272px] max-sm:max-h-[220px]">
         <CardHeader>
