@@ -14,7 +14,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         if (id) {
             await deleteOrder(id);
         }
-        return NextResponse.redirect(new URL(`${process.env.HOST_URL}/canceled/${canceled}`));
+        return NextResponse.redirect(new URL(`${process.env.HOST_URL}/success/false`));
     }
 
     if (id && status === 'approved') {
@@ -28,5 +28,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
         });
     }
   
-    return NextResponse.redirect(new URL(`${process.env.HOST_URL}/success/${success}`));
+    return NextResponse.redirect(new URL(`${process.env.HOST_URL}/success/true`));
 };
