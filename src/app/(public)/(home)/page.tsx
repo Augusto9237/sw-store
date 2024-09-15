@@ -44,13 +44,13 @@ export default async function Home() {
 
       <div className="max-md:hidden flex flex-row items-center h-[215px] overflow-hidden max-w-[1248px] w-full mx-auto gap-8">
         <PromoBanner
-          src="/Banner-home-02.png"
-          alt="Desconto esse mês"
+          src={banners[0]?.image}
+          alt={banners[0]?.title}
         />
 
         <PromoBanner
-          src="/Banner-home-03.png"
-          alt="Desconto esse mês"
+          src={banners[1]?.image}
+          alt={banners[1]?.title}
         />
       </div>
 
