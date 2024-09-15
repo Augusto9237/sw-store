@@ -70,7 +70,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                         <ArrowRightIcon size={16} />
                     </Button>
                 </div>
-                <p>{product.stock} Disponiveis</p>
+                <p>{product.stock} {`Disponív${product.stock > 1 ? 'eis' : 'el'}`}</p>
             </div>
 
             <div className="mt-8 flex flex-col gap-3">
