@@ -33,6 +33,9 @@ export const getOrders = async (name?: string) => {
                 }
             }
         }
+        , orderBy: {
+            createdAt: 'asc'
+        }
     })
 
     return { orders }

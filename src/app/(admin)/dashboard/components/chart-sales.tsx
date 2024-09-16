@@ -19,12 +19,8 @@ import {
 } from "@/components/ui/chart"
 import { useContext } from "react"
 import { AdminContext } from "@/providers/admin"
-import { computeProductTotalPrice } from "@/helpers/product"
 import { TotalSumOrders } from "@/helpers/order"
 import { Prisma } from "@prisma/client"
-
-
-export const description = "A bar chart with a label"
 
 
 const chartConfig = {
@@ -34,9 +30,7 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-
-interface GroupedOrders {
-    date: string;
+interface OrderProps {
     orders: Prisma.OrderGetPayload<{
         include: {
             orderProducts: {
@@ -49,36 +43,39 @@ interface GroupedOrders {
 }
 
 
-export function ChartSales() {
-    const { customers, orders } = useContext(AdminContext);
+interface GroupedOrders {
+    date: string;
+    total: number;
+}
 
-    const filterAndGroupOrdersByDay = (orders: GroupedOrders['orders']): GroupedOrders[] => {
+
+export function ChartSales() {
+    const { orders } = useContext(AdminContext);
+
+    const filterAndGroupOrdersByDay = (orders: OrderProps['orders']): GroupedOrders[] => {
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
 
-        // Filtrar apenas as ordens do mês atual
         const filteredOrders = orders.filter(order => {
             const orderDate = new Date(order.createdAt);
             return orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear;
         });
 
-        // Agrupar as ordens por dia
-        const groupedOrdersMap: Record<string, GroupedOrders['orders']> = filteredOrders.reduce((acc, order) => {
+        const groupedOrdersMap: Record<string, OrderProps['orders']> = filteredOrders.reduce((acc, order) => {
             const orderDate = new Date(order.createdAt);
-            const dateKey = orderDate.toISOString().split('T')[0]; // YYYY-MM-DD
+            const dateKey = orderDate.toISOString().split('T')[0];
 
             if (!acc[dateKey]) {
                 acc[dateKey] = [];
             }
             acc[dateKey].push(order);
             return acc;
-        }, {} as Record<string, GroupedOrders['orders']>);
+        }, {} as Record<string, OrderProps['orders']>);
 
-        // Converter o objeto agrupado em um array de objetos { date: string, orders: Order[] }
         const groupedOrdersArray: GroupedOrders[] = Object.entries(groupedOrdersMap).map(([date, orders]) => ({
             date,
-            orders,
+            total: TotalSumOrders(orders)
         }));
 
         return groupedOrdersArray;
@@ -90,16 +87,16 @@ export function ChartSales() {
         const day = item.date.split('-')[2];
 
         return (
-            { month: day, desktop:  TotalSumOrders(item.orders) }
+            { month: day, desktop: item.total }
         )
     })
 
 
     return (
         <Card className="w-full">
-            <CardHeader>
-                <CardTitle>Vendas</CardTitle>
-                <CardDescription>Setembro</CardDescription>
+            <CardHeader className="p-5">
+                <CardTitle className="text-lg">Perfomance de vendas</CardTitle>
+                <CardDescription className="text-base">Setembro</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>

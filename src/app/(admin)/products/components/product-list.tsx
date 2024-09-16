@@ -43,7 +43,7 @@ export default function ProductList() {
     }
 
     return (
-        <Card className='p-5 w-full h-full overflow-hidden min-h-full'>
+        <Card className='p-5 w-full h-full overflow-hidden min-h-full space-y-5'>
             <div className="flex justify-between gap-4">
                 <SearchInput />
                 <ModalAddProduct />
@@ -65,7 +65,7 @@ export default function ProductList() {
                             </div>
                             :
                             <>
-                                <Table className='mt-5'>
+                                <Table>
                                     <TableHeader>
                                         <TableRow className='text-base text-foreground/70 max-md:text-sm border-b-2 hover:bg-transparent'>
                                             <TableHead className="w-28">Imagem</TableHead>
