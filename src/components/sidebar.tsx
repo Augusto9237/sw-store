@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { ActiveLink } from "./ui/active-link";
 import { SignOutAdmin } from "@/actions/auth";
+import Logo from "./logo";
 
 
 export default function Sidebar() {
@@ -17,7 +18,7 @@ export default function Sidebar() {
         <Card className="w-64 rounded-none px-0 max-lg:hidden">
             <CardHeader className="pl-10 max-xl:pl-8">
                 <Link href="/dashboard" className="font-semibold text-2xl max-lg:text-lg flex flex-nowrap">
-                    <span className="text-primary">Auto</span> Tech
+                    <Logo/>
                 </Link>
             </CardHeader>
 

@@ -13,9 +13,9 @@ export default async function CatalogPage() {
                 variant='outline'
             >
                 <ShapesIcon size={16} />
-                Catálogo
+                Categorias
             </Badge>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 {categories?.map(category => <CategoryItem key={category.id} category={category} />)}
             </div>
         </div>

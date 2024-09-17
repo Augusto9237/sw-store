@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { LogInIcon } from "lucide-react";
+import Logo from "./logo";
 
 interface LoginCustomerProps {
     justify?: string
@@ -29,7 +30,7 @@ export default function LoginCustomer({justify}: LoginCustomerProps) {
             <DialogContent className="w-full overflow-hidden flex flex-col items-center gap-4 max-w-sm">
                 <DialogHeader>
                     <DialogTitle className="font-semibold text-lg md:text-2xl">
-                        <span className="text-primary">SW</span> Store
+                        <Logo/>
                     </DialogTitle>
                 </DialogHeader>
 

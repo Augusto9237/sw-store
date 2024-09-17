@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { HomeIcon, ListOrderedIcon,LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2 } from "lucide-react";
+import { HomeIcon, ListOrderedIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, SearchIcon, ShoppingCartIcon, User2 } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
@@ -10,7 +10,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { signIn, useSession} from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
@@ -21,6 +21,7 @@ import { CartContext } from "@/providers/cart";
 import { Input } from "./input";
 import { SignOutCustomer } from '@/actions/auth';
 import LoginCustomer from '../login-customer';
+import Logo from '../logo';
 
 export default function Header() {
     const { status, data } = useSession();
@@ -79,7 +80,7 @@ export default function Header() {
 
                         <div className="mt-4 flex flex-col gap-2">
                             {status === "unauthenticated" && (
-                                <LoginCustomer/>
+                                <LoginCustomer />
                             )}
 
                             {status === "authenticated" && (
@@ -120,7 +121,7 @@ export default function Header() {
                                 <Link href="/catalog">
                                     <Button variant='outline' className="w-full justify-start gap-2">
                                         <ListOrderedIcon size={16} />
-                                        Catálogo
+                                        Categorias
                                     </Button>
                                 </Link>
                             </SheetClose>
@@ -129,9 +130,7 @@ export default function Header() {
                 </Sheet>
 
                 <Link href="/">
-                    <h1 className="font-semibold text-lg  md:text-2xl">
-                        <span className="text-primary">AUTO</span> Tech
-                    </h1>
+                    <Logo />
                 </Link>
 
                 <div className="flex flex-1 gap-8 items-center justify-center max-md:hidden">
@@ -143,7 +142,7 @@ export default function Header() {
 
                     <Link href="/catalog">
                         <h1 className="font-semibold">
-                            Catálogo
+                            Categorias
                         </h1>
                     </Link>
 
@@ -238,9 +237,9 @@ export default function Header() {
                                 <ShoppingCartIcon />
                             </Button>
                         </SheetTrigger>
-                            <SheetContent className="w-full max-w-[350px] md:max-w-[440px]">
-                                <Cart />
-                            </SheetContent>
+                        <SheetContent className="w-full max-w-[350px] md:max-w-[440px]">
+                            <Cart />
+                        </SheetContent>
                     </Sheet>
                 </div>
             </div>

@@ -18,6 +18,7 @@ import Link from "next/link";
 
 import { AvatarImage, AvatarFallback, Avatar } from "./avatar";
 import { SignOutAdmin } from "@/actions/auth";
+import Logo from "../logo";
 
 export default function HeaderAdmin() {
     const { status, data } = useSession();
@@ -90,8 +91,8 @@ export default function HeaderAdmin() {
 
                     <SheetContent side='left' className="w-full max-md:max-w-[240px] max-lg:max-w-[340px] px-0">
                         <SheetHeader className="mb-4">
-                            <Link href="/dashboard" className="font-semibold text-lg  md:text-2xl">
-                                <span className="text-primary">Auto</span> Tech
+                            <Link href="/dashboard" className="w-full justify-center flex">
+                               <Logo/>
                             </Link>
                             {status === "authenticated" && data?.user && (
                                 <div className="flex items-center gap-2 pl-6">
