@@ -2,7 +2,7 @@
 import { ShoppingCartIcon } from "lucide-react";
 import { Badge } from "./badge";
 import { Dispatch, SetStateAction, useContext } from "react";
-import { CartContext } from "@/providers/cart";
+import { CartContext, CartProduct } from "@/providers/cart";
 import CartItem from "./cart-item";
 import { computeProductTotalPrice } from "@/helpers/product";
 import { Separator } from "./separator";
@@ -13,19 +13,48 @@ import { useSession } from "next-auth/react";
 import { formatReal } from "@/helpers/formatReal";
 import LoginCustomer from "../login-customer";
 import { Payment } from "@/actions/payment";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Product } from "@prisma/client";
+import { getProduct } from "@/actions/products";
+import { toast } from "./use-toast";
 
 
 export default function Cart() {
     const { data, status } = useSession();
-    const { products, subtotal, total, totalDiscount } = useContext(CartContext);
+    const { products, setProducts, subtotal, total, totalDiscount } = useContext(CartContext);
     const router = useRouter();
 
     async function handleFinishPurchaseClick() {
         if (data?.user) {
-            const order = await createOrder(products, data?.user.id!);
-            const dataresponse = await Payment(products, order.id);
+
+            const checkStock = await Promise.all(
+                products.map(async product => {
+                    const { product: data } = await getProduct(product.id);
+
+                    if (!data) {
+                        toast({ title: `Erro ao buscar o produto ${product.name}`, variant: "destructive" });
+                        return null;
+                    }
+
+                    if (data.stock === 0) {
+                        toast({ title: `O produto ${product.name} está zerado em nosso estoque`, variant: "destructive" });
+                        return null;
+                    }
+
+                    if (data.stock < product.quantity) {
+                        toast({ title: `Quantidade insuficiente do produto ${product.name}, sua quantidade foi alterada no pedido`, variant: "default" });
+                        return { ...product, quantity: data.stock };
+                    }
+
+                    return product;
+                })
+            );
+
+            const finalProducts = checkStock.filter(product => product !== null);
+            setProducts(finalProducts)
+
+            const order = await createOrder(finalProducts, data?.user.id!);
+            const dataresponse = await Payment(finalProducts, order.id);
 
             router.push(dataresponse.init_point)
         }

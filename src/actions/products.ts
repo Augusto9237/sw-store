@@ -26,7 +26,17 @@ export async function getProducts(name?: string, take?: number) {
         }
     })
 
-    return { products}
+    return { products }
+}
+
+export async function getProduct(id: string) {
+    const product = await prismaClient.product.findUnique({
+        where: {
+            id: id
+        }
+    })
+
+    return { product }
 }
 
 export const createProduct = async (product: ProductProps) => {

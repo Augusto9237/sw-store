@@ -78,7 +78,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 <p className="text-sm opacity-60 text-justify">{product.description}</p>
             </div>
 
-            <Button onClick={handleAddToCartClick} className="mt-8 uppercase font-bold">Adicionar ao carrinho</Button>
+            {product.stock < 1 && (
+                <span className="text-primary font-bold bg-primary/5 p-2 text-center mt-8 rounded-md">Produto esgotado</span>
+            )}
+
+            {product.stock > 0 && (
+                <Button onClick={handleAddToCartClick} className="mt-8 uppercase font-bold">Adicionar ao carrinho</Button>
+            )}
 
             <div className="bg-accent md:bg-accent-foreground/5 flex item px-5 py-5 mt-5 rounded-lg justify-between">
                 <div className="flex items-center gap-2">

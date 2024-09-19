@@ -82,6 +82,11 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
             setProducts((prev) =>
                 prev.map((cartProduct) => {
                     if (cartProduct.id === product.id) {
+                        if (cartProduct.quantity >= cartProduct.stock) {
+                            toast({ title: `Produto já foi adicionado ao carrinho, temos apenas ${cartProduct.stock} no estoque`, variant: "default" });
+                            return cartProduct
+                        }
+
                         return {
                             ...cartProduct,
                             quantity: cartProduct.quantity + product.quantity,
@@ -120,6 +125,11 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         setProducts((prev) =>
             prev.map((cartProduct) => {
                 if (cartProduct.id === productId) {
+                    if (cartProduct.quantity >= cartProduct.stock) {
+                        toast({ title: "Quantidade não pode ser maior do que o estoque disponivel", variant: "destructive" });    
+                        return cartProduct
+                    }
+
                     return {
                         ...cartProduct,
                         quantity: cartProduct.quantity + 1,

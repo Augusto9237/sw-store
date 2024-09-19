@@ -27,7 +27,7 @@ export default function CartItem({ product }: CartItemProps) {
                     <p className="text-xs">{product.name}</p>
                     <div className="flex items-center gap-2">
                         <p className="text-sm font-bold">
-                           R$ {formatReal(product.totalPrice)}
+                           {formatReal(product.totalPrice)}
                         </p>
                         {product.discountPercentage > 0 && (
                             <p className="opacity-75 line-through text-xs">{formatReal(Number(product.basePrice))}</p>
