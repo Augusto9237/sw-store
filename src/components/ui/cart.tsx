@@ -50,17 +50,16 @@ export default function Cart() {
                 })
             );
 
-            if (checkStock) {
-                const finalProducts = checkStock.filter(product => product !== null);
-                if (!finalProducts) return
+            const finalProducts = checkStock.filter((product): product is CartProduct => product !== null);
 
-                setProducts(finalProducts)
+            if (!finalProducts.length) return;
 
-                const order = await createOrder(finalProducts, data?.user.id!);
-                const dataresponse = await Payment(finalProducts, order.id);
+            setProducts(finalProducts);
 
-                router.push(dataresponse.init_point)
-            }
+            const order = await createOrder(finalProducts, data?.user.id!);
+            const dataresponse = await Payment(finalProducts, order.id);
+
+            router.push(dataresponse.init_point)
         }
     };
 
