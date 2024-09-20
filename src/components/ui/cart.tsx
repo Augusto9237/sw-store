@@ -50,10 +50,10 @@ export default function Cart() {
                 })
             );
 
-            const finalProducts = checkStock.filter(product => product !== null);
-            
+            const finalProducts : CartProduct[] = checkStock.filter(product => product !== null);
+
             if (finalProducts) {
-                setProducts(finalProducts)
+                setProducts(finalProducts!)
 
                 const order = await createOrder(finalProducts, data?.user.id!);
                 const dataresponse = await Payment(finalProducts, order.id);
