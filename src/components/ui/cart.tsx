@@ -51,12 +51,15 @@ export default function Cart() {
             );
 
             const finalProducts = checkStock.filter(product => product !== null);
-            setProducts(finalProducts)
+            
+            if (finalProducts) {
+                setProducts(finalProducts)
 
-            const order = await createOrder(finalProducts, data?.user.id!);
-            const dataresponse = await Payment(finalProducts, order.id);
+                const order = await createOrder(finalProducts, data?.user.id!);
+                const dataresponse = await Payment(finalProducts, order.id);
 
-            router.push(dataresponse.init_point)
+                router.push(dataresponse.init_point)
+            }
         }
     };
 
