@@ -12,12 +12,7 @@ export default async function AuthAdmin(formData: FormData) {
     return redirect('/dashboard')
 }
 
-export async function SignOutAdmin() {
-    cookies().delete('role_token')
-    await signOut()
-}
-
-export async function SignOutCustomer() {
+export async function SignOut() {
     cookies().delete('role_token')
     await signOut()
 }

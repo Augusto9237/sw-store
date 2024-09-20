@@ -20,14 +20,15 @@ import { deleteOrder, getOrders } from "@/actions/order";
 import { toast } from "@/components/ui/use-toast";
 import { AdminContext } from "@/providers/admin";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { OrderProduct } from "@prisma/client";
 
 export default function TableOrder() {
     const { orders, customers, setOrders } = useContext(AdminContext)
 
 
-    async function handleDeleteOrder(id: string) {
+    async function handleDeleteOrder(id: string, orderProducts:OrderProduct[] ) {
         try {
-            await deleteOrder(id);
+            await deleteOrder(id, orderProducts);
             toast({
                 variant: "cancel",
                 title: "🗑️ Pedido excluído",
@@ -88,7 +89,7 @@ export default function TableOrder() {
                                     <div className="flex items-center w-full gap-4 justify-end">
                                         <ModalOrder order={order} />
                                         <ModalEditOrder order={order} />
-                                        <Button variant='outline' className='gap-2' onClick={() => handleDeleteOrder(order.id)}>
+                                        <Button variant='outline' className='gap-2' onClick={() => handleDeleteOrder(order.id, order.orderProducts)}>
                                             <Trash2 size={16} />
                                             <span className="max-lg:hidden">
                                                 Excluir

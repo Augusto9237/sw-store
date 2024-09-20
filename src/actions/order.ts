@@ -1,7 +1,7 @@
 "use server";
 import { prismaClient } from "@/lib/prisma";
 import { CartProduct } from "@/providers/cart";
-import { Prisma, Product } from "@prisma/client";
+import { OrderProduct, Prisma, Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 
@@ -61,6 +61,18 @@ export const createOrder = async (
             },
         },
     });
+    cartProducts.map(async (item) => {
+        await prismaClient.product.update({
+            where: {
+                id: item.id
+            },
+            data: {
+                stock: {
+                    decrement: item.quantity
+                }
+            }
+        })
+    })
 
     return order;
 };
@@ -90,7 +102,7 @@ export async function updateOrder(id: string, orderProducts: OrderItem[]) {
     }
 }
 
-export const deleteOrder = async (id: string) => {
+export const deleteOrder = async (id: string, orderProducts: OrderProduct[]) => {
     await prismaClient.orderProduct.deleteMany({
         where: {
             orderId: id,
@@ -105,6 +117,18 @@ export const deleteOrder = async (id: string) => {
             orderProducts: true,
         },
     });
+    orderProducts.map(async (item) => {
+        await prismaClient.product.update({
+            where: {
+                id: item.productId
+            },
+            data: {
+                stock: {
+                    increment: item.quantity
+                }
+            }
+        })
+    })
 
     return revalidatePath('/order');
 }

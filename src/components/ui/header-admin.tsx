@@ -17,7 +17,7 @@ import ModalMyAccount from "../my-account";
 import Link from "next/link";
 
 import { AvatarImage, AvatarFallback, Avatar } from "./avatar";
-import { SignOutAdmin } from "@/actions/auth";
+import { SignOut } from "@/actions/auth";
 import Logo from "../logo";
 
 export default function HeaderAdmin() {
@@ -77,7 +77,7 @@ export default function HeaderAdmin() {
     }
 
     async function handleLogoutClick() {
-        await SignOutAdmin();
+        await SignOut();
     }
     return (
         <Card className="px-8 max-md:px-4 min-h-[74px] w-full items-center flex rounded-none border-x-0" >

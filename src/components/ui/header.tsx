@@ -19,7 +19,7 @@ import { Badge } from "./badge";
 import { FormEvent, useContext, useState } from "react";
 import { CartContext } from "@/providers/cart";
 import { Input } from "./input";
-import { SignOutCustomer } from '@/actions/auth';
+import { SignOut} from '@/actions/auth';
 import LoginCustomer from '../login-customer';
 import Logo from '../logo';
 
@@ -35,7 +35,7 @@ export default function Header() {
     }
 
     async function handleLogoutClick() {
-        await SignOutCustomer()
+        await SignOut()
         window.location.reload()
     }
 
