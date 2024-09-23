@@ -102,7 +102,16 @@ export async function updateOrder(id: string, orderProducts: OrderItem[]) {
     }
 }
 
-export const deleteOrder = async (id: string, orderProducts: OrderProduct[]) => {
+export const deleteOrder = async (id: string) => {
+    const product = await prismaClient.orderProduct.findMany({
+        where: {
+            orderId: id,
+        },
+        include: {
+            product: true,
+        },
+    })
+
     await prismaClient.orderProduct.deleteMany({
         where: {
             orderId: id,
@@ -117,7 +126,8 @@ export const deleteOrder = async (id: string, orderProducts: OrderProduct[]) => 
             orderProducts: true,
         },
     });
-    orderProducts.map(async (item) => {
+
+    product.map(async (item) => {
         await prismaClient.product.update({
             where: {
                 id: item.productId
@@ -129,6 +139,7 @@ export const deleteOrder = async (id: string, orderProducts: OrderProduct[]) => 
             }
         })
     })
+
 
     return revalidatePath('/order');
 }

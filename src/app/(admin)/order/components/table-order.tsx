@@ -26,9 +26,9 @@ export default function TableOrder() {
     const { orders, customers, setOrders } = useContext(AdminContext)
 
 
-    async function handleDeleteOrder(id: string, orderProducts:OrderProduct[] ) {
+    async function handleDeleteOrder(id: string ) {
         try {
-            await deleteOrder(id, orderProducts);
+            await deleteOrder(id );
             toast({
                 variant: "cancel",
                 title: "🗑️ Pedido excluído",
@@ -89,7 +89,7 @@ export default function TableOrder() {
                                     <div className="flex items-center w-full gap-4 justify-end">
                                         <ModalOrder order={order} />
                                         <ModalEditOrder order={order} />
-                                        <Button variant='outline' className='gap-2' onClick={() => handleDeleteOrder(order.id, order.orderProducts)}>
+                                        <Button variant='outline' className='gap-2' onClick={() => handleDeleteOrder(order.id)}>
                                             <Trash2 size={16} />
                                             <span className="max-lg:hidden">
                                                 Excluir
