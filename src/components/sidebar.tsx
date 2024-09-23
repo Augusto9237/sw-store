@@ -3,15 +3,14 @@ import { Boxes, LogOutIcon, GalleryHorizontal, PieChart, ShapesIcon, ShoppingCar
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { ActiveLink } from "./ui/active-link";
-import { SignOutAdmin } from "@/actions/auth";
+import { ActiveLink } from "./ui/active-link"
 import Logo from "./logo";
-
+import { SignOut } from "@/actions/auth";
 
 export default function Sidebar() {
 
     async function handleLogoutClick() {
-        await SignOutAdmin()
+        await SignOut()
     }
 
     return (

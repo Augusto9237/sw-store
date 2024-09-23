@@ -1,7 +1,7 @@
 'use client'
 import { ShoppingCartIcon } from "lucide-react";
 import { Badge } from "./badge";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { CartContext, CartProduct } from "@/providers/cart";
 import CartItem from "./cart-item";
 import { computeProductTotalPrice } from "@/helpers/product";
@@ -17,11 +17,13 @@ import { useRouter } from "next/navigation";
 import { Product } from "@prisma/client";
 import { getProduct } from "@/actions/products";
 import { toast } from "./use-toast";
+import Spinner from "../spinner";
 
 
 export default function Cart() {
     const { data, status } = useSession();
-    const { products, setProducts, subtotal, total, totalDiscount } = useContext(CartContext);
+    const { products, setProducts, subtotal, total, totalDiscount, removeProductFromCart } = useContext(CartContext);
+    const [isLoadingPayment, setIsLoadingPayment] = useState(false)
     const router = useRouter();
 
     async function handleFinishPurchaseClick() {
@@ -37,7 +39,8 @@ export default function Cart() {
                     }
 
                     if (data.stock === 0) {
-                        toast({ title: `O produto ${product.name} está zerado em nosso estoque`, variant: "destructive" });
+                        removeProductFromCart(product.id);
+                        toast({ title: `O produto ${product.name} está esgotado`, variant: "destructive" });
                         return null;
                     }
 
@@ -55,7 +58,7 @@ export default function Cart() {
             if (!finalProducts.length) return;
 
             setProducts(finalProducts);
-
+            setIsLoadingPayment(true);
             const order = await createOrder(finalProducts, data?.user.id!);
             const dataresponse = await Payment(finalProducts, order.id);
 
@@ -127,8 +130,10 @@ export default function Cart() {
                         <Button
                             className="mt-7 font-bold uppercase"
                             onClick={handleFinishPurchaseClick}
+                            disabled={isLoadingPayment}
+                            variant={isLoadingPayment === true ? "secondary" : "default"}
                         >
-                            Finalizar compra
+                            {isLoadingPayment === true ? <Spinner /> : "Finalizar compra"}
                         </Button>
                     }
                 </div>
