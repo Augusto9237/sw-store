@@ -16,15 +16,15 @@ export default async function Home() {
   })
 
 
-  const {banners} = await getBanners()
+  const { banners } = await getBanners()
 
   return (
     <div className="flex flex-col gap-8 md:gap-10 pb-8">
-  
-       <section className="flex flex-1 w-full h-full justify-center">
+
+      <section className="flex flex-1 w-full h-full justify-center">
         <CarouselPromo banner={banners} />
-       </section>
-      
+      </section>
+
 
       <div className="px-5 md:px-0 max-w-[1248px] w-full mx-auto">
         <Categories />
@@ -37,8 +37,8 @@ export default async function Home() {
 
       <div className="md:hidden">
         <PromoBanner
-          src="/Banner-home-02.png"
-          alt="Desconto esse mês"
+          src={banners[1]?.image}
+          alt={banners[1]?.title}
         />
       </div>
 
@@ -54,7 +54,7 @@ export default async function Home() {
         />
       </div>
 
-     
+
     </div>
   )
 }
